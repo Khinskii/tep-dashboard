@@ -1,0 +1,7 @@
+__pycache__/
+*.log
+*.bak
+*.pyc
+.DS_Store
+file.docx
+Демо-версия.docx

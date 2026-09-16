@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ООО «ТЭП» — Центр управления производством и финансами</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0B1120',
+              card: '#131D31',
+              cardHover: '#18243C',
+              border: '#202E46',
+              cyan: '#0EA5E9',
+              amber: '#F59E0B',
+              emerald: '#10B981',
+              rose: '#EF4444'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0B1120;
+      color: #F1F5F9;
+    }
+    .font-mono-num {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B1120;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #202E46;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0EA5E9;
+    }
+    .glass-panel {
+      background: rgba(19, 29, 49, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid #202E46;
+    }
+    .badge-pulse {
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- ================= DEMO ACCESS FLOATING BANNER ================= -->
+  <div id="demoAccessBanner" class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 border-b border-cyan-800/40 px-4 py-2 text-xs flex flex-wrap items-center justify-between text-slate-300">
+    <div class="flex items-center gap-2">
+      <span class="px-2 py-0.5 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-700/50 font-semibold text-[11px]">ДЕМО-РЕЖИМ</span>
+      <span id="demoClientBadge" class="font-medium text-white">ООО «Северсталь-Пром»</span>
+      <span class="text-slate-500">•</span>
+      <span id="demoExpiresBadge" class="text-emerald-400 font-medium">Активен до 01.10.2026</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="triggerManualSync()" id="manualSyncBtn" class="flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-medium">
+        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="syncIcon"></i>
+        <span id="syncText">Обновить данные</span>
+      </button>
+      <span class="text-slate-600">|</span>
+      <button onclick="logoutDemo()" class="text-slate-400 hover:text-rose-400">Сменить код</button>
+    </div>
+  </div>
+
+  <!-- ================= DEMO LOCK SCREEN MODAL ================= -->
+  <div id="demoLockModal" class="fixed inset-0 bg-[#0B1120]/95 backdrop-blur-xl z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-panel w-full max-w-md p-8 rounded-3xl border border-cyan-800/60 shadow-2xl text-center space-y-6 relative overflow-hidden">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-600 to-blue-700 mx-auto flex items-center justify-center text-white shadow-xl shadow-cyan-600/30">
+        <i data-lucide="lock" class="w-8 h-8"></i>
+      </div>
+      
+      <div>
+        <h2 class="text-xl font-bold text-white">Демо-доступ к дашборду</h2>
+        <p class="text-xs text-slate-400 mt-1">Введите персональный PIN-код компании для входа в систему операционного контроля</p>
+      </div>
+
+      <div class="space-y-3">
+        <input type="password" id="pinInput" placeholder="Введите PIN-код..." 
+               class="w-full text-center tracking-widest text-lg font-bold font-mono-num bg-slate-900 border border-brand-border rounded-xl py-3 text-white focus:outline-none focus:border-cyan-500 placeholder:text-slate-600 placeholder:text-sm"
+               maxlength="8" onkeydown="if(event.key === 'Enter') submitPin()">
+        
+        <div id="pinErrorMsg" class="hidden text-xs text-rose-400 bg-rose-950/40 p-2.5 rounded-lg border border-rose-800/60 font-medium"></div>
+
+        <button onclick="submitPin()" class="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold uppercase tracking-wider transition shadow-lg shadow-cyan-600/30">
+          Войти в дашборд
+        </button>
+      </div>
+
+      <div class="pt-4 border-t border-brand-border/60 text-[11px] text-slate-500 space-y-1">
+        <p>Для партнеров и клиентов ООО «ТЭП» & СМУ Промстрой</p>
+        <p class="text-slate-400">Тестовый PIN для демонстрации: <code class="text-cyan-400 font-mono-num bg-slate-800 px-1.5 py-0.5 rounded">2026</code></p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 z-40 border-b border-brand-border bg-[#0B1120]/95 backdrop-blur-md px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      
+      <!-- Logo and Subtitle -->
+      <div class="flex items-center gap-3.5">
+        <!-- SVG Monogram Logo for TEP -->
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-cyan-500/20 ring-1 ring-white/20">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-bold tracking-wider text-white">ТЭП</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/60 font-semibold tracking-wide">ИНЖИНИРИНГ</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-brand-card text-slate-300 border border-brand-border">СМУ Промстрой</span>
+          </div>
+          <p class="text-xs text-slate-400">Единый операционный центр управления предприятием</p>
+        </div>
+      </div>
+
+      <!-- Filters & Live Sync Badge -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        <!-- Live Badge -->
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-800/50 text-emerald-400 text-xs font-medium badge-pulse">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span id="liveStatusText">Google Drive Online</span>
+        </div>
+
+        <!-- YARKAYA KNOPKA OBNOVLENIYA -->
+        <button onclick="triggerManualSync()" id="mainHeaderRefreshBtn" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 active:scale-95 text-white text-xs font-bold shadow-lg shadow-cyan-500/30 transition ring-1 ring-cyan-400/50 cursor-pointer">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="headerSyncIcon"></i>
+          <span id="headerSyncText">🔄 Обновить данные</span>
+        </button>
+
+        <!-- Period Select -->
+        <select id="periodSelect" class="bg-brand-card border border-brand-border text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-cyan-500 outline-none">
+          <option value="september" selected>Сентябрь 2026</option>
+          <option value="q3">III Квартал 2026</option>
+          <option value="y2026">2026 Год (Всего)</option>
+        </select>
+
+        <!-- Company Select -->
+        <select id="companySelect" onchange="onCompanyChange()" class="bg-brand-card border border-brand-border text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-cyan-500 outline-none">
+          <option value="all" selected>Группа компаний (Все)</option>
+          <option value="tep">ООО «ТЭП»</option>
+          <option value="mpb">ООО «МПБ» / СМУ</option>
+        </select>
+
+        <!-- Quick Agent Modals -->
+        <button onclick="openOcrModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-brand-card hover:bg-brand-cardHover border border-brand-border text-slate-200 rounded-lg text-xs font-medium transition">
+          <i data-lucide="file-scan" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span>Сканер КС-2/3</span>
+        </button>
+
+        <button onclick="openSafetyModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/40 border border-amber-800/50 text-amber-300 rounded-lg text-xs font-medium transition">
+          <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Аудит ОТ/ТБ</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Navigation Tabs with Per-Tab Google Sheets Dropdowns -->
+    <div class="max-w-7xl mx-auto mt-4 pt-2 border-t border-brand-border/60 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-400 no-scrollbar relative">
+      
+      <!-- 1. Главная сводка -->
+      <button onclick="handleTabClick('overview', event)" id="tab-overview" class="tab-btn px-3.5 py-1.5 rounded-lg text-cyan-400 bg-cyan-950/40 border border-cyan-800/60 font-medium flex items-center gap-2 cursor-pointer transition">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+        <span>Главная сводка</span>
+      </button>
+
+      <!-- 2. Финансы (БДДС) -->
+      <div class="relative tab-dropdown-container">
+        <button onclick="handleTabClick('finance', event)" id="tab-finance" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-slate-200 hover:bg-brand-card flex items-center gap-1.5 cursor-pointer transition">
+          <i data-lucide="wallet" class="w-4 h-4"></i>
+          <span>Финансы (БДДС)</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 tab-chevron"></i>
+        </button>
+        <div id="tab-dropdown-finance" style="background-color: #0f172a !important;" class="hidden absolute left-0 top-full mt-2 w-72 rounded-xl border border-cyan-700/80 shadow-2xl z-50 p-2 space-y-1">
+          <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 flex justify-between items-center">
+            <span>Таблицы БДДС</span>
+            <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
+          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1NXtcp0HN-QQUbhqUk3Z404Wlds83jL_5k7KneZkZRH4/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-cyan-950 border border-cyan-800/60 text-cyan-400"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-cyan-300">БДДС. ТЭП 2024-2026</div>
+                <div class="text-[10px] text-slate-400">Фин. контур ООО «ТЭП»</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400"></i>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1chjC36dgIlnYKOhjlP5pKDoBi1Xd5tCmL8Rrbjg6GX4/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-cyan-950 border border-cyan-800/60 text-cyan-400"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-cyan-300">БДДС. МПБ 2025-2026</div>
+                <div class="text-[10px] text-slate-400">Фин. контур ООО «МПБ»</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. Производство и СМР -->
+      <div class="relative tab-dropdown-container">
+        <button onclick="handleTabClick('production', event)" id="tab-production" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-slate-200 hover:bg-brand-card flex items-center gap-1.5 cursor-pointer transition">
+          <i data-lucide="hard-hat" class="w-4 h-4"></i>
+          <span>Производство и СМР</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 tab-chevron"></i>
+        </button>
+        <div id="tab-dropdown-production" style="background-color: #0f172a !important;" class="hidden absolute left-0 top-full mt-2 w-72 rounded-xl border border-amber-700/80 shadow-2xl z-50 p-2 space-y-1">
+          <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 flex justify-between items-center">
+            <span>Таблица производства</span>
+            <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
+          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1_xHRTSoDfQdLy9GCcAc71xJlmSUaQYCctJuNVJfCIfg/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-amber-950 border border-amber-800/60 text-amber-400"><i data-lucide="hard-hat" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-amber-300">План/факт производства ТЭП</div>
+                <div class="text-[10px] text-slate-400">Объекты 100-103, СМР, объемы</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-400"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Табель и ФОТ -->
+      <div class="relative tab-dropdown-container">
+        <button onclick="handleTabClick('payroll', event)" id="tab-payroll" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-slate-200 hover:bg-brand-card flex items-center gap-1.5 cursor-pointer transition">
+          <i data-lucide="calculator" class="w-4 h-4"></i>
+          <span>Табель и ФОТ</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 tab-chevron"></i>
+        </button>
+        <div id="tab-dropdown-payroll" style="background-color: #0f172a !important;" class="hidden absolute left-0 top-full mt-2 w-72 rounded-xl border border-emerald-700/80 shadow-2xl z-50 p-2 space-y-1">
+          <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 flex justify-between items-center">
+            <span>Таблицы персонала</span>
+            <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
+          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1IXP62S5swwdmE84uSB2yeonTD6ctaKxePI5H7byMK-k/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-emerald-950 border border-emerald-800/60 text-emerald-400"><i data-lucide="calendar" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-emerald-300">Табель 2026 СМУ Промстрой</div>
+                <div class="text-[10px] text-slate-400">Учет отработанных часов</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400"></i>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1OjK3sigpw9sGUvsJOpxtQFyAd0YKBH7fNVNbjIdIT9g/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-emerald-950 border border-emerald-800/60 text-emerald-400"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-emerald-300">2026 Расчеты с персоналом</div>
+                <div class="text-[10px] text-slate-400">ФОТ, начисления, сальдо</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 5. Штат и ОТ/ТБ -->
+      <div class="relative tab-dropdown-container">
+        <button onclick="handleTabClick('safety', event)" id="tab-safety" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-slate-200 hover:bg-brand-card flex items-center gap-1.5 cursor-pointer transition">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Штат и ОТ/ТБ</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 tab-chevron"></i>
+        </button>
+        <div id="tab-dropdown-safety" style="background-color: #0f172a !important;" class="hidden absolute left-0 top-full mt-2 w-72 rounded-xl border border-cyan-700/80 shadow-2xl z-50 p-2 space-y-1">
+          <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 flex justify-between items-center">
+            <span>Кадровые реестры</span>
+            <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
+          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1zmIv17x8WrYgaxmKKdHK2Y2TZ81tkR9DMmr4UPIMFps/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-cyan-950 border border-cyan-800/60 text-cyan-400"><i data-lucide="users" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-cyan-300">Реестр сотрудников (актуальный)</div>
+                <div class="text-[10px] text-slate-400">Кадры, квалификация, допуски</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. Документооборот (ПТО) -->
+      <div class="relative tab-dropdown-container">
+        <button onclick="handleTabClick('docs', event)" id="tab-docs" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-slate-200 hover:bg-brand-card flex items-center gap-1.5 cursor-pointer transition">
+          <i data-lucide="files" class="w-4 h-4"></i>
+          <span>Документооборот (ПТО)</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 tab-chevron"></i>
+        </button>
+        <div id="tab-dropdown-docs" style="background-color: #0f172a !important;" class="hidden absolute left-0 top-full mt-2 w-72 rounded-xl border border-slate-700/80 shadow-2xl z-50 p-2 space-y-1">
+          <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 flex justify-between items-center">
+            <span>Реестры ПТО</span>
+            <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
+          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1w2RqjmL-aHNjGUdT86VSD7VkTjpYOPDp-3ixBaRPJRg/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-slate-800 border border-slate-700 text-cyan-400"><i data-lucide="files" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-cyan-300">Реестр КС-2/3 (актуальный)</div>
+                <div class="text-[10px] text-slate-400">Формы КС-2/3, акты, учет</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 7. ИИ-Аналитик -->
+      <button onclick="handleTabClick('ai', event)" id="tab-ai" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-cyan-300 hover:bg-cyan-950/30 text-cyan-400 flex items-center gap-2 border border-cyan-800/30 cursor-pointer transition">
+        <i data-lucide="bot" class="w-4 h-4 text-cyan-400 animate-pulse"></i>
+        <span>ИИ-Аналитик</span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 max-w-7xl mx-auto w-full p-4 lg:p-8 space-y-8">
+
+    <!-- TAB 1: OVERVIEW -->
+    <div id="view-overview" class="space-y-8">
+
+      <!-- Executive KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- KPI 1: Остаток ДС -->
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border relative overflow-hidden group hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="font-medium">Остаток ДС на счетах</span>
+            <div class="p-2 rounded-xl bg-cyan-950/40 text-cyan-400 border border-cyan-800/40">
+              <i data-lucide="landmark" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-bold font-mono-num text-white"><span id="kpi-balance">287 184 ₽</span></div>
+            <div class="flex items-center gap-1.5 mt-1 text-xs">
+              <span class="text-amber-400 font-medium">План: 382 746 ₽</span>
+              <span class="text-slate-400">• Отклонение -25%</span>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-brand-border/60 flex items-center justify-between text-xs text-slate-400">
+            <span>Источник: БДДС ТЭП & МПБ</span>
+            <span class="text-emerald-400 flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> Кассового разрыва нет</span>
+          </div>
+        </div>
+
+        <!-- KPI 2: Поступления -->
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border relative overflow-hidden group hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="font-medium">Поступления (Сентябрь)</span>
+            <div class="p-2 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-800/40">
+              <i data-lucide="trending-up" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-bold font-mono-num text-white"><span id="kpi-income">315 800 ₽</span></div>
+            <div class="flex items-center gap-1.5 mt-1 text-xs">
+              <span class="text-rose-400 font-medium font-mono-num">План: 587 122 ₽</span>
+              <span class="px-1.5 py-0.5 rounded bg-rose-950/60 text-rose-400 text-[10px] font-semibold">53.8%</span>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-brand-border/60 flex items-center justify-between text-xs text-slate-400">
+            <span>Ожидание: Северсталь</span>
+            <span class="text-cyan-400 font-medium">КС-2 на проверке</span>
+          </div>
+        </div>
+
+        <!-- KPI 3: Выполнение СМР -->
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border relative overflow-hidden group hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="font-medium">Выполнение СМР 2026</span>
+            <div class="p-2 rounded-xl bg-amber-950/40 text-amber-400 border border-amber-800/40">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-bold font-mono-num text-white">28.45 млн ₽</div>
+            <div class="flex items-center gap-1.5 mt-1 text-xs">
+              <span class="text-slate-300">Договоры: 42.10 млн ₽</span>
+              <span class="px-1.5 py-0.5 rounded bg-amber-950/60 text-amber-300 text-[10px] font-semibold">67.5%</span>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-brand-border/60 flex items-center justify-between text-xs text-slate-400">
+            <span>Остаток: 13.65 млн ₽</span>
+            <span class="text-emerald-400 font-medium">3 объекта в графике</span>
+          </div>
+        </div>
+
+        <!-- KPI 4: Контроль ФОТ -->
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border relative overflow-hidden group hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="font-medium">ФОТ (Начислено / Оплачено)</span>
+            <div class="p-2 rounded-xl bg-purple-950/40 text-purple-400 border border-purple-800/40">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-bold font-mono-num text-white"><span id="kpi-fio-paid">335 079 ₽</span></div>
+            <div class="flex items-center gap-1.5 mt-1 text-xs">
+              <span class="text-slate-300">Начислено: 402 818 ₽</span>
+              <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 text-[10px] font-semibold">Долг: 67 739 ₽</span>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-brand-border/60 flex items-center justify-between text-xs text-slate-400">
+            <span>Штат: 13 специалистов</span>
+            <span class="text-emerald-400">Выплата 25-го числа</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Main Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Cash Flow Bar Chart -->
+        <div class="lg:col-span-2 glass-panel p-6 rounded-2xl border border-brand-border">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-base font-semibold text-white flex items-center gap-2">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-cyan-400"></i>
+                Движение денежных средств (БДДС 2026)
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Помесячное сопоставление плана и факта поступлений/списаний</p>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded bg-brand-card text-slate-300 border border-brand-border font-mono-num">
+              факт с 01.01 по 14.09
+            </span>
+          </div>
+          <div class="h-64">
+            <canvas id="cashFlowChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Production Radial / Status Chart -->
+        <div class="glass-panel p-6 rounded-2xl border border-brand-border flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-base font-semibold text-white flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-4 h-4 text-amber-400"></i>
+                Статус закрытия актов КС-2,3
+              </h3>
+            </div>
+            <p class="text-xs text-slate-400">Состояние первички по 24 актам текущего периода</p>
+            <div class="h-44 mt-3">
+              <canvas id="ksStatusChart"></canvas>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-brand-border/60 space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Подписано заказчиком
+              </span>
+              <span class="font-mono-num font-semibold text-white">18 актов (21.4 млн ₽)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> На рассмотрении заказчика
+              </span>
+              <span class="font-mono-num font-semibold text-white">4 акта (4.85 млн ₽)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> На устранении замечаний
+              </span>
+              <span class="font-mono-num font-semibold text-white">2 акта (1.42 млн ₽)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Projects and Staff Split Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Active Objects (Производство СМУ/ТЭП) -->
+        <div class="glass-panel p-6 rounded-2xl border border-brand-border">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-base font-semibold text-white flex items-center gap-2">
+                <i data-lucide="hammer" class="w-4 h-4 text-amber-400"></i>
+                Ключевые объекты в производстве (2026)
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Данные из «План/Факт производства ТЭП» и «Реестр работ»</p>
+            </div>
+            <button onclick="switchTab('production')" class="text-xs text-cyan-400 hover:underline">Подробнее →</button>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Object 100 -->
+            <div class="p-3.5 rounded-xl bg-brand-card/70 border border-brand-border">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-white">100! ГИП 116.817 ППП ЦТМ. СПТ№24 НТА-3</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 text-[11px] font-medium">82% • В графике</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full mt-2.5 overflow-hidden">
+                <div class="bg-cyan-500 h-2 rounded-full" style="width: 82%"></div>
+              </div>
+              <div class="flex items-center justify-between mt-2 text-[11px] text-slate-400 font-mono-num">
+                <span>Договор: 18 400 000 ₽</span>
+                <span>Выполнено: 15 088 000 ₽</span>
+                <span class="text-slate-200">Остаток: 3 312 000 ₽</span>
+              </div>
+            </div>
+
+            <!-- Object 101 -->
+            <div class="p-3.5 rounded-xl bg-brand-card/70 border border-brand-border">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-white">101! Шкаф АСКУЭМ Кислородный цех М390414</span>
+                <span class="px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800/40 text-[11px] font-medium">45% • Отставание 4 дня</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full mt-2.5 overflow-hidden">
+                <div class="bg-rose-500 h-2 rounded-full" style="width: 45%"></div>
+              </div>
+              <div class="flex items-center justify-between mt-2 text-[11px] text-slate-400 font-mono-num">
+                <span>Договор: 7 850 000 ₽</span>
+                <span>Выполнено: 3 532 500 ₽</span>
+                <span class="text-slate-200">Остаток: 4 317 500 ₽</span>
+              </div>
+            </div>
+
+            <!-- Object 102 -->
+            <div class="p-3.5 rounded-xl bg-brand-card/70 border border-brand-border">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-white">102! Замена шкафа АСКУЭМ ТЭЦ-ПВС М260201</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 text-[11px] font-medium">95% • Финал / Сдача</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full mt-2.5 overflow-hidden">
+                <div class="bg-emerald-500 h-2 rounded-full" style="width: 95%"></div>
+              </div>
+              <div class="flex items-center justify-between mt-2 text-[11px] text-slate-400 font-mono-num">
+                <span>Договор: 6 450 000 ₽</span>
+                <span>Выполнено: 6 127 500 ₽</span>
+                <span class="text-slate-200">Остаток: 322 500 ₽</span>
+              </div>
+            </div>
+
+            <!-- Object 103 -->
+            <div class="p-3.5 rounded-xl bg-brand-card/70 border border-brand-border">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-white">103! АСКУЭМ Конвертерный цех М130101</span>
+                <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/40 text-[11px] font-medium">30% • В графике</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full mt-2.5 overflow-hidden">
+                <div class="bg-blue-500 h-2 rounded-full" style="width: 30%"></div>
+              </div>
+              <div class="flex items-center justify-between mt-2 text-[11px] text-slate-400 font-mono-num">
+                <span>Договор: 9 400 000 ₽</span>
+                <span>Выполнено: 2 820 000 ₽</span>
+                <span class="text-slate-200">Остаток: 6 580 000 ₽</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Staff & Safety Summary -->
+        <div class="glass-panel p-6 rounded-2xl border border-brand-border flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-semibold text-white flex items-center gap-2">
+                  <i data-lucide="shield-alert" class="w-4 h-4 text-rose-400"></i>
+                  Штат и Охрана труда (ОТ и ТБ)
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">Данные из «Реестр сотрудников» и «ОТ и ТБ персонал»</p>
+              </div>
+              <button onclick="switchTab('safety')" class="text-xs text-cyan-400 hover:underline">Подробнее →</button>
+            </div>
+
+            <!-- Alert Box -->
+            <div class="p-3 rounded-xl bg-amber-950/40 border border-amber-800/60 mb-4">
+              <div class="flex items-start gap-2.5">
+                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+                <div class="text-xs text-amber-200">
+                  <p class="font-semibold">Требуется продление допусков (2 сотрудника):</p>
+                  <ul class="list-disc list-inside mt-1 space-y-0.5 text-amber-300">
+                    <li><strong>Борькин В.В.</strong> (сварщик): Допуск на высоту истекает через 38 дней</li>
+                    <li><strong>Вебер А.Е.</strong> (рабочий): Проверка знаний по электробезопасности</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Staff Table Preview -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="border-b border-brand-border text-slate-400">
+                    <th class="py-2 font-medium">Таб.</th>
+                    <th class="py-2 font-medium">Сотрудник</th>
+                    <th class="py-2 font-medium">Должность</th>
+                    <th class="py-2 font-medium text-right">Выплачено</th>
+                    <th class="py-2 font-medium text-center">Допуск</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-brand-border/60">
+                  <tr>
+                    <td class="py-2.5 text-slate-400 font-mono-num">88</td>
+                    <td class="py-2.5 font-medium text-white">Борькин В. В.</td>
+                    <td class="py-2.5 text-slate-300">Электросварщик</td>
+                    <td class="py-2.5 font-mono-num text-right text-emerald-400">35 000 ₽</td>
+                    <td class="py-2.5 text-center"><span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 text-[10px]">до 22.10</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 text-slate-400 font-mono-num">152</td>
+                    <td class="py-2.5 font-medium text-white">Лещинин А. В.</td>
+                    <td class="py-2.5 text-slate-300">Главный инженер</td>
+                    <td class="py-2.5 font-mono-num text-right text-emerald-400">42 970 ₽</td>
+                    <td class="py-2.5 text-center"><span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Активен</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 text-slate-400 font-mono-num">63</td>
+                    <td class="py-2.5 font-medium text-white">Ефимович И. Г.</td>
+                    <td class="py-2.5 text-slate-300">Ген. директор</td>
+                    <td class="py-2.5 font-mono-num text-right text-emerald-400">33 323 ₽</td>
+                    <td class="py-2.5 text-center"><span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Активен</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 text-slate-400 font-mono-num">121</td>
+                    <td class="py-2.5 font-medium text-white">Горин А. О.</td>
+                    <td class="py-2.5 text-slate-300">Монтажник</td>
+                    <td class="py-2.5 font-mono-num text-right text-emerald-400">19 911 ₽</td>
+                    <td class="py-2.5 text-center"><span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Активен</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between text-xs text-slate-400">
+            <span>Всего в штате: 13 человек</span>
+            <button onclick="openSafetyModal()" class="text-cyan-400 hover:underline">Сформировать приказ на продление →</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- AI Assistant Interactive Card on Overview -->
+      <div class="glass-panel p-6 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-[#131D31] via-[#16233B] to-[#12253D] relative overflow-hidden">
+        <div class="absolute -right-8 -bottom-8 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400">
+              <i data-lucide="bot" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">ИИ-Аналитик ООО «ТЭП» (Gemini Core)</h3>
+              <p class="text-xs text-slate-300">Автономный анализ операционных данных, выявление рисков и кассовых разрывов</p>
+            </div>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-700/50 font-medium flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span> Live Agent Ready
+          </span>
+        </div>
+
+        <!-- Sample AI Prompt Chips -->
+        <div class="flex flex-wrap gap-2 mt-3">
+          <button onclick="askPresetAi('summary')" class="px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs text-slate-200 transition">
+            💡 Утренняя сводка директора
+          </button>
+          <button onclick="askPresetAi('cashflow')" class="px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs text-slate-200 transition">
+            💡 Хватит ли остатка на выплату ФОТ?
+          </button>
+          <button onclick="askPresetAi('bottleneck')" class="px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs text-slate-200 transition">
+            💡 Где узкое место на стройке?
+          </button>
+          <button onclick="askPresetAi('docs')" class="px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs text-slate-200 transition">
+            💡 Статус сдачи папок АТГ
+          </button>
+        </div>
+
+        <!-- AI Output Box -->
+        <div id="aiOverviewResponse" class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-brand-border text-xs text-slate-200 leading-relaxed font-normal">
+          <p class="text-slate-400 italic">Нажмите на любой из вопросов выше или перейдите на вкладку «ИИ-Аналитик» для свободного диалога с корпоративным агентом.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: FINANCE (БДДС) -->
+    <div id="view-finance" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white">Финансовый контур: БДДС ТЭП & МПБ</h2>
+          <p class="text-xs text-slate-400">План-факт движения денежных средств и реестр расчетных счетов</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs text-slate-400 mr-1 flex items-center gap-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходные таблицы:
+          </span>
+          <a href="https://docs.google.com/spreadsheets/d/1NXtcp0HN-QQUbhqUk3Z404Wlds83jL_5k7KneZkZRH4/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-cyan-800/50 hover:border-cyan-400 text-cyan-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>БДДС ТЭП 2024-2026 ↗</span>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1chjC36dgIlnYKOhjlP5pKDoBi1Xd5tCmL8Rrbjg6GX4/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-cyan-800/50 hover:border-cyan-400 text-cyan-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>БДДС МПБ 2025-2026 ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-panel p-4 rounded-xl border border-brand-border">
+          <span class="text-xs text-slate-400">ДС на начало периода (сентябрь)</span>
+          <div class="text-xl font-bold font-mono-num text-white mt-1">23 612.25 ₽</div>
+          <p class="text-[11px] text-slate-400 mt-1">Расчетный счет ПАО Сбербанк</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border border-brand-border">
+          <span class="text-xs text-slate-400">Поступление факт / план</span>
+          <div class="text-xl font-bold font-mono-num text-white mt-1">315 800 ₽ / <span class="text-slate-400 text-sm">2 082 883 ₽</span></div>
+          <p class="text-[11px] text-rose-400 mt-1">Отклонение: -1 767 083 ₽</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border border-brand-border">
+          <span class="text-xs text-slate-400">Чистый финансовый результат</span>
+          <div class="text-xl font-bold font-mono-num text-emerald-400 mt-1">+133 086.83 ₽</div>
+          <p class="text-[11px] text-slate-400 mt-1">Доходы превышают расходы</p>
+        </div>
+      </div>
+
+      <!-- Cash Balances Table by Entities (from Tab Лист2) -->
+      <div class="glass-panel p-6 rounded-2xl border border-brand-border">
+        <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
+          Сводные остатки по холдингу (из листа «Консолидация»)
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
+            <span class="text-slate-400">ООО «ТЭП»</span>
+            <div class="text-base font-bold font-mono-num text-white mt-1">479 000 ₽</div>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
+            <span class="text-slate-400">ООО «СМУ Промстрой»</span>
+            <div class="text-base font-bold font-mono-num text-white mt-1">616 000 ₽</div>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
+            <span class="text-slate-400">ООО «МПБ»</span>
+            <div class="text-base font-bold font-mono-num text-white mt-1">242 000 ₽</div>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
+            <span class="text-slate-400">ООО «Аптерос»</span>
+            <div class="text-base font-bold font-mono-num text-white mt-1">900 000 ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: PRODUCTION -->
+    <div id="view-production" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white">Производственный блок (СМР 2026)</h2>
+          <p class="text-xs text-slate-400">Выполнение работ по объектам, графики и остатки объемов</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs text-slate-400 mr-1 flex items-center gap-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходная таблица:
+          </span>
+          <a href="https://docs.google.com/spreadsheets/d/1_xHRTSoDfQdLy9GCcAc71xJlmSUaQYCctJuNVJfCIfg/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-amber-800/50 hover:border-amber-400 text-amber-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="hard-hat" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>План/факт производства ТЭП ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Object Detail 100 -->
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm">Объект №100: Модернизация СПТ№24 НТА-3</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-semibold">В графике</span>
+          </div>
+          <p class="text-xs text-slate-400">Заказчик: ПАО «Северсталь» (ПХП ЦТМ). Монтаж спринклерной системы и пожаротушения.</p>
+          <div class="grid grid-cols-3 gap-2 text-xs font-mono-num bg-brand-card p-3 rounded-lg">
+            <div><span class="text-slate-400 text-[10px]">Договор</span><br><b class="text-white">18.40 млн ₽</b></div>
+            <div><span class="text-slate-400 text-[10px]">Выполнено</span><br><b class="text-cyan-400">15.09 млн ₽</b></div>
+            <div><span class="text-slate-400 text-[10px]">Остаток</span><br><b class="text-amber-400">3.31 млн ₽</b></div>
+          </div>
+          <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+            <div class="bg-cyan-500 h-2.5 rounded-full" style="width: 82%"></div>
+          </div>
+        </div>
+
+        <!-- Object Detail 101 -->
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-sm">Объект №101: Шкаф АСКУЭМ Кислородный цех</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-950 text-rose-400 font-semibold">Отставание 4 дня</span>
+          </div>
+          <p class="text-xs text-slate-400">Заказчик: ПАО «Северсталь» (М390414). Замена шкафа телемеханики и учет электроэнергии.</p>
+          <div class="grid grid-cols-3 gap-2 text-xs font-mono-num bg-brand-card p-3 rounded-lg">
+            <div><span class="text-slate-400 text-[10px]">Договор</span><br><b class="text-white">7.85 млн ₽</b></div>
+            <div><span class="text-slate-400 text-[10px]">Выполнено</span><br><b class="text-cyan-400">3.53 млн ₽</b></div>
+            <div><span class="text-slate-400 text-[10px]">Остаток</span><br><b class="text-rose-400">4.32 млн ₽</b></div>
+          </div>
+          <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+            <div class="bg-rose-500 h-2.5 rounded-full" style="width: 45%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: PAYROLL (ТАБЕЛЬ И ФОТ) -->
+    <div id="view-payroll" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white">Табель, ФОТ и Расчеты с персоналом</h2>
+          <p class="text-xs text-slate-400">Начислено, выплачено и переходящее сальдо заработной платы</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs text-slate-400 mr-1 flex items-center gap-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходные таблицы:
+          </span>
+          <a href="https://docs.google.com/spreadsheets/d/1IXP62S5swwdmE84uSB2yeonTD6ctaKxePI5H7byMK-k/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-emerald-800/50 hover:border-emerald-400 text-emerald-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="calendar" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Табель 2026 СМУ Промстрой ↗</span>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1OjK3sigpw9sGUvsJOpxtQFyAd0YKBH7fNVNbjIdIT9g/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-emerald-800/50 hover:border-emerald-400 text-emerald-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>2026 Расчеты с персоналом ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Payroll KPI Triple -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border">
+          <span class="text-xs text-slate-400">Начислено норматив (ФОТ за месяц)</span>
+          <div class="text-2xl font-bold font-mono-num text-white mt-1">402 818 ₽</div>
+          <p class="text-[11px] text-slate-400 mt-1">По часам табеля и расценкам СМР</p>
+        </div>
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border">
+          <span class="text-xs text-slate-400">Выплачено факт (Журнал оплат)</span>
+          <div class="text-2xl font-bold font-mono-num text-emerald-400 mt-1"><span id="kpi-fio-paid">335 079 ₽</span></div>
+          <p class="text-[11px] text-emerald-400 mt-1">83.2% от начисленного</p>
+        </div>
+        <div class="glass-panel p-5 rounded-2xl border border-brand-border">
+          <span class="text-xs text-slate-400">Остаток к выплате (Сальдо ФОТ)</span>
+          <div class="text-2xl font-bold font-mono-num text-amber-400 mt-1">67 739 ₽</div>
+          <p class="text-[11px] text-amber-400 mt-1">Переходит к выплате в аванс</p>
+        </div>
+      </div>
+
+      <!-- Detailed Employee Table -->
+      <div class="glass-panel p-6 rounded-2xl border border-brand-border">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-base font-semibold text-white">Ведомость начислений и выплат по сотрудникам</h3>
+          <span class="text-xs text-slate-400">Расчетный период: Сентябрь 2026</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-brand-border text-slate-400">
+                <th class="py-2.5 font-medium">Таб. №</th>
+                <th class="py-2.5 font-medium">ФИО сотрудника</th>
+                <th class="py-2.5 font-medium">Должность</th>
+                <th class="py-2.5 font-medium text-right">Начислено</th>
+                <th class="py-2.5 font-medium text-right">Выплачено</th>
+                <th class="py-2.5 font-medium text-right">Остаток</th>
+                <th class="py-2.5 font-medium text-center">Статус</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-brand-border/60">
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">88</td>
+                <td class="py-3 font-semibold text-white">Борькин Виктор Валерьевич</td>
+                <td class="py-3 text-slate-300">Электросварщик</td>
+                <td class="py-3 text-right font-mono-num">40 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">35 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-amber-400">5 000 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 text-[10px]">Частично</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">152</td>
+                <td class="py-3 font-semibold text-white">Лещинин Александр Владимирович</td>
+                <td class="py-3 text-slate-300">Главный инженер</td>
+                <td class="py-3 text-right font-mono-num">50 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">42 970 ₽</td>
+                <td class="py-3 text-right font-mono-num text-amber-400">7 030 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 text-[10px]">Частично</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">63</td>
+                <td class="py-3 font-semibold text-white">Ефимович Игорь Григорьевич</td>
+                <td class="py-3 text-slate-300">Генеральный директор</td>
+                <td class="py-3 text-right font-mono-num">33 323 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">33 323 ₽</td>
+                <td class="py-3 text-right font-mono-num text-slate-400">0 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Закрыто</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">12</td>
+                <td class="py-3 font-semibold text-white">Никитин Виктор Владимирович</td>
+                <td class="py-3 text-slate-300">Рабочий</td>
+                <td class="py-3 text-right font-mono-num">35 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">35 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-slate-400">0 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Закрыто</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">121</td>
+                <td class="py-3 font-semibold text-white">Горин Анатолий Олегович</td>
+                <td class="py-3 text-slate-300">Монтажник</td>
+                <td class="py-3 text-right font-mono-num">25 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">19 911 ₽</td>
+                <td class="py-3 text-right font-mono-num text-amber-400">5 089 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 text-[10px]">Частично</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">30</td>
+                <td class="py-3 font-semibold text-white">Можар Сергей Олегович</td>
+                <td class="py-3 text-slate-300">Электросварщик</td>
+                <td class="py-3 text-right font-mono-num">25 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">20 763 ₽</td>
+                <td class="py-3 text-right font-mono-num text-amber-400">4 237 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 text-[10px]">Частично</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-mono-num text-slate-400">92</td>
+                <td class="py-3 font-semibold text-white">Капустин Сергей Леонидович</td>
+                <td class="py-3 text-slate-300">Рабочий</td>
+                <td class="py-3 text-right font-mono-num">28 000 ₽</td>
+                <td class="py-3 text-right font-mono-num text-emerald-400">25 162 ₽</td>
+                <td class="py-3 text-right font-mono-num text-amber-400">2 838 ₽</td>
+                <td class="py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 text-[10px]">Частично</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: SAFETY & STAFF (ШТАТ И ОТ/ТБ) -->
+    <div id="view-safety" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white">Штат компании и Охрана труда (ОТ и ТБ)</h2>
+          <p class="text-xs text-slate-400">Реестр сотрудников, кадровый учет и автоматический контроль сроков допусков</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs text-slate-400 mr-1 flex items-center gap-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходная таблица:
+          </span>
+          <a href="https://docs.google.com/spreadsheets/d/1zmIv17x8WrYgaxmKKdHK2Y2TZ81tkR9DMmr4UPIMFps/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-cyan-800/50 hover:border-cyan-400 text-cyan-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="users" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Реестр сотрудников (актуальный) ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Staff List -->
+        <div class="glass-panel p-6 rounded-2xl border border-brand-border">
+          <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="users" class="w-4 h-4 text-cyan-400"></i>
+            Штатное расписание и документы
+          </h3>
+          <p class="text-xs text-slate-400 mb-4">Всего сотрудников: 13 | Укомплектованность делами: 100%</p>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-lg bg-brand-card flex items-center justify-between">
+              <div>
+                <b class="text-white">Ефимович И.Г.</b> <span class="text-slate-400">— Генеральный директор</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">Паспорт / СНИЛС / ИНН</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-brand-card flex items-center justify-between">
+              <div>
+                <b class="text-white">Лещинин А.В.</b> <span class="text-slate-400">— Главный инженер</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">Паспорт / СНИЛС / ИНН</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-brand-card flex items-center justify-between">
+              <div>
+                <b class="text-white">Борькин В.В.</b> <span class="text-slate-400">— Электросварщик (таб. 88)</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">Паспорт / Воен. билет</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-brand-card flex items-center justify-between">
+              <div>
+                <b class="text-white">Горин А.О.</b> <span class="text-slate-400">— Монтажник (таб. 121)</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">Паспорт / СНИЛС / ИНН</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Safety Expiry Matrix -->
+        <div class="glass-panel p-6 rounded-2xl border border-brand-border">
+          <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+            Матрица контроля сроков допусков
+          </h3>
+          <p class="text-xs text-slate-400 mb-4">Авто-расчет дней до окончания срока действия удостоверений</p>
+          <div class="space-y-3 text-xs">
+            <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-800/40 flex items-center justify-between">
+              <div>
+                <div class="font-bold text-white">Борькин Виктор Валерьевич</div>
+                <div class="text-slate-300 text-[11px]">Допуск на высоту (Приказ №5)</div>
+              </div>
+              <div class="text-right">
+                <span class="text-rose-400 font-bold font-mono-num text-sm">38 дней</span>
+                <div class="text-[10px] text-slate-400">истекает 22.10.2026</div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-amber-950/30 border border-amber-800/40 flex items-center justify-between">
+              <div>
+                <div class="font-bold text-white">Вебер Александр Евгеньевич</div>
+                <div class="text-slate-300 text-[11px]">Электробезопасность (Группа III до 1000В)</div>
+              </div>
+              <div class="text-right">
+                <span class="text-amber-400 font-bold font-mono-num text-sm">255 дней</span>
+                <div class="text-[10px] text-slate-400">до 27.05.2027</div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/40 flex items-center justify-between">
+              <div>
+                <div class="font-bold text-white">Периодический медосмотр бригады</div>
+                <div class="text-slate-300 text-[11px]">Клиника «ПрофМед» (все 13 сотрудников)</div>
+              </div>
+              <div class="text-right">
+                <span class="text-emerald-400 font-bold font-mono-num text-sm">Пройден</span>
+                <div class="text-[10px] text-slate-400">действителен до 2027 г.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: DOCS (ПТО) -->
+    <div id="view-docs" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white">ПТО и Закрытие документации (КС-2, КС-3, АТГ)</h2>
+          <p class="text-xs text-slate-400">Интеграция с автоматическим сканером актов и формированием папок</p>
+        </div>
+        <button onclick="openOcrModal()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+          <i data-lucide="upload" class="w-3.5 h-3.5"></i> Загрузить акт на распознавание
+        </button>
+      </div>
+
+      <div class="glass-panel p-6 rounded-2xl border border-brand-border">
+        <h3 class="text-sm font-semibold text-white mb-3">Реестр подписания первичных форм (последние операции)</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-brand-border text-slate-400">
+                <th class="py-2.5">Номер формы</th>
+                <th class="py-2.5">Объект</th>
+                <th class="py-2.5">Заказчик</th>
+                <th class="py-2.5 text-right">Сумма без НДС</th>
+                <th class="py-2.5 text-right">Сумма с НДС</th>
+                <th class="py-2.5 text-center">Статус</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-brand-border/60 font-mono-num">
+              <tr>
+                <td class="py-2.5 font-bold text-cyan-400">КС-2 №19 от 20.08.26</td>
+                <td class="py-2.5 font-sans text-white">100! СПТ№24 НТА-3</td>
+                <td class="py-2.5 font-sans text-slate-300">Северсталь</td>
+                <td class="py-2.5 text-right">1 240 000 ₽</td>
+                <td class="py-2.5 text-right text-emerald-400">1 488 000 ₽</td>
+                <td class="py-2.5 text-center font-sans"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Подписан</span></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 font-bold text-cyan-400">КС-2 №20 от 02.09.26</td>
+                <td class="py-2.5 font-sans text-white">101! Кислородный цех</td>
+                <td class="py-2.5 font-sans text-slate-300">Северсталь</td>
+                <td class="py-2.5 text-right">980 000 ₽</td>
+                <td class="py-2.5 text-right text-amber-400">1 176 000 ₽</td>
+                <td class="py-2.5 text-center font-sans"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 text-[10px]">На согласовании</span></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 font-bold text-cyan-400">КС-3 №14 от 08.09.26</td>
+                <td class="py-2.5 font-sans text-white">102! АСКУЭМ ТЭЦ-ПВС</td>
+                <td class="py-2.5 font-sans text-slate-300">Северсталь</td>
+                <td class="py-2.5 text-right">1 850 000 ₽</td>
+                <td class="py-2.5 text-right text-emerald-400">2 220 000 ₽</td>
+                <td class="py-2.5 text-center font-sans"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">Подписан</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 7: FULL AI CONSOLE -->
+    <div id="view-ai" class="hidden space-y-6">
+      <div class="glass-panel p-6 rounded-2xl border border-brand-border flex flex-col h-[650px]">
+        
+        <div class="flex items-center justify-between border-b border-brand-border pb-4 mb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center text-cyan-400">
+              <i data-lucide="bot" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">Корпоративный ИИ-Аналитик ООО «ТЭП»</h3>
+              <p class="text-xs text-slate-400">Прямое подключение к таблицам БДДС, Производство, Табель, ОТ/ТБ через Mac mini</p>
+            </div>
+          </div>
+          <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Очистить диалог
+          </button>
+        </div>
+
+        <!-- Chat History -->
+        <div id="chatHistory" class="flex-1 overflow-y-auto space-y-4 pr-2 text-xs">
+          <!-- Bot Welcome Message -->
+          <div class="flex items-start gap-3">
+            <div class="w-7 h-7 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800">
+              <i data-lucide="bot" class="w-4 h-4"></i>
+            </div>
+            <div class="p-3.5 rounded-2xl rounded-tl-none bg-brand-card border border-brand-border text-slate-200 max-w-2xl leading-relaxed">
+              Здравствуйте! Я корпоративный ИИ-агент группы компаний «ТЭП» и «СМУ Промстрой».<br><br>
+              Я непрерывно отслеживаю:
+              <ul class="list-disc list-inside mt-1 space-y-0.5 text-slate-300">
+                <li>Денежные потоки и кассовые разрывы по <b>БДДС</b>;</li>
+                <li>Выполнение планов по объектам <b>100–103</b>;</li>
+                <li>Начисление и выплату зарплаты по <b>Табелю и ФОТ</b>;</li>
+                <li>Сроки окончания удостоверений и допусков <b>ОТ и ТБ</b>.</li>
+              </ul>
+              <br>Задайте мне любой вопрос или воспользуйтесь подсказками ниже.
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="pt-4 border-t border-brand-border mt-4">
+          <div class="flex gap-2">
+            <input type="text" id="userQuery" placeholder="Задайте вопрос по финансам, объектам, табелю или охране труда..." 
+                   class="flex-1 bg-brand-card border border-brand-border rounded-xl px-4 py-3 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"
+                   onkeydown="if(event.key === 'Enter') sendUserQuery()">
+            <button onclick="sendUserQuery()" class="px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center gap-2 transition">
+              <span>Отправить</span>
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= MODAL 1: OCR SCANNER (КС-2/3) ================= -->
+  <div id="ocrModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-xl p-6 rounded-2xl border border-brand-border relative space-y-4">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="file-scan" class="w-5 h-5 text-cyan-400"></i>
+          <h3 class="font-bold text-white text-base">ИИ-Сканер первичных актов (КС-2, КС-3, Счета)</h3>
+        </div>
+        <button onclick="closeOcrModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="border-2 border-dashed border-brand-border hover:border-cyan-500/60 rounded-xl p-6 text-center cursor-pointer transition bg-brand-card/40" onclick="simulateFileUpload()">
+        <i data-lucide="upload-cloud" class="w-10 h-10 text-cyan-400 mx-auto mb-2"></i>
+        <p class="text-xs font-semibold text-white">Перетащите PDF файл акта или кликните для выбора</p>
+        <p class="text-[11px] text-slate-400 mt-1">Агент выполнит оптическое распознавание (OCR Drive + Gemini), извлечет реквизиты и занесет в 13 колонок реестра</p>
+      </div>
+
+      <div id="ocrProcessStatus" class="hidden p-3.5 rounded-xl bg-brand-card border border-brand-border space-y-2 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-cyan-400 flex items-center gap-2"><i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Обработка нейросетью Gemini 2.5 Flash...</span>
+          <span class="font-mono-num text-slate-400">100%</span>
+        </div>
+        <div class="p-2.5 bg-slate-900 rounded text-[11px] text-slate-300 font-mono-num">
+          ✅ Распознано: Акт КС-2 №24 от 12.09.2026<br>
+          • Заказчик: ПАО «Северсталь» (Объект 100)<br>
+          • Сумма без НДС: 1 150 000.00 ₽ | С НДС: 1 380 000.00 ₽<br>
+          • Данные автоматически внесены в таблицу «Реестр КС-2,3».
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 2: SAFETY AUDIT ================= -->
+  <div id="safetyModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-lg p-6 rounded-2xl border border-brand-border relative space-y-4">
+      <div class="flex items-center justify-between border-b border-brand-border pb-3">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400"></i>
+          <h3 class="font-bold text-white text-base">Экспресс-аудит Охраны Труда и Допусков</h3>
+        </div>
+        <button onclick="closeSafetyModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <p class="text-slate-300">Агент просканировал даты в таблицах <b>«ОТ и ТБ персонал»</b> и <b>«Реестр сотрудников»</b>:</p>
+        <div class="p-3 bg-amber-950/40 border border-amber-800/60 rounded-xl space-y-2">
+          <div class="font-semibold text-amber-300 flex items-center gap-1.5">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i> Необходимы срочные действия:
+          </div>
+          <p class="text-slate-200">1. Направить <b>Борькина В.В.</b> на повторную аттестацию по работе на высоте до 22 октября 2026 года.</p>
+          <p class="text-slate-200">2. Оформить распоряжение о проверке знаний по электробезопасности для рабочего <b>Вебера А.Е.</b></p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-brand-border flex justify-end gap-2">
+        <button onclick="closeSafetyModal()" class="px-3 py-2 bg-brand-card hover:bg-brand-cardHover text-slate-300 rounded-lg text-xs">Закрыть</button>
+        <button onclick="alert('Приказ №42-ОТ сгенерирован в Google Docs и отправлен на подпись директору!'); closeSafetyModal();" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5">
+          <i data-lucide="file-check" class="w-3.5 h-3.5"></i> Сформировать приказ в Docs
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-brand-border py-4 px-4 text-center text-xs text-slate-500">
+    ООО «ТЭП» & ООО «СМУ Промстрой» • Автоматизированная операционная система управления • Powered by Mac mini M-Series & Gemini
+  </footer>
+
+  <!-- ================= CLIENT JAVASCRIPT ================= -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Per-Tab Dropdown & Tab Switching Handler
+    function closeAllTabDropdowns() {
+      document.querySelectorAll('[id^="tab-dropdown-"]').forEach(el => {
+        el.classList.add('hidden');
+      });
+      document.querySelectorAll('.tab-chevron').forEach(ch => {
+        ch.classList.remove('rotate-180');
+      });
+    }
+
+    function handleTabClick(tabId, e) {
+      if (e) e.stopPropagation();
+      const dropdown = document.getElementById('tab-dropdown-' + tabId);
+      const btn = document.getElementById('tab-' + tabId);
+      const chevron = btn ? btn.querySelector('.tab-chevron') : null;
+      const isCurrentlyOpen = dropdown && !dropdown.classList.contains('hidden');
+
+      // 1. Switch the view
+      switchTab(tabId);
+
+      // 2. Close all dropdowns
+      closeAllTabDropdowns();
+
+      // 3. Toggle this dropdown if it exists
+      if (dropdown && !isCurrentlyOpen) {
+        dropdown.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-180');
+        lucide.createIcons();
+      }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.tab-dropdown-container')) {
+        closeAllTabDropdowns();
+      }
+    });
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      const views = ['overview', 'finance', 'production', 'payroll', 'safety', 'docs', 'ai'];
+      views.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el) el.classList.add('hidden');
+        const btn = document.getElementById('tab-' + v);
+        if (btn) {
+          btn.classList.remove('text-cyan-400', 'bg-cyan-950/40', 'border-cyan-800/60');
+          btn.classList.add('text-slate-400');
+        }
+      });
+      const activeView = document.getElementById('view-' + tabId);
+      if (activeView) activeView.classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('text-cyan-400', 'bg-cyan-950/40', 'border', 'border-cyan-800/60');
+      }
+      lucide.createIcons();
+    }
+
+    // Modal Handlers
+    function openOcrModal() {
+      document.getElementById('ocrModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeOcrModal() {
+      document.getElementById('ocrModal').classList.add('hidden');
+      document.getElementById('ocrProcessStatus').classList.add('hidden');
+    }
+    function simulateFileUpload() {
+      const st = document.getElementById('ocrProcessStatus');
+      st.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function openSafetyModal() {
+      document.getElementById('safetyModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeSafetyModal() {
+      document.getElementById('safetyModal').classList.add('hidden');
+    }
+
+    // AI Overview Preset Responses
+    const aiKnowledge = {
+      summary: `<b>📊 Экспресс-сводка генерального директора на 14 сентября 2026:</b><br><br>
+1. <b>Финансы:</b> Факт остатка на расчетных счетах составляет <b>287 184 ₽</b> (МПБ + ТЭП). Поступления за сентябрь 315 800 ₽ при плане 587 122 ₽. Ожидаются подписанные закрывающие документы от «Северстали» на этой неделе.<br>
+2. <b>Производство:</b> В работе 4 объекта. Объект №100 (СПТ№24 НТА-3) идет с опережением (82% закрытия). Объект №101 отстает от графика на 4 дня из-за задержки поставки кабельной продукции.<br>
+3. <b>ФОТ:</b> Начислено 402 818 ₽, выплачено 335 079 ₽. Текущая задолженность перед бригадой — 67 739 ₽.<br>
+4. <b>Безопасность:</b> Через 38 дней истекает допуск на высоту у электросварщика Борькина В.В.`,
+
+      cashflow: `<b>💰 Анализ выплаты заработной платы и Cash Flow:</b><br><br>
+• Текущий совокупный остаток на расчетных счетах группы: <b>287 184 ₽</b> (ООО ТЭП: 479 тыс. ₽, СМУ: 616 тыс. ₽).<br>
+• Сумма невыплаченного остатка ФОТ за месяц: <b>67 739 ₽</b>.<br>
+• <b>Вывод:</b> Денежных средств на счетах компании <b>более чем достаточно</b> для полного закрытия зарплатного остатка без риска возникновения кассового разрыва.`,
+
+      bottleneck: `<b>⚠️ Анализ узких мест на производстве:</b><br><br>
+• <b>Объект 101 (Кислородный цех М390414):</b> зафиксировано отставание на 4 рабочих дня от сетевого графика монтажа шкафа АСКУЭМ.<br>
+• <b>Причина:</b> пауза в согласовании листа изменений к проекту электроснабжения со службой заказчика.<br>
+• <b>Рекомендация:</b> Главному инженеру Лещинину А.В. подписать рабочий протокол техрешения с куратором цеха ПАО «Северсталь» до 16.09.`,
+
+      docs: `<b>📑 Анализ статуса исполнительной документации (АТГ):</b><br><br>
+• По объекту 102 (АСКУЭМ ТЭЦ-ПВС) папка исполнительной документации готова на <b>95%</b>, сформированы все акты на скрытые работы и протоколы наладки.<br>
+• По объекту 100 сдано 12 томов исполнительной, замечания устранены. Готовятся к сдаче финальные исполнительные схемы кабельных трасс.`
+    };
+
+    function askPresetAi(key) {
+      const box = document.getElementById('aiOverviewResponse');
+      box.innerHTML = `<div class="flex items-center gap-2 text-cyan-400"><i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Обработка запроса ИИ-агентом...</div>`;
+      lucide.createIcons();
+      setTimeout(() => {
+        box.innerHTML = aiKnowledge[key] || "Данные сформированы.";
+      }, 500);
+    }
+
+    // AI Full Console Chat
+    function sendUserQuery() {
+      const input = document.getElementById('userQuery');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const history = document.getElementById('chatHistory');
+      
+      // User message
+      const userDiv = document.createElement('div');
+      userDiv.className = 'flex items-start gap-3 justify-end';
+      userDiv.innerHTML = `
+        <div class="p-3.5 rounded-2xl rounded-tr-none bg-cyan-950/60 border border-cyan-800 text-slate-100 max-w-xl leading-relaxed">
+          ${text}
+        </div>
+        <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
+          <i data-lucide="user" class="w-4 h-4"></i>
+        </div>
+      `;
+      history.appendChild(userDiv);
+      input.value = '';
+      history.scrollTop = history.scrollHeight;
+      lucide.createIcons();
+
+      // Bot Typing
+      const botDiv = document.createElement('div');
+      botDiv.className = 'flex items-start gap-3';
+      botDiv.innerHTML = `
+        <div class="w-7 h-7 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800">
+          <i data-lucide="bot" class="w-4 h-4"></i>
+        </div>
+        <div class="p-3.5 rounded-2xl rounded-tl-none bg-brand-card border border-brand-border text-slate-200 max-w-2xl leading-relaxed">
+          <span class="text-cyan-400 flex items-center gap-2"><i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i> Агент анализирует таблицы ТЭП...</span>
+        </div>
+      `;
+      history.appendChild(botDiv);
+      history.scrollTop = history.scrollHeight;
+      lucide.createIcons();
+
+      // Bot Answer Simulation
+      setTimeout(() => {
+        let answer = "";
+        const lower = text.toLowerCase();
+        if (lower.includes("зарплат") || lower.includes("фот") || lower.includes("долг")) {
+          answer = `По данным таблицы «2026 расчеты с персоналом»: всего начислено <b>402 818 ₽</b>, фактически выплачено через журнал оплат <b>335 079 ₽</b>. Остаток к выплате — <b>67 739 ₽</b>. Все сотрудники получили аванс, расчет запланирован на 25 число.`;
+        } else if (lower.includes("северстал") || lower.includes("объект") || lower.includes("100") || lower.includes("101")) {
+          answer = `По объектам ПАО «Северсталь»: совокупный объем контрактов 42.1 млн ₽, закрыто 28.45 млн ₽ (67.5%). По объекту 100 закрыто 82% (15.08 млн ₽). По объекту 101 необходимо ускорить закрытие КС-2 на сумму 1.17 млн ₽ для устранения 4-дневного отставания.`;
+        } else if (lower.includes("безопасн") || lower.includes("от") || lower.includes("допуск") || lower.includes("борькин")) {
+          answer = `По данным «ОТ и ТБ персонал»: 11 допусков активны. Внимание требуется электросварщику <b>Борькину В.В.</b> (допуск на высоту заканчивается через 38 дней, 22.10.2026) и <b>Веберу А.Е.</b> (электробезопасность). Сформировать приказ на переаттестацию?`;
+        } else {
+          answer = `По вашему запросу «${text}»: показатели сверены по актуальным таблицам БДДС, Реестра КС-2/3 и Производства. Все ключевые метрики находятся в границах производственного допуска. Требуется ли сформировать официальный отчет в PDF?`;
+        }
+        botDiv.querySelector('div:last-child').innerHTML = answer;
+        history.scrollTop = history.scrollHeight;
+        lucide.createIcons();
+      }, 700);
+    }
+
+    function clearChat() {
+      const history = document.getElementById('chatHistory');
+      history.innerHTML = `
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="p-3.5 rounded-2xl rounded-tl-none bg-brand-card border border-brand-border text-slate-200 max-w-2xl leading-relaxed">
+            Диалог очищен. Чем я могу помочь по данным компании ТЭП?
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    // Chart.js Implementations
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Cash Flow Bar Chart
+      const ctxCash = document.getElementById('cashFlowChart').getContext('2d');
+      new Chart(ctxCash, {
+        type: 'bar',
+        data: {
+          labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь (тек.)'],
+          datasets: [
+            {
+              label: 'Поступления план (₽)',
+              data: [1800000, 2100000, 2400000, 1950000, 2200000, 2500000, 2100000, 2300000, 2082883],
+              backgroundColor: 'rgba(14, 165, 233, 0.4)',
+              borderColor: '#0EA5E9',
+              borderWidth: 1.5,
+              borderRadius: 6
+            },
+            {
+              label: 'Поступления факт (₽)',
+              data: [1750000, 2050000, 2241980, 1920000, 2180000, 2480000, 2050000, 2280000, 315800],
+              backgroundColor: 'rgba(16, 185, 129, 0.7)',
+              borderColor: '#10B981',
+              borderWidth: 1.5,
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: '#94A3B8', font: { size: 11 } }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: '#1E293B' },
+              ticks: { color: '#94A3B8', font: { size: 10 } }
+            },
+            y: {
+              grid: { color: '#1E293B' },
+              ticks: {
+                color: '#94A3B8',
+                font: { size: 10 },
+                callback: v => (v / 1000000).toFixed(1) + ' млн'
+              }
+            }
+          }
+        }
+      });
+
+      // 2. KS Status Doughnut Chart
+      const ctxKs = document.getElementById('ksStatusChart').getContext('2d');
+      new Chart(ctxKs, {
+        type: 'doughnut',
+        data: {
+          labels: ['Подписано', 'На рассмотрении', 'Замечания'],
+          datasets: [{
+            data: [18, 4, 2],
+            backgroundColor: ['#10B981', '#F59E0B', '#EF4444'],
+            borderColor: '#131D31',
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '70%',
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- ================= FLOATING PERSONAL AGENT BUTTON ================= -->
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+    <!-- Mini Popup hint -->
+    <div id="agentFloatingHint" class="px-3.5 py-2 rounded-xl bg-cyan-950/90 border border-cyan-700/60 text-cyan-200 text-xs shadow-2xl backdrop-blur-md flex items-center gap-2 animate-bounce">
+      <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+      <span><b>Личный агент руководителя</b> на связи</span>
+      <button onclick="document.getElementById('agentFloatingHint').style.display='none'" class="text-slate-400 hover:text-white ml-1">×</button>
+    </div>
+
+    <!-- Floating Trigger Button -->
+    <button onclick="togglePersonalAgentDrawer()" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-600 text-white shadow-xl shadow-cyan-500/30 flex items-center justify-center hover:scale-105 active:scale-95 transition group border border-white/20">
+      <i data-lucide="bot" class="w-7 h-7 group-hover:rotate-12 transition transform"></i>
+    </button>
+  </div>
+
+  <!-- ================= PERSONAL AGENT DRAWER / MODAL ================= -->
+  <div id="personalAgentDrawer" class="fixed inset-y-0 right-0 w-full sm:w-[460px] bg-[#0F172A]/98 border-l border-brand-border z-50 shadow-2xl backdrop-blur-xl transform translate-x-full transition-transform duration-300 flex flex-col">
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-brand-border flex items-center justify-between bg-brand-card/50">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-md">
+          <i data-lucide="user-check" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-sm">Личный агент руководителя</h3>
+          <p class="text-[11px] text-emerald-400 flex items-center gap-1.5 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Mac mini Core • Почта • WhatsApp • Документы
+          </p>
+        </div>
+      </div>
+      <button onclick="togglePersonalAgentDrawer()" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-brand-card transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Mode Switcher -->
+    <div class="px-5 py-3 border-b border-brand-border/60 bg-brand-card/30 flex gap-2">
+      <button id="modeBtnCorp" onclick="setAgentMode('corp')" class="flex-1 py-1.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-medium flex items-center justify-center gap-1.5">
+        <i data-lucide="building" class="w-3.5 h-3.5"></i> Корпоративный
+      </button>
+      <button id="modeBtnPersonal" onclick="setAgentMode('personal')" class="flex-1 py-1.5 rounded-lg bg-brand-card text-slate-400 border border-brand-border text-xs font-medium flex items-center justify-center gap-1.5 hover:text-white">
+        <i data-lucide="user" class="w-3.5 h-3.5"></i> Личный помощник
+      </button>
+    </div>
+
+    <!-- Quick Action Chips for Executive -->
+    <div class="p-4 border-b border-brand-border/60 bg-brand-card/10 space-y-2">
+      <span class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Быстрые поручения директора:</span>
+      <div class="flex flex-wrap gap-1.5 text-[11px]">
+        <button onclick="sendDrawerPrompt('mail')" class="px-2.5 py-1 rounded-lg bg-brand-card hover:bg-cyan-950/60 border border-brand-border text-slate-200 hover:text-cyan-300 transition flex items-center gap-1">
+          ✉️ Проверь почту (Северсталь)
+        </button>
+        <button onclick="sendDrawerPrompt('whatsapp')" class="px-2.5 py-1 rounded-lg bg-brand-card hover:bg-cyan-950/60 border border-brand-border text-slate-200 hover:text-cyan-300 transition flex items-center gap-1">
+          💬 Отправь WhatsApp прорабу
+        </button>
+        <button onclick="sendDrawerPrompt('report')" class="px-2.5 py-1 rounded-lg bg-brand-card hover:bg-cyan-950/60 border border-brand-border text-slate-200 hover:text-cyan-300 transition flex items-center gap-1">
+          📄 Сформируй Word-отчет
+        </button>
+        <button onclick="sendDrawerPrompt('spotlight')" class="px-2.5 py-1 rounded-lg bg-brand-card hover:bg-cyan-950/60 border border-brand-border text-slate-200 hover:text-cyan-300 transition flex items-center gap-1">
+          🔍 Найди смету на Mac
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Messages Container -->
+    <div id="drawerChatHistory" class="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs">
+      <div class="flex items-start gap-2.5">
+        <div class="w-7 h-7 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800/60">
+          <i data-lucide="bot" class="w-4 h-4"></i>
+        </div>
+        <div class="p-3 rounded-2xl rounded-tl-none bg-brand-card border border-brand-border text-slate-200 leading-relaxed max-w-[85%]">
+          Добрый день! Я ваш личный ИИ-ассистент руководителя.<br><br>
+          В отличие от обычных чат-ботов, я подключен напрямую к вашей операционной системе Mac mini, почтовым ящикам, Google Диску и WhatsApp.<br><br>
+          <b>Чем могу помочь прямо сейчас?</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Input Area -->
+    <div class="p-4 border-t border-brand-border bg-brand-card/40">
+      <div class="flex gap-2">
+        <input type="text" id="drawerUserInput" placeholder="Дать поручение агенту..." 
+               class="flex-1 bg-brand-card border border-brand-border rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"
+               onkeydown="if(event.key === 'Enter') sendDrawerQuery()">
+        <button onclick="sendDrawerQuery()" class="px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-lg shadow-cyan-600/20">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+<script>
+    // Personal Agent Drawer Handlers
+    let currentAgentMode = 'corp';
+
+    function togglePersonalAgentDrawer() {
+      const drawer = document.getElementById('personalAgentDrawer');
+      const isClosed = drawer.classList.contains('translate-x-full');
+      if (isClosed) {
+        drawer.classList.remove('translate-x-full');
+      } else {
+        drawer.classList.add('translate-x-full');
+      }
+      lucide.createIcons();
+    }
+
+    function setAgentMode(mode) {
+      currentAgentMode = mode;
+      const btnCorp = document.getElementById('modeBtnCorp');
+      const btnPers = document.getElementById('modeBtnPersonal');
+      if (mode === 'corp') {
+        btnCorp.className = "flex-1 py-1.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-medium flex items-center justify-center gap-1.5";
+        btnPers.className = "flex-1 py-1.5 rounded-lg bg-brand-card text-slate-400 border border-brand-border text-xs font-medium flex items-center justify-center gap-1.5 hover:text-white";
+      } else {
+        btnPers.className = "flex-1 py-1.5 rounded-lg bg-purple-950 text-purple-300 border border-purple-800 text-xs font-medium flex items-center justify-center gap-1.5";
+        btnCorp.className = "flex-1 py-1.5 rounded-lg bg-brand-card text-slate-400 border border-brand-border text-xs font-medium flex items-center justify-center gap-1.5 hover:text-white";
+      }
+    }
+
+    const drawerPresetResponses = {
+      mail: `<b>✉️ Проверка входящих писем (Apple Mail & Gmail):</b><br><br>
+• Найдено <b>3 новых письма</b> по контракту с ПАО «Северсталь» (Куратор: Смирнов А.В.):<br>
+  1. <i>«Согласование изменений кабельного журнала по объекту 101»</i> — скан вложен в папку ТЭП на Google Диске.<br>
+  2. <i>«Акт сверки расчетов за август»</i> — передано в бухгалтерию.<br>
+  3. Уведомление о готовности пропуска на промплощадку для бригады сварщиков.<br>
+• Подготовить проект ответного письма по объекту 101?`,
+
+      whatsapp: `<b>💬 Автономная отправка сообщения в WhatsApp:</b><br><br>
+• <b>Получатель:</b> Главный инженер Лещинин А.В. (контакт из адресной книги Mac).<br>
+• <b>Текст поручения:</b> <i>«Александр Владимирович, по объекту 101 устраните отставание 4 дня до четверга. Протокол согласован куратором цеха.»</i><br>
+• <b>Статус:</b> Готово к отправке в фоновом режиме через локальный шлюз WhatsApp на Mac mini. <b>[Отправить прямо сейчас]</b>`,
+
+      report: `<b>📄 Генерация Word-документа:</b><br><br>
+• Создан документ: <code>/Users/user/Desktop/Отчет_СМР_ТЭП_Сентябрь_2026.docx</code>.<br>
+• В отчет включены: сводная таблица выполнения по 4 объектам, расчеты ФОТ и статус подписания КС-2.<br>
+• Ссылка для скачивания подготовлена. Открыть файл на Mac?`,
+
+      spotlight: `<b>🔍 Поиск файлов через системный Spotlight Mac:</b><br><br>
+• Найдено 4 файла по запросу <i>«Смета Кислородный цех»</i>:<br>
+  1. <code>~/Documents/Сметная документация/Смета-расчет М390414_v3.xlsx</code> (изменен 3 дня назад)<br>
+  2. <code>~/Downloads/ТКП ТЭП-1000-24.pdf</code><br>
+• Открыть файл в Excel?`
+    };
+
+    function sendDrawerPrompt(key) {
+      const history = document.getElementById('drawerChatHistory');
+      
+      const promptTitles = {
+        mail: "Проверь входящую почту по объектам Северстали",
+        whatsapp: "Отправь поручение в WhatsApp главному инженеру",
+        report: "Сформируй официальный Word-отчет за сентябрь",
+        spotlight: "Найди на Mac смету по Кислородному цеху"
+      };
+
+      // Add user message
+      const uDiv = document.createElement('div');
+      uDiv.className = 'flex items-start gap-2.5 justify-end';
+      uDiv.innerHTML = `
+        <div class="p-3 rounded-2xl rounded-tr-none bg-cyan-950/70 border border-cyan-800/80 text-slate-100 max-w-[85%] leading-relaxed">
+          ${promptTitles[key]}
+        </div>
+        <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
+          <i data-lucide="user" class="w-4 h-4"></i>
+        </div>
+      `;
+      history.appendChild(uDiv);
+      history.scrollTop = history.scrollHeight;
+      lucide.createIcons();
+
+      // Bot response
+      setTimeout(() => {
+        const bDiv = document.createElement('div');
+        bDiv.className = 'flex items-start gap-2.5';
+        bDiv.innerHTML = `
+          <div class="w-7 h-7 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800/60">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="p-3 rounded-2xl rounded-tl-none bg-brand-card border border-brand-border text-slate-200 leading-relaxed max-w-[85%]">
+            ${drawerPresetResponses[key]}
+          </div>
+        `;
+        history.appendChild(bDiv);
+        history.scrollTop = history.scrollHeight;
+        lucide.createIcons();
+      }, 500);
+    }
+
+    function sendDrawerQuery() {
+      const input = document.getElementById('drawerUserInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const history = document.getElementById('drawerChatHistory');
+
+      const uDiv = document.createElement('div');
+      uDiv.className = 'flex items-start gap-2.5 justify-end';
+      uDiv.innerHTML = `
+        <div class="p-3 rounded-2xl rounded-tr-none bg-cyan-950/70 border border-cyan-800/80 text-slate-100 max-w-[85%] leading-relaxed">
+          ${text}
+        </div>
+        <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
+          <i data-lucide="user" class="w-4 h-4"></i>
+        </div>
+      `;
+      history.appendChild(uDiv);
+      input.value = '';
+      history.scrollTop = history.scrollHeight;
+      lucide.createIcons();
+
+      setTimeout(() => {
+        const bDiv = document.createElement('div');
+        bDiv.className = 'flex items-start gap-2.5';
+        let resp = `Принято к исполнению! Запрос обработан вашим локальным агентом на Mac mini. Синхронизировано с базой данных ТЭП и почтовым клиентом.`;
+        const lower = text.toLowerCase();
+        if (lower.includes("почт") || lower.includes("письм")) {
+          resp = `Проверил входящую почту по подключенным ящикам. Новых срочных запросов от заказчиков не обнаружено. Последнее письмо от «Северстали» обработано сегодня в 14:15.`;
+        } else if (lower.includes("ватсап") || lower.includes("whatsapp")) {
+          resp = `Шлюз WhatsApp активен. Кому отправить сообщение и какой текст подготовить?`;
+        } else if (lower.includes("файл") || lower.includes("найти") || lower.includes("документ")) {
+          resp = `Запустил поиск через Spotlight на Mac. Найдено 2 релевантных документа в папке <code>~/Documents/СМУ Промстрой</code>.`;
+        }
+        bDiv.innerHTML = `
+          <div class="w-7 h-7 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800/60">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="p-3 rounded-2xl rounded-tl-none bg-brand-card border border-brand-border text-slate-200 leading-relaxed max-w-[85%]">
+            ${resp}
+          </div>
+        `;
+        history.appendChild(bDiv);
+        history.scrollTop = history.scrollHeight;
+        lucide.createIcons();
+      }, 600);
+    }
+</script>
+
+  <script>
+    // ================= DEMO ACCESS LOGIC =================
+    async function checkAccess(pin) {
+      const cleanPin = String(pin || '').trim();
+      if (!cleanPin) {
+        return { valid: false, message: "Введите PIN-код" };
+      }
+
+      // 1. Try server API if available
+      try {
+        const res = await fetch('/api/check-access', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: cleanPin })
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch(e) {}
+
+      // 2. Fallback: verified active client registries (Cloud / Static Mode)
+      const validDemos = {
+        "2026": { client_name: "ООО «Северсталь-Пром» (Заказчик)", expires: "01.10.2026", expired: false },
+        "7777": { client_name: "ООО «ПромМонтаж» (Демонстрация)", expires: "25.09.2026", expired: false },
+        "1111": { client_name: "Тестовый партнер (Истекший срок)", expires: "01.09.2026", expired: true }
+      };
+
+      if (validDemos[cleanPin]) {
+        const d = validDemos[cleanPin];
+        if (d.expired) {
+          return {
+            valid: false,
+            expired: true,
+            client_name: d.client_name,
+            message: `Срок действия демо-доступа для ${d.client_name} истек (${d.expires}). Для продления обратитесь к менеджеру: +7 (800) 555-20-26`
+          };
+        }
+        return {
+          valid: true,
+          expired: false,
+          client_name: d.client_name,
+          expires_at: d.expires,
+          message: `Демо-доступ активен до ${d.expires}`
+        };
+      }
+
+      return { valid: false, message: "Неверный PIN-код" };
+    }
+
+    async function submitPin() {
+      const pin = document.getElementById('pinInput').value.trim();
+      const errBox = document.getElementById('pinErrorMsg');
+      errBox.classList.add('hidden');
+
+      const res = await checkAccess(pin);
+      if (res.valid) {
+        localStorage.setItem('tep_demo_pin', pin);
+        document.getElementById('demoLockModal').classList.add('hidden');
+        document.getElementById('demoClientBadge').innerText = res.client_name;
+        document.getElementById('demoExpiresBadge').innerText = res.message;
+      } else {
+        errBox.innerText = res.message || "Неверный PIN-код";
+        errBox.classList.remove('hidden');
+      }
+    }
+
+    function logoutDemo() {
+      localStorage.removeItem('tep_demo_pin');
+      document.getElementById('pinInput').value = '';
+      document.getElementById('demoLockModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // ================= REAL-TIME DATA SYNC =================
+    async function fetchLiveData() {
+      try {
+        let res = await fetch('/api/data');
+        if (!res.ok) {
+          res = await fetch('live_data.json');
+        }
+        if (res.ok) {
+          const data = await res.json();
+          applyLiveData(data);
+        }
+      } catch(e) {
+        try {
+          const res2 = await fetch('live_data.json');
+          if (res2.ok) {
+            const data2 = await res2.json();
+            applyLiveData(data2);
+          }
+        } catch(e2) {
+          console.warn("[LiveSync] Failed to fetch data:", e2);
+        }
+      }
+    }
+
+    let cachedGlobalData = null;
+
+    function onCompanyChange() {
+      if (cachedGlobalData) {
+        applyLiveData(cachedGlobalData);
+      }
+    }
+
+    function applyLiveData(data) {
+      if (!data) return;
+      cachedGlobalData = data;
+      
+      const comp = document.getElementById('companySelect') ? document.getElementById('companySelect').value : 'all';
+      let fin = data.finance;
+      if (data.finance_by_company && data.finance_by_company[comp]) {
+        fin = data.finance_by_company[comp];
+      }
+
+      // Update Finance
+      if (fin) {
+        const elBal = document.getElementById('kpi-balance');
+        if (elBal && fin.balance_actual !== undefined) {
+          elBal.innerText = Number(fin.balance_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        }
+        const elInc = document.getElementById('kpi-income');
+        if (elInc && fin.income_actual !== undefined) {
+          elInc.innerText = Number(fin.income_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        }
+        // Plan text
+        const elPlan = elBal ? elBal.parentElement.nextElementSibling.querySelector('span:first-child') : null;
+        if (elPlan && fin.balance_plan !== undefined) {
+          elPlan.innerText = 'План: ' + Number(fin.balance_plan).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        }
+      }
+
+      // Update Payroll
+      if (data.payroll) {
+        const elPaid = document.getElementById('kpi-fio-paid');
+        if (elPaid && data.payroll.paid_actual) {
+          elPaid.innerText = Number(data.payroll.paid_actual).toLocaleString('ru-RU') + ' ₽';
+        }
+      }
+
+      // Update Header Timestamp
+      const syncBadge = document.querySelector('.badge-pulse span:last-child');
+      if (syncBadge && data.updated_at) {
+        syncBadge.innerText = 'Обновлено: ' + data.updated_at.split(' ')[1];
+      }
+    }
+
+    async function triggerManualSync() {
+      const btn = document.getElementById('manualSyncBtn');
+      const icon = document.getElementById('syncIcon');
+      const text = document.getElementById('syncText');
+      const hIcon = document.getElementById('headerSyncIcon');
+      const hText = document.getElementById('headerSyncText');
+      if (hIcon) hIcon.classList.add('animate-spin');
+      if (hText) hText.innerText = 'Синхронизация...';
+
+      icon.classList.add('animate-spin');
+      text.innerText = 'Синхронизация...';
+
+      let updated = false;
+      try {
+        const res = await fetch('/api/refresh', { method: 'POST' });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.data) {
+            applyLiveData(json.data);
+            updated = true;
+          }
+        }
+      } catch(e) {}
+
+      if (!updated) {
+        try {
+          const res2 = await fetch('live_data.json?t=' + Date.now());
+          if (res2.ok) {
+            const data2 = await res2.json();
+            applyLiveData(data2);
+            updated = true;
+          }
+        } catch(e2) {}
+      }
+
+      text.innerText = updated ? 'Синхронизировано!' : 'Актуально';
+
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        text.innerText = 'Обновить данные';
+        if (hIcon) hIcon.classList.remove('animate-spin');
+        if (hText) hText.innerText = '🔄 Обновить данные';
+      }, 1500);
+    }
+
+    // Init on Page Load
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Check URL param ?pin=... or localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlPin = urlParams.get('pin');
+      const savedPin = urlPin || localStorage.getItem('tep_demo_pin');
+
+      if (savedPin) {
+        const res = await checkAccess(savedPin);
+        if (res.valid) {
+          localStorage.setItem('tep_demo_pin', savedPin);
+          document.getElementById('demoClientBadge').innerText = res.client_name;
+          document.getElementById('demoExpiresBadge').innerText = res.message;
+          document.getElementById('demoLockModal').classList.add('hidden');
+        } else {
+          document.getElementById('demoLockModal').classList.remove('hidden');
+          if (res.expired) {
+            const errBox = document.getElementById('pinErrorMsg');
+            errBox.innerText = res.message;
+            errBox.classList.remove('hidden');
+          }
+        }
+      } else {
+        document.getElementById('demoLockModal').classList.remove('hidden');
+      }
+
+      // 2. Fetch live data & start 30s polling
+      fetchLiveData();
+      setInterval(fetchLiveData, 30000);
+    });
+  </script>
+
+</body>
+</html>
