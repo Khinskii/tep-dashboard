@@ -1768,7 +1768,51 @@
         }
       } catch(e) {}
 
-      // 2. Fallback: verified active client registries (Cloud / Static Mode)
+      // 2. Fetch directly from demo_config.json (Single Source of Truth)
+      try {
+        const cfgRes = await fetch('demo_config.json?t=' + Date.now());
+        if (cfgRes.ok) {
+          const cfg = await cfgRes.json();
+          if (cfg.require_auth === false) {
+            return { valid: true, client_name: "Гостевой режим", expires_at: "Без ограничений", message: "Демо-доступ открыт" };
+          }
+          const matched = (cfg.active_demos || []).find(d => String(d.pin).trim() === cleanPin);
+          if (matched) {
+            let expDt = null;
+            const expRaw = matched.expires_at || matched.expires;
+            if (expRaw) {
+              if (expRaw.includes('.')) {
+                const p = expRaw.split('.');
+                expDt = new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0]), 23, 59, 59);
+              } else {
+                expDt = new Date(expRaw);
+              }
+            }
+            const now = new Date();
+            const isExpired = expDt ? (now > expDt) : false;
+            const expStr = expDt ? expDt.toLocaleDateString('ru-RU') : (expRaw || "Бессрочно");
+
+            if (isExpired || matched.expired || matched.is_active === false) {
+              return {
+                valid: false,
+                expired: true,
+                client_name: matched.client_name,
+                message: `Срок действия демо-доступа для ${matched.client_name} истек (${expStr}). Для продления обратитесь к менеджеру: +7 (800) 555-20-26`
+              };
+            }
+            return {
+              valid: true,
+              expired: false,
+              client_name: matched.client_name,
+              expires_at: expStr,
+              message: `Демо-доступ активен до ${expStr}`
+            };
+          }
+          return { valid: false, message: "Неверный PIN-код" };
+        }
+      } catch(cfgErr) {}
+
+      // 3. Fallback: verified active client registries
       const validDemos = {
         "2026": { client_name: "ООО «Северсталь-Пром» (Заказчик)", expires: "01.10.2026", expired: false },
         "7777": { client_name: "ООО «ПромМонтаж» (Демонстрация)", expires: "25.09.2026", expired: false },
