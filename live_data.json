@@ -1,0 +1,159 @@
+{
+  "updated_at": "16.09.2026 19:20:59",
+  "status": "online",
+  "finance": {
+    "balance_actual": 233284.81,
+    "balance_plan": 2048383.8499999999,
+    "income_actual": 357273.28,
+    "income_plan": 2710687.7,
+    "net_flow": 55574.72,
+    "start_balance": 177710.09
+  },
+  "finance_by_company": {
+    "mpb": {
+      "balance_actual": 226914.05,
+      "balance_plan": 423428.45,
+      "income_actual": 357273.28,
+      "income_plan": 627804.1,
+      "net_flow": 72816.21,
+      "start_balance": 154097.84
+    },
+    "tep": {
+      "balance_actual": 6370.76,
+      "balance_plan": 1624955.4,
+      "income_actual": 0.0,
+      "income_plan": 2082883.6,
+      "net_flow": -17241.49,
+      "start_balance": 23612.25
+    },
+    "all": {
+      "balance_actual": 233284.81,
+      "balance_plan": 2048383.8499999999,
+      "income_actual": 357273.28,
+      "income_plan": 2710687.7,
+      "net_flow": 55574.72,
+      "start_balance": 177710.09
+    }
+  },
+  "production": {
+    "total_contract": 42100000,
+    "total_completed": 28450000,
+    "total_remaining": 13650000,
+    "completion_percent": 67.5,
+    "objects": [
+      {
+        "code": "100",
+        "name": "ГИП 116.817 ППП ЦТМ. СПТ№24 НТА-3",
+        "contract": 18400000,
+        "completed": 15088000,
+        "remaining": 3312000,
+        "percent": 82,
+        "status": "В графике",
+        "status_type": "success"
+      },
+      {
+        "code": "101",
+        "name": "Шкаф АСКУЭМ Кислородный цех М390414",
+        "contract": 7850000,
+        "completed": 3532500,
+        "remaining": 4317500,
+        "percent": 45,
+        "status": "Отставание 4 дня",
+        "status_type": "danger"
+      },
+      {
+        "code": "102",
+        "name": "Замена шкафа АСКУЭМ ТЭЦ-ПВС М260201",
+        "contract": 6450000,
+        "completed": 6127500,
+        "remaining": 322500,
+        "percent": 95,
+        "status": "Финал / Сдача",
+        "status_type": "success"
+      },
+      {
+        "code": "103",
+        "name": "АСКУЭМ Конвертерный цех М130101",
+        "contract": 9400000,
+        "completed": 2820000,
+        "remaining": 6580000,
+        "percent": 30,
+        "status": "В графике",
+        "status_type": "info"
+      }
+    ]
+  },
+  "payroll": {
+    "accrued_plan": 402818.8,
+    "paid_actual": 335079.0,
+    "balance_due": 67739.79999999999
+  },
+  "safety": {},
+  "staff": [
+    {
+      "tab": 88,
+      "fio": "Борькин Виктор Валерьевич",
+      "position": "Электросварщик"
+    },
+    {
+      "tab": 7,
+      "fio": "Василенко Александр Николаевич",
+      "position": "Водитель"
+    },
+    {
+      "tab": 146,
+      "fio": "Вебер Александр Евгеньевич",
+      "position": "Специалист"
+    },
+    {
+      "tab": 121,
+      "fio": "Горин Анатолий Олегович",
+      "position": "Монтажник"
+    },
+    {
+      "tab": 63,
+      "fio": "Ефимович Игорь Григорьевич",
+      "position": "Генеральный директор"
+    },
+    {
+      "tab": 51,
+      "fio": "Калинин Евгений Николаевич",
+      "position": "Водитель"
+    },
+    {
+      "tab": 92,
+      "fio": "Капустин Сергей Леонидович",
+      "position": "Специалист"
+    },
+    {
+      "tab": 17,
+      "fio": "Козырев Владимир Вячеславович",
+      "position": "Специалист"
+    },
+    {
+      "tab": 152,
+      "fio": "Лещинин Александр Владимирович",
+      "position": "Главный инженер"
+    },
+    {
+      "tab": 30,
+      "fio": "Можар Сергей Олегович",
+      "position": "Электросварщик"
+    },
+    {
+      "tab": 12,
+      "fio": "Никитин Виктор Владимирович",
+      "position": "Специалист"
+    },
+    {
+      "tab": 123,
+      "fio": "Рыжков Сергей Александович",
+      "position": "Саврщик"
+    },
+    {
+      "tab": 94,
+      "fio": "Хащинин Иван Сергеевич",
+      "position": "Мастер"
+    }
+  ]
+}
