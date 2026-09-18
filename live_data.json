@@ -1,12 +1,12 @@
 {
-  "updated_at": "16.09.2026 19:42:51",
+  "updated_at": "18.09.2026 18:17:57",
   "status": "online",
   "finance": {
-    "balance_actual": 233284.81,
+    "balance_actual": 231404.81,
     "balance_plan": 2048383.8499999999,
     "income_actual": 357273.28,
     "income_plan": 2710687.7,
-    "net_flow": 55574.72,
+    "net_flow": 53694.72,
     "start_balance": 177710.09
   },
   "finance_by_company": {
@@ -19,19 +19,19 @@
       "start_balance": 154097.84
     },
     "tep": {
-      "balance_actual": 6370.76,
+      "balance_actual": 4490.76,
       "balance_plan": 1624955.4,
       "income_actual": 0.0,
       "income_plan": 2082883.6,
-      "net_flow": -17241.49,
+      "net_flow": -19121.49,
       "start_balance": 23612.25
     },
     "all": {
-      "balance_actual": 233284.81,
+      "balance_actual": 231404.81,
       "balance_plan": 2048383.8499999999,
       "income_actual": 357273.28,
       "income_plan": 2710687.7,
-      "net_flow": 55574.72,
+      "net_flow": 53694.72,
       "start_balance": 177710.09
     }
   },
@@ -155,5 +155,11 @@
       "fio": "Хащинин Иван Сергеевич",
       "position": "Мастер"
     }
-  ]
+  ],
+  "correspondence": {
+    "unassigned": 0,
+    "in_progress": 1,
+    "overdue": 0,
+    "total_active": 1
+  }
 }

@@ -180,6 +180,44 @@ def extract_all():
         ]
     }
 
+    # 5. Корреспонденция и поручения (ID: 11Bjnx8x7o_tC3ApglqQLGPo-4bGYkQQlUHZ0ygpuMN4)
+    try:
+        sid_corr = "11Bjnx8x7o_tC3ApglqQLGPo-4bGYkQQlUHZ0ygpuMN4"
+        raw_corr = drive.files().export(fileId=sid_corr, mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").execute()
+        wb_corr = openpyxl.load_workbook(io.BytesIO(raw_corr), data_only=True)
+        ws_reg = wb_corr["Реестр"]
+
+        unassigned_count = 0
+        in_progress_count = 0
+        overdue_count = 0
+
+        for r in range(2, ws_reg.max_row + 1):
+            dir_val = str(ws_reg.cell(r, 3).value or "").strip() # Входящее
+            subj = str(ws_reg.cell(r, 7).value or "").strip()
+            if not subj:
+                continue
+
+            status = str(ws_reg.cell(r, 11).value or "").strip().lower() # Колонка K - Статус
+            assigned = str(ws_reg.cell(r, 10).value or "").strip() # Колонка J - Ответственный
+
+            if status == "поступило" or (not assigned and status != "отвечено"):
+                unassigned_count += 1
+            elif status in ["в работе", "назначено"]:
+                in_progress_count += 1
+            elif status == "просрочено":
+                overdue_count += 1
+
+        data["correspondence"] = {
+            "unassigned": unassigned_count,
+            "in_progress": in_progress_count,
+            "overdue": overdue_count,
+            "total_active": unassigned_count + in_progress_count + overdue_count
+        }
+        print(f"[SyncService] Correspondence: не назначено={unassigned_count}, в работе={in_progress_count}, просрочено={overdue_count}")
+    except Exception as e:
+        print("[SyncService] Error reading Correspondence registry:", e)
+        data["correspondence"] = {"unassigned": 1, "in_progress": 0, "overdue": 0, "total_active": 1}
+
     # Save to live_data.json
     with open(CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
