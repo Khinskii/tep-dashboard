@@ -1,5 +1,5 @@
 {
-  "updated_at": "18.09.2026 18:17:57",
+  "updated_at": "18.09.2026 18:36:06",
   "status": "online",
   "finance": {
     "balance_actual": 231404.81,
@@ -155,11 +155,5 @@
       "fio": "Хащинин Иван Сергеевич",
       "position": "Мастер"
     }
-  ],
-  "correspondence": {
-    "unassigned": 0,
-    "in_progress": 1,
-    "overdue": 0,
-    "total_active": 1
-  }
+  ]
 }
