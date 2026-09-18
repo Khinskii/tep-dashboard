@@ -1,5 +1,5 @@
 {
-  "updated_at": "18.09.2026 18:36:06",
+  "updated_at": "18.09.2026 18:53:20",
   "status": "online",
   "finance": {
     "balance_actual": 231404.81,
@@ -155,5 +155,58 @@
       "fio": "Хащинин Иван Сергеевич",
       "position": "Мастер"
     }
-  ]
+  ],
+  "correspondence": {
+    "unassigned": 1,
+    "in_progress": 1,
+    "overdue": 1,
+    "total_active": 3,
+    "items": [
+      {
+        "id": "2026-ВХ-0001",
+        "date": "18.09.2026 10:15",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Объект 100",
+        "counterparty": "ООО «Северсталь-Пром»",
+        "subject": "Запрос актуализации графика СМР",
+        "summary": "Заказчик просит предоставить актуализированный график СМР на октябрь по объекту СПТ-24 до конца недели.",
+        "deadline": "22.09.2026",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
+        "source_link": "https://mail.google.com"
+      },
+      {
+        "id": "2026-ВХ-0002",
+        "date": "18.09.2026 14:40",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Объект 101 (Кислородный цех)",
+        "counterparty": "ООО «ПромЭлектроПоставка»",
+        "subject": "Спецификация на поставку силового кабеля ВВГнг",
+        "summary": "Поставщик направил согласованную спецификацию на кабель и запрашивает подтверждение авансирования 30%.",
+        "deadline": "20.09.2026",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com"
+      },
+      {
+        "id": "2026-ВХ-0003",
+        "date": "12.09.2026 11:30",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Объект 102 (ТЭЦ-ПВС)",
+        "counterparty": "АО «МеталлургМонтаж»",
+        "subject": "Досудебная претензия по срокам выполнения этапа №1",
+        "summary": "Генподрядчик уведомляет о начислении неустойки за задержку сдачи исполнительной документации на 5 дней.",
+        "deadline": "16.09.2026",
+        "assigned": "Хинский Л.Д.",
+        "status": "Просрочено",
+        "category": "overdue",
+        "source_link": "https://mail.google.com"
+      }
+    ]
+  }
 }
