@@ -2282,27 +2282,60 @@
       lucide.createIcons();
     }
 
+    // Helper to parse dates in format "DD.MM.YYYY HH:mm:ss" or "DD.MM.YYYY HH:mm"
+    function parseCustomDate(str) {
+      if (!str || typeof str !== 'string') return 0;
+      const parts = str.trim().split(' ');
+      if (parts.length < 2) return 0;
+      const dParts = parts[0].split('.');
+      const tParts = parts[1].split(':');
+      if (dParts.length < 3 || tParts.length < 2) return 0;
+      const day = parseInt(dParts[0], 10);
+      const month = parseInt(dParts[1], 10) - 1;
+      const year = parseInt(dParts[2], 10);
+      const hour = parseInt(tParts[0], 10);
+      const min = parseInt(tParts[1], 10);
+      const sec = tParts[2] ? parseInt(tParts[2], 10) : 0;
+      return new Date(year, month, day, hour, min, sec).getTime();
+    }
+
     // ================= REAL-TIME DATA SYNC =================
     async function fetchLiveData() {
+      // 1. If running with local backend
       try {
-        let res = await fetch('/api/data?t=' + Date.now());
-        if (!res.ok) {
-          res = await fetch('live_data.json?t=' + Date.now());
-        }
+        const res = await fetch('/api/data?t=' + Date.now());
         if (res.ok) {
           const data = await res.json();
-          applyLiveData(data);
+          if (data) applyLiveData(data);
+          return;
         }
-      } catch(e) {
+      } catch(e) {}
+
+      // 2. Base static data (finance, payroll, projects)
+      // Only load live_data.json if we haven't loaded data yet, to prevent static file from overriding live state
+      if (!cachedGlobalData) {
         try {
           const res2 = await fetch('live_data.json?t=' + Date.now());
           if (res2.ok) {
             const data2 = await res2.json();
-            applyLiveData(data2);
+            if (data2) applyLiveData(data2);
           }
         } catch(e2) {
-          console.warn("[LiveSync] Failed to fetch data:", e2);
+          console.warn("[LiveSync] Failed to fetch base data:", e2);
         }
+      }
+
+      // 3. Live Google Apps Script check in background
+      if (APPS_SCRIPT_WEBAPP_URL) {
+        try {
+          const resApp = await fetchWithTimeout(APPS_SCRIPT_WEBAPP_URL + '?t=' + Date.now(), { redirect: 'follow' }, 8000);
+          if (resApp.ok) {
+            const dataApp = await resApp.json();
+            if (dataApp && (dataApp.correspondence || dataApp.updated_at)) {
+              applyLiveData(dataApp);
+            }
+          }
+        } catch(eApp) {}
       }
     }
 
@@ -2316,6 +2349,20 @@
 
     function applyLiveData(data) {
       if (!data) return;
+
+      // Protection against stale/older timestamps:
+      // If we already have a newer timestamp in cachedGlobalData, do not let an older timestamp (e.g. from static file) roll it back
+      if (cachedGlobalData && cachedGlobalData.updated_at && data.updated_at) {
+        const prevTime = parseCustomDate(cachedGlobalData.updated_at);
+        const newTime = parseCustomDate(data.updated_at);
+        if (prevTime > 0 && newTime > 0 && newTime < prevTime) {
+          data.updated_at = cachedGlobalData.updated_at;
+          if (cachedGlobalData.correspondence) {
+            data.correspondence = cachedGlobalData.correspondence;
+          }
+        }
+      }
+
       // Merge with previously cached data so partial updates (e.g. correspondence from Apps Script) don't erase finance
       cachedGlobalData = Object.assign({}, cachedGlobalData || {}, data);
       const fullData = cachedGlobalData;
@@ -2514,9 +2561,9 @@
         document.getElementById('demoLockModal').classList.remove('hidden');
       }
 
-      // 2. Fetch live data & start 30s polling
+      // 2. Fetch live data & start 60s background polling
       fetchLiveData();
-      setInterval(fetchLiveData, 30000);
+      setInterval(fetchLiveData, 60000);
     });
   </script>
 
