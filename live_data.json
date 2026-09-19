@@ -1,5 +1,5 @@
 {
-  "updated_at": "18.09.2026 19:15:32",
+  "updated_at": "19.09.2026 11:12:52",
   "status": "online",
   "finance": {
     "balance_actual": 231404.81,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 0,
+    "unassigned": 4,
     "in_progress": 10,
     "overdue": 0,
-    "total_active": 10,
+    "total_active": 14,
     "items": [
       {
         "id": "2026-ВХ-0001",
@@ -311,6 +311,66 @@
         "status": "В работе",
         "category": "in_progress",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a09e65c4641215c"
+      },
+      {
+        "id": "2026-ВХ-0012",
+        "date": "19.09.2026 11:10",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "hh.ru",
+        "subject": "Новые резюме: Инженер КИПиА",
+        "summary": "Получены новые резюме по запросу на позицию Инженера КИПиА.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0b8ee1c448935c"
+      },
+      {
+        "id": "2026-ВХ-0013",
+        "date": "19.09.2026 10:13",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Академия финансов и налогов АФиНА",
+        "subject": "Налоговый дайджест и бухгалтерские методички",
+        "summary": "Письмо от Академии финансов и налогов АФиНА информирует о выходе нового налогового дайджеста за 12-18.09.2026, предлагает скачать 54 бухгалтерские методички и прослушать подкаст о заработке без «серых» зарплат.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0b8ba4050ef283"
+      },
+      {
+        "id": "2026-ВХ-0014",
+        "date": "17.09.2026 15:33",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Комитет по управлению имуществом города Череповца",
+        "subject": "Возражения по делу а13-4757/2026",
+        "summary": "Письмо информирует о возражениях по судебному делу а13-4757/2026 от Комитета по управлению имуществом города Череповца.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0af921f0dbc25d"
+      },
+      {
+        "id": "2026-ВХ-0015",
+        "date": "17.09.2026 14:12",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Nice - Polska Sp. z o.o.",
+        "subject": "Предложение о партнерстве по системе Nice Smart Living",
+        "summary": "Компания Nice предлагает сотрудничество в качестве партнера по внедрению системы Nice Smart Living для умного дома, охватывающей широкий спектр решений и интеграций.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0af483050d506d"
       }
     ]
   }
