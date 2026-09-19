@@ -2316,12 +2316,14 @@
 
     function applyLiveData(data) {
       if (!data) return;
-      cachedGlobalData = data;
+      // Merge with previously cached data so partial updates (e.g. correspondence from Apps Script) don't erase finance
+      cachedGlobalData = Object.assign({}, cachedGlobalData || {}, data);
+      const fullData = cachedGlobalData;
       
       const comp = document.getElementById('companySelect') ? document.getElementById('companySelect').value : 'all';
-      let fin = data.finance;
-      if (data.finance_by_company && data.finance_by_company[comp]) {
-        fin = data.finance_by_company[comp];
+      let fin = fullData.finance;
+      if (fullData.finance_by_company && fullData.finance_by_company[comp]) {
+        fin = fullData.finance_by_company[comp];
       }
 
       // Update Finance
@@ -2342,26 +2344,26 @@
       }
 
       // Update Payroll
-      if (data.payroll) {
+      if (fullData.payroll) {
         const elPaid = document.getElementById('kpi-fio-paid');
-        if (elPaid && data.payroll.paid_actual) {
-          elPaid.innerText = Number(data.payroll.paid_actual).toLocaleString('ru-RU') + ' ₽';
+        if (elPaid && fullData.payroll.paid_actual) {
+          elPaid.innerText = Number(fullData.payroll.paid_actual).toLocaleString('ru-RU') + ' ₽';
         }
       }
 
       // Update Correspondence Indicators
-      if (data.correspondence) {
+      if (fullData.correspondence) {
         const elUnassigned = document.getElementById('kpi-corr-unassigned');
-        if (elUnassigned && data.correspondence.unassigned !== undefined) {
-          elUnassigned.innerText = data.correspondence.unassigned;
+        if (elUnassigned && fullData.correspondence.unassigned !== undefined) {
+          elUnassigned.innerText = fullData.correspondence.unassigned;
         }
         const elInProgress = document.getElementById('kpi-corr-in-progress');
-        if (elInProgress && data.correspondence.in_progress !== undefined) {
-          elInProgress.innerText = data.correspondence.in_progress;
+        if (elInProgress && fullData.correspondence.in_progress !== undefined) {
+          elInProgress.innerText = fullData.correspondence.in_progress;
         }
         const elOverdue = document.getElementById('kpi-corr-overdue');
-        if (elOverdue && data.correspondence.overdue !== undefined) {
-          elOverdue.innerText = data.correspondence.overdue;
+        if (elOverdue && fullData.correspondence.overdue !== undefined) {
+          elOverdue.innerText = fullData.correspondence.overdue;
         }
       }
 
@@ -2370,29 +2372,34 @@
         lucide.createIcons();
       }
 
-      // Update Header Timestamp with Date and Time
-      const syncBadge = document.querySelector('.badge-pulse span:last-child');
+      // Update Header Timestamp with Date and Time (with exact seconds!)
+      const syncBadge = document.getElementById('liveStatusText') || document.querySelector('.badge-pulse span:last-child');
       if (syncBadge && data.updated_at) {
         const parts = data.updated_at.trim().split(' ');
         if (parts.length >= 2) {
           const datePart = parts[0];
-          const timePart = parts[1].substring(0, 5); // HH:MM
+          const timePart = parts[1]; // full HH:mm:ss
           syncBadge.innerText = 'Обновлено: ' + datePart + ' в ' + timePart;
         } else {
           syncBadge.innerText = 'Обновлено: ' + data.updated_at;
+        }
+        const badgeParent = syncBadge.closest('.badge-pulse');
+        if (badgeParent) {
+          badgeParent.classList.add('ring-2', 'ring-emerald-400');
+          setTimeout(() => badgeParent.classList.remove('ring-2', 'ring-emerald-400'), 1500);
         }
       }
     }
 
     const DEFAULT_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwLEobKR1ibj0CIXLAGkfzXhFXPGBRbJUGDRbGilbERGLIuaWUFIh9Wjbt0-WC999nIOQ/exec";
     let storedUrl = localStorage.getItem('tep_webapp_url');
-    if (!storedUrl || storedUrl.includes('WUFlh9')) {
+    if (!storedUrl || storedUrl.includes('WUFlh9') || !storedUrl.includes('WC999nIOQ')) {
       storedUrl = DEFAULT_APPS_SCRIPT_URL;
       localStorage.setItem('tep_webapp_url', DEFAULT_APPS_SCRIPT_URL);
     }
     let APPS_SCRIPT_WEBAPP_URL = storedUrl;
 
-    async function fetchWithTimeout(resource, options = {}, timeoutMs = 3500) {
+    async function fetchWithTimeout(resource, options = {}, timeoutMs = 8000) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeoutMs);
       try {
@@ -2420,13 +2427,13 @@
       let updated = false;
 
       try {
-        // 1. Попытка прямого обращения к облачному Web App в Google Таблице с таймаутом 3.5с
+        // 1. Попытка прямого обращения к облачному Web App в Google Таблице с таймаутом 10с
         if (APPS_SCRIPT_WEBAPP_URL) {
           try {
-            const resApp = await fetchWithTimeout(APPS_SCRIPT_WEBAPP_URL + '?t=' + Date.now(), { redirect: 'follow' }, 3500);
+            const resApp = await fetchWithTimeout(APPS_SCRIPT_WEBAPP_URL + '?t=' + Date.now(), { redirect: 'follow' }, 10000);
             if (resApp.ok) {
               const dataApp = await resApp.json();
-              if (dataApp && (dataApp.correspondence || dataApp.finance)) {
+              if (dataApp && (dataApp.correspondence || dataApp.finance || dataApp.updated_at)) {
                 applyLiveData(dataApp);
                 updated = true;
               }
@@ -2472,11 +2479,12 @@
           if (hBtn) {
             const icons = hBtn.querySelectorAll('svg, i');
             icons.forEach(el => el.classList.remove('animate-spin'));
+            if (hIcon) hIcon.classList.remove('animate-spin');
             hBtn.disabled = false;
             hBtn.classList.remove('opacity-75');
           }
           if (hText) hText.innerText = '🔄 Обновить данные';
-        }, 1200);
+        }, 1500);
       }
     }
 
