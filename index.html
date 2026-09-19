@@ -2463,12 +2463,13 @@
         if (hText) hText.innerText = updated ? '✅ Обновлено' : 'Готово';
 
         setTimeout(() => {
-          if (hIcon) hIcon.classList.remove('animate-spin');
-          if (hText) hText.innerText = '🔄 Обновить данные';
           if (hBtn) {
+            const icons = hBtn.querySelectorAll('svg, i');
+            icons.forEach(el => el.classList.remove('animate-spin'));
             hBtn.disabled = false;
             hBtn.classList.remove('opacity-75');
           }
+          if (hText) hText.innerText = '🔄 Обновить данные';
         }, 1200);
       }
     }
