@@ -77,11 +77,6 @@
       <span id="demoExpiresBadge" class="text-emerald-400 font-medium">Активен до 01.10.2026</span>
     </div>
     <div class="flex items-center gap-3">
-      <button onclick="triggerManualSync()" id="manualSyncBtn" class="flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-medium">
-        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="syncIcon"></i>
-        <span id="syncText">Обновить данные</span>
-      </button>
-      <span class="text-slate-600">|</span>
       <button onclick="logoutDemo()" class="text-slate-400 hover:text-rose-400">Сменить код</button>
     </div>
   </div>
@@ -2390,16 +2385,11 @@
     }
 
     async function triggerManualSync() {
-      const btn = document.getElementById('manualSyncBtn');
-      const icon = document.getElementById('syncIcon');
-      const text = document.getElementById('syncText');
+      const hBtn = document.getElementById('mainHeaderRefreshBtn');
       const hIcon = document.getElementById('headerSyncIcon');
       const hText = document.getElementById('headerSyncText');
       if (hIcon) hIcon.classList.add('animate-spin');
       if (hText) hText.innerText = 'Синхронизация...';
-
-      if (icon) icon.classList.add('animate-spin');
-      if (text) text.innerText = 'Синхронизация...';
 
       let updated = false;
       try {
@@ -2424,15 +2414,12 @@
         } catch(e2) {}
       }
 
-      if (text) text.innerText = updated ? 'Данные актуальны' : 'Готово';
       if (hText) hText.innerText = '✅ Обновлено';
 
       setTimeout(() => {
-        if (icon) icon.classList.remove('animate-spin');
-        if (text) text.innerText = 'Обновить данные';
         if (hIcon) hIcon.classList.remove('animate-spin');
         if (hText) hText.innerText = '🔄 Обновить данные';
-      }, 1800);
+      }, 1500);
     }
 
     // Init on Page Load
