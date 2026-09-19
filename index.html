@@ -2384,7 +2384,13 @@
       }
     }
 
-    let APPS_SCRIPT_WEBAPP_URL = localStorage.getItem('tep_webapp_url') || "https://script.google.com/macros/s/AKfycbwLEobKR1ibj0CIXLAGkfzXhFXPGBRbJUGDRbGilbERGLIuaWUFlh9Wjbt0-WC999nIOQ/exec";
+    const DEFAULT_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwLEobKR1ibj0CIXLAGkfzXhFXPGBRbJUGDRbGilbERGLIuaWUFIh9Wjbt0-WC999nIOQ/exec";
+    let storedUrl = localStorage.getItem('tep_webapp_url');
+    if (!storedUrl || storedUrl.includes('WUFlh9')) {
+      storedUrl = DEFAULT_APPS_SCRIPT_URL;
+      localStorage.setItem('tep_webapp_url', DEFAULT_APPS_SCRIPT_URL);
+    }
+    let APPS_SCRIPT_WEBAPP_URL = storedUrl;
 
     async function fetchWithTimeout(resource, options = {}, timeoutMs = 3500) {
       const controller = new AbortController();
