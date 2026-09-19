@@ -2384,6 +2384,9 @@
       }
     }
 
+    // Google Apps Script Web App URL (live cloud gateway)
+    let APPS_SCRIPT_WEBAPP_URL = localStorage.getItem('tep_webapp_url') || "";
+
     async function triggerManualSync() {
       const hBtn = document.getElementById('mainHeaderRefreshBtn');
       const hIcon = document.getElementById('headerSyncIcon');
@@ -2392,17 +2395,38 @@
       if (hText) hText.innerText = 'Синхронизация...';
 
       let updated = false;
-      try {
-        const res = await fetch('/api/refresh', { method: 'POST' });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data) {
-            applyLiveData(json.data);
-            updated = true;
-          }
-        }
-      } catch(e) {}
 
+      // 1. Попытка прямого обращения к облачному Web App в Google Таблице (без задержек)
+      if (APPS_SCRIPT_WEBAPP_URL) {
+        try {
+          const resApp = await fetch(APPS_SCRIPT_WEBAPP_URL + '?t=' + Date.now(), { redirect: 'follow' });
+          if (resApp.ok) {
+            const dataApp = await resApp.json();
+            if (dataApp && dataApp.correspondence) {
+              applyLiveData(dataApp);
+              updated = true;
+            }
+          }
+        } catch(eApp) {
+          console.warn('[LiveSync] Apps Script WebApp fetch failed:', eApp);
+        }
+      }
+
+      // 2. Попытка через локальный сервер (если запущен)
+      if (!updated) {
+        try {
+          const res = await fetch('/api/refresh', { method: 'POST' });
+          if (res.ok) {
+            const json = await res.json();
+            if (json.data) {
+              applyLiveData(json.data);
+              updated = true;
+            }
+          }
+        } catch(e) {}
+      }
+
+      // 3. Базовый опрос свежего live_data.json с GitHub Pages
       if (!updated) {
         try {
           const res2 = await fetch('live_data.json?t=' + Date.now());
@@ -2414,7 +2438,7 @@
         } catch(e2) {}
       }
 
-      if (hText) hText.innerText = '✅ Обновлено';
+      if (hText) hText.innerText = updated ? '✅ Обновлено' : 'Готово';
 
       setTimeout(() => {
         if (hIcon) hIcon.classList.remove('animate-spin');
