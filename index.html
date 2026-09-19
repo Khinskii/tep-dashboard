@@ -1583,7 +1583,13 @@
       const listEl = document.getElementById('corrModalList');
       if (!listEl) return;
 
-      const items = (cachedGlobalData?.correspondence?.items) || getDefaultCorrItems();
+      const rawItems = (cachedGlobalData?.correspondence?.items) || getDefaultCorrItems();
+      const items = [...rawItems].sort((a, b) => {
+        const timeB = parseCustomDate(b.date || b.created_at || '');
+        const timeA = parseCustomDate(a.date || a.created_at || '');
+        if (timeB !== timeA) return timeB - timeA;
+        return (b.id || '').localeCompare(a.id || '');
+      });
       
       let filtered = items.filter(item => {
         // Tab filter
