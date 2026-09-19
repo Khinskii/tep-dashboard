@@ -60,6 +60,8 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
         if self.path == "/api/refresh":
             print("[API] Manual refresh requested...")
             try:
+                import importlib
+                importlib.reload(sync_service)
                 data = sync_service.extract_all()
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
