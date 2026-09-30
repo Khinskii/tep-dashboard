@@ -1,38 +1,38 @@
 {
-  "updated_at": "30.09.2026 02:03:26",
+  "updated_at": "30.09.2026 23:49:15",
   "status": "online",
   "finance": {
-    "balance_actual": 278548.31,
-    "balance_plan": 2048383.8499999999,
-    "income_actual": 404416.78,
-    "income_plan": 2710687.7,
-    "net_flow": 100838.22,
-    "start_balance": 177710.09
+    "balance_actual": 93588.5999999999,
+    "balance_plan": 2035431.994,
+    "income_actual": 691548.78,
+    "income_plan": 2774010.2,
+    "net_flow": -84121.48999999989,
+    "start_balance": 177710.0899999998
   },
   "finance_by_company": {
     "mpb": {
-      "balance_actual": 274057.55,
-      "balance_plan": 423428.45,
-      "income_actual": 404416.78,
-      "income_plan": 627804.1,
-      "net_flow": 119959.71,
-      "start_balance": 154097.84
+      "balance_actual": 90987.70999999996,
+      "balance_plan": 410476.5939999998,
+      "income_actual": 621548.78,
+      "income_plan": 691126.6,
+      "net_flow": -63110.12999999989,
+      "start_balance": 154097.83999999985
     },
     "tep": {
-      "balance_actual": 4490.76,
-      "balance_plan": 1624955.4,
-      "income_actual": 0,
+      "balance_actual": 2600.889999999941,
+      "balance_plan": 1624955.4000000001,
+      "income_actual": 70000,
       "income_plan": 2082883.6,
-      "net_flow": -19121.49,
-      "start_balance": 23612.25
+      "net_flow": -21011.36,
+      "start_balance": 23612.24999999994
     },
     "all": {
-      "balance_actual": 278548.31,
-      "balance_plan": 2048383.8499999999,
-      "income_actual": 404416.78,
-      "income_plan": 2710687.7,
-      "net_flow": 100838.22,
-      "start_balance": 177710.09
+      "balance_actual": 93588.5999999999,
+      "balance_plan": 2035431.994,
+      "income_actual": 691548.78,
+      "income_plan": 2774010.2,
+      "net_flow": -84121.48999999989,
+      "start_balance": 177710.0899999998
     }
   },
   "production": {
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 11,
-    "in_progress": 3,
+    "unassigned": 4,
+    "in_progress": 1,
     "overdue": 0,
-    "total_active": 14,
+    "total_active": 5,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -178,21 +178,6 @@
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0ade5b468700f3"
       },
       {
-        "id": "2026-ВХ-0013",
-        "date": "Fri Sep 25 2026 21:42:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "ООО \"ЛПС\"",
-        "subject": "Письмо из Липецка",
-        "summary": "Почта России уведомила о неудачной попытке вручения письма от ООО \"ЛПС\", адресованного Хинской Е. Н., для получения которого требуется удостоверение личности.",
-        "deadline": "",
-        "assigned": "Хинский Л.Д.",
-        "status": "Отвечено",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0ce07a83a3a560"
-      },
-      {
         "id": "2026-ВХ-0017",
         "date": "Fri Sep 25 2026 04:34:00 GMT+0200 (Central European Summer Time)",
         "direction": "Входящее",
@@ -206,36 +191,6 @@
         "status": "Отвечено",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0d7f1900987d77"
-      },
-      {
-        "id": "2026-ВХ-0018",
-        "date": "Thu Sep 24 2026 23:10:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Loxone",
-        "subject": "Переаттестация партнерского статуса Loxone",
-        "summary": "Ваш партнерский статус Loxone SILVER требует переаттестации до 01.10.2026 с соблюдением критериев по объему закупок и обучению.",
-        "deadline": "Thu Oct 01 2026 09:00:00 GMT+0200 (Central European Summer Time)",
-        "assigned": "Хинский Л.Д.",
-        "status": "В работе",
-        "category": "in_progress",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0d444fdef3feef"
-      },
-      {
-        "id": "2026-ВХ-0020",
-        "date": "Wed Sep 23 2026 23:28:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "ООО \"ЛПС\"",
-        "subject": "Письмо из Липецка",
-        "summary": "Почта России уведомила о вручении письма от ООО \"ЛПС\" адресату Хинской Е. Н. из Липецка.",
-        "deadline": "",
-        "assigned": "Хинский Л.Д.",
-        "status": "В работе",
-        "category": "in_progress",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0d31e507d37567"
       },
       {
         "id": "2026-ВХ-0026",
@@ -253,21 +208,6 @@
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0a8e91f783e39e"
       },
       {
-        "id": "2026-ВХ-0027",
-        "date": "Sun Sep 27 2026 19:52:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Комитет по управлению имуществом города Череповца, АО \"Россельхозбанк\", Хинский Л.Д.",
-        "subject": "Обновления по арбитражным делам",
-        "summary": "Письмо содержит обновления по арбитражным делам А13-4757/2026, включая назначение онлайн-заседания и ходатайство АО \"Россельхозбанк\", и А13-2087/2026, по которому апелляционная инстанция оставила решение без изменения.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0e27d18ad70c9d"
-      },
-      {
         "id": "2026-ВХ-0028",
         "date": "Sun Sep 27 2026 17:00:00 GMT+0200 (Central European Summer Time)",
         "direction": "Входящее",
@@ -281,111 +221,6 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0e13d167e738f2"
-      },
-      {
-        "id": "2026-ВХ-0029",
-        "date": "Thu Sep 24 2026 23:57:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "ООО \"МЕДПРОМБЫТ\"",
-        "subject": "Общий запрос",
-        "summary": "Письмо содержит только подпись и контактные данные отправителя без основного текста.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0d347626f5c659"
-      },
-      {
-        "id": "2026-ВХ-0030",
-        "date": "Thu Sep 24 2026 22:30:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "kd-mid.ru",
-        "subject": "Ваша заявка успешно удалена",
-        "summary": "Заявка №9376 по вопросам нотариата, адресованная Хинскому Леониду Давидовичу, успешно удалена.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0d2f72ce804b37"
-      },
-      {
-        "id": "2026-ВХ-0031",
-        "date": "Wed Sep 23 2026 23:54:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Хинский Леонид Давидович",
-        "subject": "Принято ходатайство об ознакомлении с материалами дела",
-        "summary": "Арбитражный суд Вологодской области зарегистрировал ходатайство Хинского Леонида Давидовича об ознакомлении с материалами дела А13-2087/2026.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0d0262cb4c9647"
-      },
-      {
-        "id": "2026-ВХ-0032",
-        "date": "Wed Sep 23 2026 17:45:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Комитет по управлению имуществом города Череповца, Предприниматель Хинский Леонид Давыдович",
-        "subject": "Обновление по арбитражному делу А13-4757/2026",
-        "summary": "Получено уведомление об обновлении арбитражного дела А13-4757/2026 с добавлением доказательств и аудио/видеозаписи судебного заседания, касающегося Комитета по управлению имуществом города Череповца и Предпринимателя Хинского Л.Д.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0cd4f04a8919a2"
-      },
-      {
-        "id": "2026-ВХ-0033",
-        "date": "Wed Sep 23 2026 02:08:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Мой арбитр",
-        "subject": "Доступ к материалам дела А13-4757/2026",
-        "summary": "Предоставлен доступ к материалам арбитражного дела А13-4757/2026 с кодом 140216, действительным до 23.09.2026 17:08.",
-        "deadline": "Wed Sep 23 2026 09:00:00 GMT+0200 (Central European Summer Time)",
-        "assigned": "",
-        "status": "Отвечено",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0cb5d49b3a16e4"
-      },
-      {
-        "id": "2026-ВХ-0034",
-        "date": "Wed Sep 23 2026 00:36:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Зинина Валентина",
-        "subject": "Претензия",
-        "summary": "Пересланное письмо содержит претензию от Зининой Валентины по документу 3003536_2026.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0c91e2209294b5"
-      },
-      {
-        "id": "2026-ВХ-0035",
-        "date": "Tue Sep 22 2026 21:21:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Елена Хинская",
-        "subject": "Скриншоты Витрина",
-        "summary": "Елена Хинская прислала скриншоты, касающиеся системы 'Витрина', с перечислением возможных объектов.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0c86b6f82bf5e4"
       },
       {
         "id": "2026-ВХ-0036",
@@ -419,18 +254,18 @@
       },
       {
         "id": "2026-ВХ-0038",
-        "date": "Tue Sep 29 2026 16:56:00 GMT+0200 (Central European Summer Time)",
+        "date": "Thu Oct 01 2026 07:26:00 GMT+0200 (Central European Summer Time)",
         "direction": "Входящее",
         "channel": "Email (Google)",
         "object": "Общие / Корпоративные",
-        "counterparty": "Леонид Хинский",
-        "subject": "Правовая позиция ВС РФ по банкротству и корпоративным конфликтам",
-        "summary": "В письме приводится правовая позиция Верховного Суда РФ о недопустимости использования процедур банкротства для разрешения корпоративных конфликтов, ссылаясь на определения по делам № А43-230/2021 и № А40-79027/2022.",
-        "deadline": "",
+        "counterparty": "ПАО ГМК \"Норильский никель\"",
+        "subject": "Закупочная Процедура 20059599/2 (Агрегат насосный)",
+        "summary": "Уведомление от ПАО ГМК \"Норильский никель\" об изменениях в закупочной процедуре №20059599/2 на поставку агрегата насосного, срок подачи предложений до 02.10.2026.",
+        "deadline": "Fri Oct 02 2026 09:00:00 GMT+0200 (Central European Summer Time)",
         "assigned": "",
         "status": "Поступило",
         "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0eb85e040d9cd0"
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0f3c926c9a8a58"
       }
     ]
   }
