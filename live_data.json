@@ -1,38 +1,38 @@
 {
-  "updated_at": "30.09.2026 23:53:22",
+  "updated_at": "01.10.2026 02:05:07",
   "status": "online",
   "finance": {
     "balance_actual": 93588.5999999999,
-    "balance_plan": 2035431.994,
-    "income_actual": 691548.78,
-    "income_plan": 2774010.2,
-    "net_flow": -84121.48999999989,
-    "start_balance": 177710.0899999998
+    "balance_plan": 159454.59999999992,
+    "income_actual": 0,
+    "income_plan": 808220,
+    "net_flow": 0,
+    "start_balance": 93588.5999999999
   },
   "finance_by_company": {
     "mpb": {
       "balance_actual": 90987.70999999996,
-      "balance_plan": 410476.5939999998,
-      "income_actual": 621548.78,
-      "income_plan": 691126.6,
-      "net_flow": -63110.12999999989,
-      "start_balance": 154097.83999999985
+      "balance_plan": 265684.61,
+      "income_actual": 0,
+      "income_plan": 508220,
+      "net_flow": 0,
+      "start_balance": 90987.70999999996
     },
     "tep": {
       "balance_actual": 2600.889999999941,
-      "balance_plan": 1624955.4000000001,
-      "income_actual": 70000,
-      "income_plan": 2082883.6,
-      "net_flow": -21011.36,
-      "start_balance": 23612.24999999994
+      "balance_plan": -106230.01000000008,
+      "income_actual": 0,
+      "income_plan": 300000,
+      "net_flow": 0,
+      "start_balance": 2600.889999999941
     },
     "all": {
       "balance_actual": 93588.5999999999,
-      "balance_plan": 2035431.994,
-      "income_actual": 691548.78,
-      "income_plan": 2774010.2,
-      "net_flow": -84121.48999999989,
-      "start_balance": 177710.0899999998
+      "balance_plan": 159454.59999999992,
+      "income_actual": 0,
+      "income_plan": 808220,
+      "net_flow": 0,
+      "start_balance": 93588.5999999999
     }
   },
   "production": {
