@@ -9,7 +9,7 @@ export default function handler(req, res) {
 
   const pin = String(req.body?.pin || '').trim();
   const demos = [
-    { client_name: "ООО «Северсталь-Пром» (Заказчик)", pin: "2026", expires_at: "2026-10-01T23:59:59" },
+    { client_name: "ООО «Северсталь-Пром» (Заказчик)", pin: "2026", expires_at: "2026-10-20T23:59:59" },
     { client_name: "ООО «ПромМонтаж» (Демонстрация)", pin: "7777", expires_at: "2026-09-25T23:59:59" },
     { client_name: "Тестовый партнер (Истекший срок)", pin: "1111", expires_at: "2026-09-01T00:00:00" }
   ];

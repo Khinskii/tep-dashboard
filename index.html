@@ -230,7 +230,7 @@
         </button>
         <div id="tab-dropdown-production" style="background-color: #0f172a !important;" class="hidden absolute left-0 top-full mt-2 w-72 rounded-xl border border-amber-700/80 shadow-2xl z-50 p-2 space-y-1">
           <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 flex justify-between items-center">
-            <span>Таблица производства</span>
+            <span>Таблицы производства</span>
             <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
           </div>
           <a href="https://docs.google.com/spreadsheets/d/1_xHRTSoDfQdLy9GCcAc71xJlmSUaQYCctJuNVJfCIfg/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
@@ -239,6 +239,16 @@
               <div>
                 <div class="font-medium group-hover:text-amber-300">План/факт производства ТЭП</div>
                 <div class="text-[10px] text-slate-400">Объекты 100-103, СМР, объемы</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-400"></i>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1w2RqjmL-aHNjGUdT86VSD7VkTjpYOPDp-3ixBaRPJRg/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-amber-950 border border-amber-800/60 text-amber-400"><i data-lucide="clipboard-list" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium group-hover:text-amber-300">Реестр работ 2026 / КС-2/3</div>
+                <div class="text-[10px] text-slate-400">Акты выполненных работ, ведомость</div>
               </div>
             </div>
             <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-400"></i>
@@ -889,11 +899,15 @@
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <span class="text-xs text-slate-400 mr-1 flex items-center gap-1">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходная таблица:
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходные таблицы:
           </span>
           <a href="https://docs.google.com/spreadsheets/d/1_xHRTSoDfQdLy9GCcAc71xJlmSUaQYCctJuNVJfCIfg/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-amber-800/50 hover:border-amber-400 text-amber-300 text-xs font-medium transition shadow-sm">
             <i data-lucide="hard-hat" class="w-3.5 h-3.5 text-amber-400"></i>
             <span>План/факт производства ТЭП ↗</span>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1w2RqjmL-aHNjGUdT86VSD7VkTjpYOPDp-3ixBaRPJRg/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-amber-800/50 hover:border-amber-400 text-amber-300 text-xs font-medium transition shadow-sm">
+            <i data-lucide="clipboard-list" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Реестр работ 2026 / КС-2/3 ↗</span>
           </a>
         </div>
       </div>
@@ -2237,7 +2251,7 @@
 
       // 3. Fallback: verified active client registries
       const validDemos = {
-        "2026": { client_name: "ООО «Северсталь-Пром» (Заказчик)", expires: "01.10.2026", expired: false },
+        "2026": { client_name: "ООО «Северсталь-Пром» (Заказчик)", expires: "20.10.2026", expired: false },
         "7777": { client_name: "ООО «ПромМонтаж» (Демонстрация)", expires: "25.09.2026", expired: false },
         "1111": { client_name: "Тестовый партнер (Истекший срок)", expires: "01.09.2026", expired: true }
       };
