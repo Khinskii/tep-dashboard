@@ -1,38 +1,38 @@
 {
-  "updated_at": "01.10.2026 02:05:07",
+  "updated_at": "02.10.2026 02:03:31",
   "status": "online",
   "finance": {
-    "balance_actual": 93588.5999999999,
-    "balance_plan": 159454.59999999992,
+    "balance_actual": 0,
+    "balance_plan": 0,
     "income_actual": 0,
-    "income_plan": 808220,
+    "income_plan": 0,
     "net_flow": 0,
-    "start_balance": 93588.5999999999
+    "start_balance": 0
   },
   "finance_by_company": {
     "mpb": {
-      "balance_actual": 90987.70999999996,
-      "balance_plan": 265684.61,
+      "balance_actual": 0,
+      "balance_plan": 0,
       "income_actual": 0,
-      "income_plan": 508220,
+      "income_plan": 0,
       "net_flow": 0,
-      "start_balance": 90987.70999999996
+      "start_balance": 0
     },
     "tep": {
-      "balance_actual": 2600.889999999941,
-      "balance_plan": -106230.01000000008,
+      "balance_actual": 0,
+      "balance_plan": 0,
       "income_actual": 0,
-      "income_plan": 300000,
+      "income_plan": 0,
       "net_flow": 0,
-      "start_balance": 2600.889999999941
+      "start_balance": 0
     },
     "all": {
-      "balance_actual": 93588.5999999999,
-      "balance_plan": 159454.59999999992,
+      "balance_actual": 0,
+      "balance_plan": 0,
       "income_actual": 0,
-      "income_plan": 808220,
+      "income_plan": 0,
       "net_flow": 0,
-      "start_balance": 93588.5999999999
+      "start_balance": 0
     }
   },
   "production": {
