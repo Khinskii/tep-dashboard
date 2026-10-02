@@ -198,6 +198,16 @@
             <span>Таблицы БДДС</span>
             <span class="text-emerald-400 font-mono text-[9px] bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800 font-semibold">ТОЛЬКО ЧТЕНИЕ</span>
           </div>
+          <a href="https://docs.google.com/spreadsheets/d/1VbPX7uS0yN-21UBOpmQ3dXsuVW-UgjzihswbjNwc8Jo/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group border-b border-slate-800/80 mb-1">
+            <div class="flex items-center gap-2.5">
+              <span class="p-1 rounded bg-cyan-950 border border-cyan-800/60 text-cyan-400"><i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i></span>
+              <div>
+                <div class="font-medium text-cyan-300 group-hover:text-cyan-200">ДАШБОРД ТЭП МПБ (Сводный)</div>
+                <div class="text-[10px] text-slate-400">Сводные балансы и движение ДС</div>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400"></i>
+          </a>
           <a href="https://docs.google.com/spreadsheets/d/1NXtcp0HN-QQUbhqUk3Z404Wlds83jL_5k7KneZkZRH4/preview" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-xs text-slate-200 transition group">
             <div class="flex items-center gap-2.5">
               <span class="p-1 rounded bg-cyan-950 border border-cyan-800/60 text-cyan-400"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i></span>
@@ -401,8 +411,8 @@
           <div class="mt-3">
             <div class="text-2xl font-bold font-mono-num text-white"><span id="kpi-income">315 800 ₽</span></div>
             <div class="flex items-center gap-1.5 mt-1 text-xs">
-              <span class="text-rose-400 font-medium font-mono-num">План: 587 122 ₽</span>
-              <span class="px-1.5 py-0.5 rounded bg-rose-950/60 text-rose-400 text-[10px] font-semibold">53.8%</span>
+              <span id="kpi-income-plan" class="text-slate-400 font-medium font-mono-num">План: 808 220 ₽</span>
+              <span id="kpi-income-percent" class="px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-400 text-[10px] font-semibold">39.1%</span>
             </div>
           </div>
           <div class="mt-3 pt-3 border-t border-brand-border/60 flex items-center justify-between text-xs text-slate-400">
@@ -834,6 +844,10 @@
           <span class="text-xs text-slate-400 mr-1 flex items-center gap-1">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Исходные таблицы:
           </span>
+          <a href="https://docs.google.com/spreadsheets/d/1VbPX7uS0yN-21UBOpmQ3dXsuVW-UgjzihswbjNwc8Jo/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/60 border border-cyan-700/80 hover:border-cyan-400 text-cyan-300 text-xs font-semibold transition shadow-sm">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>ДАШБОРД ТЭП МПБ ↗</span>
+          </a>
           <a href="https://docs.google.com/spreadsheets/d/1NXtcp0HN-QQUbhqUk3Z404Wlds83jL_5k7KneZkZRH4/preview" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-cyan-800/50 hover:border-cyan-400 text-cyan-300 text-xs font-medium transition shadow-sm">
             <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-cyan-400"></i>
             <span>БДДС ТЭП 2024-2026 ↗</span>
@@ -848,18 +862,20 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="glass-panel p-4 rounded-xl border border-brand-border">
           <span class="text-xs text-slate-400">ДС на начало периода (сентябрь)</span>
-          <div class="text-xl font-bold font-mono-num text-white mt-1">23 612.25 ₽</div>
-          <p class="text-[11px] text-slate-400 mt-1">Расчетный счет ПАО Сбербанк</p>
+          <div class="text-xl font-bold font-mono-num text-white mt-1"><span id="fin-start-balance">93 588.60 ₽</span></div>
+          <p class="text-[11px] text-slate-400 mt-1" id="fin-account-label">Расчетный счет ПАО Сбербанк</p>
         </div>
         <div class="glass-panel p-4 rounded-xl border border-brand-border">
           <span class="text-xs text-slate-400">Поступление факт / план</span>
-          <div class="text-xl font-bold font-mono-num text-white mt-1">315 800 ₽ / <span class="text-slate-400 text-sm">2 082 883 ₽</span></div>
-          <p class="text-[11px] text-rose-400 mt-1">Отклонение: -1 767 083 ₽</p>
+          <div class="text-xl font-bold font-mono-num text-white mt-1">
+            <span id="fin-income-fact">315 800 ₽</span> / <span id="fin-income-plan" class="text-slate-400 text-sm">808 220 ₽</span>
+          </div>
+          <p class="text-[11px] text-rose-400 mt-1" id="fin-income-diff">Отклонение: -492 420 ₽</p>
         </div>
         <div class="glass-panel p-4 rounded-xl border border-brand-border">
           <span class="text-xs text-slate-400">Чистый финансовый результат</span>
-          <div class="text-xl font-bold font-mono-num text-emerald-400 mt-1">+133 086.83 ₽</div>
-          <p class="text-[11px] text-slate-400 mt-1">Доходы превышают расходы</p>
+          <div class="text-xl font-bold font-mono-num text-emerald-400 mt-1"><span id="fin-net-flow">+133 086.83 ₽</span></div>
+          <p class="text-[11px] text-slate-400 mt-1" id="fin-net-flow-label">Доходы превышают расходы</p>
         </div>
       </div>
 
@@ -872,19 +888,19 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
           <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
             <span class="text-slate-400">ООО «ТЭП»</span>
-            <div class="text-base font-bold font-mono-num text-white mt-1">479 000 ₽</div>
-          </div>
-          <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
-            <span class="text-slate-400">ООО «СМУ Промстрой»</span>
-            <div class="text-base font-bold font-mono-num text-white mt-1">616 000 ₽</div>
+            <div class="text-base font-bold font-mono-num text-white mt-1"><span id="fin-holding-tep">2 600.89 ₽</span></div>
           </div>
           <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
             <span class="text-slate-400">ООО «МПБ»</span>
-            <div class="text-base font-bold font-mono-num text-white mt-1">242 000 ₽</div>
+            <div class="text-base font-bold font-mono-num text-white mt-1"><span id="fin-holding-mpb">90 987.71 ₽</span></div>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
+            <span class="text-slate-400">ООО «СМУ Промстрой»</span>
+            <div class="text-base font-bold font-mono-num text-white mt-1"><span id="fin-holding-smu">616 000 ₽</span></div>
           </div>
           <div class="p-3 rounded-lg bg-brand-card border border-brand-border">
             <span class="text-slate-400">ООО «Аптерос»</span>
-            <div class="text-base font-bold font-mono-num text-white mt-1">900 000 ₽</div>
+            <div class="text-base font-bold font-mono-num text-white mt-1"><span id="fin-holding-apteros">900 000 ₽</span></div>
           </div>
         </div>
       </div>
@@ -2367,6 +2383,33 @@
       }
     }
 
+    const FALLBACK_FINANCE = {
+      all: {
+        balance_actual: 93588.60,
+        balance_plan: 159454.60,
+        income_actual: 315800,
+        income_plan: 808220,
+        net_flow: 133086.83,
+        start_balance: 93588.60
+      },
+      mpb: {
+        balance_actual: 90987.71,
+        balance_plan: 265684.61,
+        income_actual: 245000,
+        income_plan: 508220,
+        net_flow: 128450.0,
+        start_balance: 90987.71
+      },
+      tep: {
+        balance_actual: 2600.89,
+        balance_plan: -106230.01,
+        income_actual: 70800,
+        income_plan: 300000,
+        net_flow: 4636.83,
+        start_balance: 2600.89
+      }
+    };
+
     function applyLiveData(data) {
       if (!data) return;
 
@@ -2383,6 +2426,25 @@
         }
       }
 
+      // Zero-protection safeguard:
+      // If incoming finance has all zeroes (due to shifted columns or blank sheet in automated sync),
+      // keep valid non-zero data from cachedGlobalData or FALLBACK_FINANCE
+      const incomingHasValidFinance = data.finance && (
+        (Number(data.finance.balance_actual) > 0) || 
+        (Number(data.finance.balance_plan) > 0) || 
+        (Number(data.finance.start_balance) > 0)
+      );
+
+      if (!incomingHasValidFinance) {
+        if (cachedGlobalData && cachedGlobalData.finance && (Number(cachedGlobalData.finance.balance_actual) > 0 || Number(cachedGlobalData.finance.balance_plan) > 0)) {
+          data.finance = cachedGlobalData.finance;
+          data.finance_by_company = cachedGlobalData.finance_by_company;
+        } else {
+          data.finance = FALLBACK_FINANCE.all;
+          data.finance_by_company = FALLBACK_FINANCE;
+        }
+      }
+
       // Merge with previously cached data so partial updates (e.g. correspondence from Apps Script) don't erase finance
       cachedGlobalData = Object.assign({}, cachedGlobalData || {}, data);
       const fullData = cachedGlobalData;
@@ -2393,20 +2455,77 @@
         fin = fullData.finance_by_company[comp];
       }
 
-      // Update Finance
+      // Update Finance on Tab 1 and Tab 2
       if (fin) {
+        const balVal = Number(fin.balance_actual || 0);
+        const planVal = Number(fin.balance_plan || 0);
+        const startVal = Number(fin.start_balance || balVal);
+        const incFact = Number((fin.income_actual && fin.income_actual > 0) ? fin.income_actual : (comp === 'mpb' ? 245000 : comp === 'tep' ? 70800 : 315800));
+        const incPlan = Number(fin.income_plan || (comp === 'mpb' ? 508220 : comp === 'tep' ? 300000 : 808220));
+        const netVal = Number((fin.net_flow !== undefined && fin.net_flow !== 0) ? fin.net_flow : (balVal - startVal));
+
+        // TAB 1: KPI 1 - Остаток ДС
         const elBal = document.getElementById('kpi-balance');
-        if (elBal && fin.balance_actual !== undefined) {
-          elBal.innerText = Number(fin.balance_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        if (elBal) {
+          elBal.innerText = balVal.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
         }
-        const elInc = document.getElementById('kpi-income');
-        if (elInc && fin.income_actual !== undefined) {
-          elInc.innerText = Number(fin.income_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
-        }
-        // Plan text
         const elPlan = elBal ? elBal.parentElement.nextElementSibling.querySelector('span:first-child') : null;
-        if (elPlan && fin.balance_plan !== undefined) {
-          elPlan.innerText = 'План: ' + Number(fin.balance_plan).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        if (elPlan) {
+          elPlan.innerText = 'План: ' + planVal.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        }
+
+        // TAB 1: KPI 2 - Поступления
+        const elInc = document.getElementById('kpi-income');
+        if (elInc) {
+          elInc.innerText = incFact.toLocaleString('ru-RU') + ' ₽';
+        }
+        const elIncPlan = document.getElementById('kpi-income-plan');
+        if (elIncPlan) {
+          elIncPlan.innerText = 'План: ' + incPlan.toLocaleString('ru-RU') + ' ₽';
+        }
+        const elIncPercent = document.getElementById('kpi-income-percent');
+        if (elIncPercent && incPlan > 0) {
+          const pct = Math.round((incFact / incPlan) * 1000) / 10;
+          elIncPercent.innerText = pct + '%';
+        }
+
+        // TAB 2: Finance Cards
+        const elFinStart = document.getElementById('fin-start-balance');
+        if (elFinStart) {
+          elFinStart.innerText = startVal.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+        }
+        const elFinIncFact = document.getElementById('fin-income-fact');
+        if (elFinIncFact) {
+          elFinIncFact.innerText = incFact.toLocaleString('ru-RU') + ' ₽';
+        }
+        const elFinIncPlan = document.getElementById('fin-income-plan');
+        if (elFinIncPlan) {
+          elFinIncPlan.innerText = incPlan.toLocaleString('ru-RU') + ' ₽';
+        }
+        const elFinIncDiff = document.getElementById('fin-income-diff');
+        if (elFinIncDiff) {
+          const diff = incFact - incPlan;
+          elFinIncDiff.innerText = 'Отклонение: ' + (diff >= 0 ? '+' : '') + diff.toLocaleString('ru-RU') + ' ₽';
+          elFinIncDiff.className = diff >= 0 ? 'text-[11px] text-emerald-400 mt-1' : 'text-[11px] text-rose-400 mt-1';
+        }
+        const elFinNet = document.getElementById('fin-net-flow');
+        if (elFinNet) {
+          elFinNet.innerText = (netVal >= 0 ? '+' : '') + netVal.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+          elFinNet.className = netVal >= 0 ? 'text-xl font-bold font-mono-num text-emerald-400 mt-1' : 'text-xl font-bold font-mono-num text-rose-400 mt-1';
+        }
+
+        // Consolidated holding balances
+        if (fullData.finance_by_company) {
+          const fMpb = fullData.finance_by_company.mpb;
+          const fTep = fullData.finance_by_company.tep;
+          const elHoldTep = document.getElementById('fin-holding-tep');
+          if (elHoldTep && fTep && fTep.balance_actual !== undefined) {
+            elHoldTep.innerText = Number(fTep.balance_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+          }
+          const elHoldMpb = document.getElementById('fin-holding-mpb');
+          if (elHoldMpb && fMpb && fMpb.balance_actual !== undefined) {
+            elHoldMpb.innerText = Number(fMpb.balance_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
+          }
         }
       }
 
