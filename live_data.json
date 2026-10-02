@@ -1,38 +1,38 @@
 {
-  "updated_at": "02.10.2026 02:03:31",
+  "updated_at": "03.10.2026 02:03:43",
   "status": "online",
   "finance": {
-    "balance_actual": 93588.6,
-    "balance_plan": 159454.6,
-    "income_actual": 315800,
-    "income_plan": 808220,
-    "net_flow": 133086.83,
-    "start_balance": 93588.6
+    "balance_actual": 0,
+    "balance_plan": 0,
+    "income_actual": 0,
+    "income_plan": 0,
+    "net_flow": 0,
+    "start_balance": 0
   },
   "finance_by_company": {
     "mpb": {
-      "balance_actual": 90987.71,
-      "balance_plan": 265684.61,
-      "income_actual": 245000,
-      "income_plan": 508220,
-      "net_flow": 128450,
-      "start_balance": 90987.71
+      "balance_actual": 0,
+      "balance_plan": 0,
+      "income_actual": 0,
+      "income_plan": 0,
+      "net_flow": 0,
+      "start_balance": 0
     },
     "tep": {
-      "balance_actual": 2600.89,
-      "balance_plan": -106230.01,
-      "income_actual": 70800,
-      "income_plan": 300000,
-      "net_flow": 4636.83,
-      "start_balance": 2600.89
+      "balance_actual": 0,
+      "balance_plan": 0,
+      "income_actual": 0,
+      "income_plan": 0,
+      "net_flow": 0,
+      "start_balance": 0
     },
     "all": {
-      "balance_actual": 93588.6,
-      "balance_plan": 159454.6,
-      "income_actual": 315800,
-      "income_plan": 808220,
-      "net_flow": 133086.83,
-      "start_balance": 93588.6
+      "balance_actual": 0,
+      "balance_plan": 0,
+      "income_actual": 0,
+      "income_plan": 0,
+      "net_flow": 0,
+      "start_balance": 0
     }
   },
   "production": {
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 4,
-    "in_progress": 1,
+    "unassigned": 1,
+    "in_progress": 5,
     "overdue": 0,
-    "total_active": 5,
+    "total_active": 6,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -217,9 +217,9 @@
         "subject": "Фотографии объектов",
         "summary": "Письмо содержит ссылки на несколько HEIC-изображений на Google Диске, предположительно, фотографии с объектов.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0e13d167e738f2"
       },
       {
@@ -232,9 +232,9 @@
         "subject": "Список объектов",
         "summary": "Леонид Хинский предоставил перечень объектов, включая АСКУЭМ и другие проекты.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0ecdacc2b699c7"
       },
       {
@@ -247,9 +247,9 @@
         "subject": "Открыт аукцион № 5516262",
         "summary": "ПАО ММК информирует об открытии нового аукциона № 5516262 на оборудование Siemens, торги по которому пройдут с 29.09.2026 по 09.10.2026.",
         "deadline": "Fri Oct 09 2026 09:00:00 GMT+0200 (Central European Summer Time)",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0ec8ad75b7eaaa"
       },
       {
@@ -262,10 +262,25 @@
         "subject": "Закупочная Процедура 20059599/2 (Агрегат насосный)",
         "summary": "Уведомление от ПАО ГМК \"Норильский никель\" об изменениях в закупочной процедуре №20059599/2 на поставку агрегата насосного, срок подачи предложений до 02.10.2026.",
         "deadline": "Fri Oct 02 2026 09:00:00 GMT+0200 (Central European Summer Time)",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0f3c926c9a8a58"
+      },
+      {
+        "id": "2026-ВХ-0039",
+        "date": "Fri Oct 02 2026 18:36:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Юридическая компания «Технологии обжалования»",
+        "subject": "По делу № А13-2087/2026",
+        "summary": "14 арбитражный апелляционный суд вынес судебный акт не в пользу компании по делу № А13-2087/2026 с Комитетом по управлению имуществом, предлагается помощь в кассационном обжаловании.",
+        "deadline": "",
         "assigned": "",
         "status": "Поступило",
         "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0f3c926c9a8a58"
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0fb541d135d192"
       }
     ]
   }
