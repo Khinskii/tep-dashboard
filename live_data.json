@@ -1,5 +1,5 @@
 {
-  "updated_at": "04.10.2026 02:02:45",
+  "updated_at": "05.10.2026 02:03:47",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 1,
+    "unassigned": 2,
     "in_progress": 5,
     "overdue": 0,
-    "total_active": 6,
+    "total_active": 7,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -281,6 +281,21 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0fb541d135d192"
+      },
+      {
+        "id": "2026-ВХ-0040",
+        "date": "Mon Oct 05 2026 04:34:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Билайн",
+        "subject": "Счет на оплату услуг связи",
+        "summary": "Получен счет на оплату услуг связи от Билайн с приложением стандартного пакета документов.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a107c4835c92ca7"
       }
     ]
   }
