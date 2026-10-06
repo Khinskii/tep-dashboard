@@ -1,5 +1,5 @@
 {
-  "updated_at": "05.10.2026 02:03:47",
+  "updated_at": "07.10.2026 02:03:51",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -158,9 +158,9 @@
   ],
   "correspondence": {
     "unassigned": 2,
-    "in_progress": 5,
+    "in_progress": 6,
     "overdue": 0,
-    "total_active": 7,
+    "total_active": 8,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -268,21 +268,6 @@
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0f3c926c9a8a58"
       },
       {
-        "id": "2026-ВХ-0039",
-        "date": "Fri Oct 02 2026 18:36:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Юридическая компания «Технологии обжалования»",
-        "subject": "По делу № А13-2087/2026",
-        "summary": "14 арбитражный апелляционный суд вынес судебный акт не в пользу компании по делу № А13-2087/2026 с Комитетом по управлению имуществом, предлагается помощь в кассационном обжаловании.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0fb541d135d192"
-      },
-      {
         "id": "2026-ВХ-0040",
         "date": "Mon Oct 05 2026 04:34:00 GMT+0200 (Central European Summer Time)",
         "direction": "Входящее",
@@ -292,10 +277,40 @@
         "subject": "Счет на оплату услуг связи",
         "summary": "Получен счет на оплату услуг связи от Билайн с приложением стандартного пакета документов.",
         "deadline": "",
+        "assigned": "Кропта О.Н.",
+        "status": "В работе",
+        "category": "in_progress",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a107c4835c92ca7"
+      },
+      {
+        "id": "2026-ВХ-0041",
+        "date": "Mon Oct 05 2026 18:15:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "ООО \"Компания \"Автокард\"",
+        "subject": "Баланс по договору с Автокард",
+        "summary": "Баланс по договору ID25542-4049-07/КА от 21.11.2024 с ООО \"Компания \"Автокард\" для ООО \"ТЭП\" составляет 6017.24 руб. на 05.10.2026.",
+        "deadline": "",
         "assigned": "",
         "status": "Поступило",
         "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a107c4835c92ca7"
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a10ab59a00a7132"
+      },
+      {
+        "id": "2026-ВХ-0042",
+        "date": "Wed Oct 07 2026 02:34:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "ООО \"Сага Телеком\"",
+        "subject": "Расчет работ по РД Радиосвязь VHF Северсталь",
+        "summary": "Запрос на составление перечня работ с расценками и спецификации поставки оборудования (металлоконструкции, кабели, РЩ, АВ, оптика) для договора по РД Радиосвязь VHF на объектах ПАО Северсталь, исключая замену UHF ретрансляторов.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a111a3bd6cd937c"
       }
     ]
   }
