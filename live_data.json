@@ -1,5 +1,5 @@
 {
-  "updated_at": "07.10.2026 02:03:51",
+  "updated_at": "08.10.2026 02:03:53",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 2,
+    "unassigned": 5,
     "in_progress": 6,
     "overdue": 0,
-    "total_active": 8,
+    "total_active": 11,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -311,6 +311,51 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a111a3bd6cd937c"
+      },
+      {
+        "id": "2026-ВХ-0043",
+        "date": "Thu Oct 08 2026 02:55:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "ПАО ММК",
+        "subject": "Открыт аукцион № 5517537",
+        "summary": "Открыт аукцион ПАО ММК № 5517537 на поставку КИП оборудования (модули Beckhoff).",
+        "deadline": "Thu Oct 15 2026 09:00:00 GMT+0200 (Central European Summer Time)",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a116dc83d3f6709"
+      },
+      {
+        "id": "2026-ВХ-0044",
+        "date": "Thu Oct 08 2026 00:02:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "СМУ Промстрой",
+        "subject": "Проверка применимости полевых датчиков",
+        "summary": "Получены сканы паспортов полевых датчиков, требуется проверить их применимость в условиях среды.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a1163e713e7d872"
+      },
+      {
+        "id": "2026-ВХ-0045",
+        "date": "Wed Oct 07 2026 22:25:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Автоматика",
+        "subject": "Утверждение документа по аренде манипулятора",
+        "summary": "Главный бухгалтер компании \"Автоматика\" запрашивает утверждение документа, отправленного \"Промстрой\" по ЭДО, касающегося аренды манипулятора.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a115e5a138412c1"
       }
     ]
   }
