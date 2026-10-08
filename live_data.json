@@ -1,5 +1,5 @@
 {
-  "updated_at": "08.10.2026 02:03:53",
+  "updated_at": "09.10.2026 02:03:16",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 5,
+    "unassigned": 7,
     "in_progress": 6,
     "overdue": 0,
-    "total_active": 11,
+    "total_active": 13,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -356,6 +356,36 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a115e5a138412c1"
+      },
+      {
+        "id": "2026-ВХ-0046",
+        "date": "Fri Oct 09 2026 06:45:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Норникель",
+        "subject": "Изменения в закупочной процедуре: Система вентиляции ЗИФ",
+        "summary": "Норникель информирует об изменениях в закупочной процедуре по системе вентиляции ЗИФ и приглашает к подаче предложения до 26.10.2026.",
+        "deadline": "Mon Oct 26 2026 08:00:00 GMT+0100 (Central European Standard Time)",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11cd6cef91d315"
+      },
+      {
+        "id": "2026-ВХ-0047",
+        "date": "Fri Oct 09 2026 01:28:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Объект 100 (ГИП 116.817 ППП ЦТМ. СПТ№24 НТА-3)",
+        "counterparty": "Северсталь (Сазанов Г.В.)",
+        "subject": "Модернизация системы пожаротушения. Комплектация шкафов АПТэ",
+        "summary": "Заказчик указывает на неверную комплектацию и сборку шкафов АПТэ1 и АПТэ2 по проекту ГИП 116.817 ЦТМ, требует проверки установленных модулей и получения недостающих.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11bb38b00541ef"
       }
     ]
   }
