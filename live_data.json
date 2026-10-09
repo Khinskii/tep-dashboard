@@ -1,5 +1,5 @@
 {
-  "updated_at": "09.10.2026 02:03:16",
+  "updated_at": "10.10.2026 02:03:54",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 7,
+    "unassigned": 8,
     "in_progress": 6,
     "overdue": 0,
-    "total_active": 13,
+    "total_active": 14,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -386,6 +386,21 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11bb38b00541ef"
+      },
+      {
+        "id": "2026-ВХ-0048",
+        "date": "Fri Oct 09 2026 14:17:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Комитет по управлению имуществом города Череповца",
+        "subject": "Обновления в картотеке арбитражных дел",
+        "summary": "Уведомление об обновлениях по арбитражному делу А13-4757/2026, касающихся добавления доказательств и ходатайства об участии в судебном заседании.",
+        "deadline": "",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11f1cbbb0744c4"
       }
     ]
   }
