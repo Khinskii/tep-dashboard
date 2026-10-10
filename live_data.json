@@ -1,5 +1,5 @@
 {
-  "updated_at": "10.10.2026 02:03:54",
+  "updated_at": "11.10.2026 02:03:26",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 8,
+    "unassigned": 9,
     "in_progress": 6,
     "overdue": 0,
-    "total_active": 14,
+    "total_active": 15,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -401,6 +401,21 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11f1cbbb0744c4"
+      },
+      {
+        "id": "2026-ВХ-0049",
+        "date": "Sun Oct 11 2026 06:57:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "ПАО ГМК \"Норильский никель\"",
+        "subject": "Закупочная процедура Норникель: Анкер и Платик",
+        "summary": "Уведомление об изменении в закупочной процедуре ПАО ГМК \"Норильский никель\" на поставку анкеров и платиков с дедлайном 16.10.2026.",
+        "deadline": "Fri Oct 16 2026 09:00:00 GMT+0200 (Central European Summer Time)",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a1272e97aefb851"
       }
     ]
   }
