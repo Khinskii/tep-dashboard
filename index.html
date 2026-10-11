@@ -74,7 +74,7 @@
       <span class="px-2 py-0.5 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-700/50 font-semibold text-[11px]">ДЕМО-РЕЖИМ</span>
       <span id="demoClientBadge" class="font-medium text-white">ООО «Северсталь-Пром»</span>
       <span class="text-slate-500">•</span>
-      <span id="demoExpiresBadge" class="text-emerald-400 font-medium">Активен до 01.10.2026</span>
+      <span id="demoExpiresBadge" class="text-emerald-400 font-medium">Активен до 20.10.2026</span>
     </div>
     <div class="flex items-center gap-3">
       <button onclick="logoutDemo()" class="text-slate-400 hover:text-rose-400">Сменить код</button>
@@ -150,9 +150,12 @@
         </button>
 
         <!-- Period Select -->
-        <select id="periodSelect" class="bg-brand-card border border-brand-border text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-cyan-500 outline-none">
-          <option value="september" selected>Сентябрь 2026</option>
-          <option value="q3">III Квартал 2026</option>
+        <select id="periodSelect" onchange="onPeriodChange()" class="bg-brand-card border border-brand-border text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-cyan-500 outline-none cursor-pointer">
+          <option value="october_2026" selected>Октябрь 2026 (тек.)</option>
+          <option value="september_2026">Сентябрь 2026</option>
+          <option value="august_2026">Август 2026</option>
+          <option value="q4_2026">IV Квартал 2026 (тек.)</option>
+          <option value="q3_2026">III Квартал 2026</option>
           <option value="y2026">2026 Год (Всего)</option>
         </select>
 
@@ -403,7 +406,7 @@
         <!-- KPI 2: Поступления -->
         <div class="glass-panel p-5 rounded-2xl border border-brand-border relative overflow-hidden group hover:border-cyan-500/50 transition">
           <div class="flex items-center justify-between text-slate-400 text-xs">
-            <span class="font-medium">Поступления (Сентябрь)</span>
+            <span class="font-medium" id="kpi-income-period-label">Поступления (Октябрь)</span>
             <div class="p-2 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-800/40">
               <i data-lucide="trending-up" class="w-4 h-4"></i>
             </div>
@@ -861,7 +864,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="glass-panel p-4 rounded-xl border border-brand-border">
-          <span class="text-xs text-slate-400">ДС на начало периода (сентябрь)</span>
+          <span class="text-xs text-slate-400" id="fin-period-title">ДС на начало периода (октябрь)</span>
           <div class="text-xl font-bold font-mono-num text-white mt-1"><span id="fin-start-balance">93 588.60 ₽</span></div>
           <p class="text-[11px] text-slate-400 mt-1" id="fin-account-label">Расчетный счет ПАО Сбербанк</p>
         </div>
@@ -1010,7 +1013,7 @@
       <div class="glass-panel p-6 rounded-2xl border border-brand-border">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-base font-semibold text-white">Ведомость начислений и выплат по сотрудникам</h3>
-          <span class="text-xs text-slate-400">Расчетный период: Сентябрь 2026</span>
+          <span class="text-xs text-slate-400" id="payroll-period-title">Расчетный период: Октябрь 2026</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
@@ -1783,35 +1786,77 @@
       ];
     }
 
-    // AI Overview Preset Responses
-    const aiKnowledge = {
-      summary: `<b>📊 Экспресс-сводка генерального директора на 14 сентября 2026:</b><br><br>
-1. <b>Финансы:</b> Факт остатка на расчетных счетах составляет <b>287 184 ₽</b> (МПБ + ТЭП). Поступления за сентябрь 315 800 ₽ при плане 587 122 ₽. Ожидаются подписанные закрывающие документы от «Северстали» на этой неделе.<br>
-2. <b>Производство:</b> В работе 4 объекта. Объект №100 (СПТ№24 НТА-3) идет с опережением (82% закрытия). Объект №101 отстает от графика на 4 дня из-за задержки поставки кабельной продукции.<br>
-3. <b>ФОТ:</b> Начислено 402 818 ₽, выплачено 335 079 ₽. Текущая задолженность перед бригадой — 67 739 ₽.<br>
-4. <b>Безопасность:</b> Через 38 дней истекает допуск на высоту у электросварщика Борькина В.В.`,
+    // Russian Months Localization Helpers
+    const RU_MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const RU_MONTHS_GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
-      cashflow: `<b>💰 Анализ выплаты заработной платы и Cash Flow:</b><br><br>
-• Текущий совокупный остаток на расчетных счетах группы: <b>287 184 ₽</b> (ООО ТЭП: 479 тыс. ₽, СМУ: 616 тыс. ₽).<br>
-• Сумма невыплаченного остатка ФОТ за месяц: <b>67 739 ₽</b>.<br>
-• <b>Вывод:</b> Денежных средств на счетах компании <b>более чем достаточно</b> для полного закрытия зарплатного остатка без риска возникновения кассового разрыва.`,
+    // Dynamic AI Overview Knowledge Generator
+    function getDynamicAiKnowledge() {
+      const now = new Date();
+      const day = now.getDate();
+      const monthGen = RU_MONTHS_GEN[now.getMonth()];
+      const year = now.getFullYear();
+      const dateStr = `${day} ${monthGen} ${year}`;
 
-      bottleneck: `<b>⚠️ Анализ узких мест на производстве:</b><br><br>
-• <b>Объект 101 (Кислородный цех М390414):</b> зафиксировано отставание на 4 рабочих дня от сетевого графика монтажа шкафа АСКУЭМ.<br>
-• <b>Причина:</b> пауза в согласовании листа изменений к проекту электроснабжения со службой заказчика.<br>
-• <b>Рекомендация:</b> Главному инженеру Лещинину А.В. подписать рабочий протокол техрешения с куратором цеха ПАО «Северсталь» до 16.09.`,
+      const periodSel = document.getElementById('periodSelect');
+      const periodKey = periodSel ? periodSel.value : 'october_2026';
+      const periodMeta = (typeof PERIOD_DATA !== 'undefined' && PERIOD_DATA[periodKey]) ? PERIOD_DATA[periodKey] : { shortLabel: 'Октябрь', label: 'Октябрь 2026' };
+      const periodName = periodMeta.shortLabel;
 
-      docs: `<b>📑 Анализ статуса исполнительной документации (АТГ):</b><br><br>
+      const comp = document.getElementById('companySelect') ? document.getElementById('companySelect').value : 'all';
+      let finBal = "142 588 ₽";
+      let finInc = "180 000 ₽";
+      let finPlan = "850 000 ₽";
+      if (typeof PERIOD_DATA !== 'undefined' && PERIOD_DATA[periodKey] && PERIOD_DATA[periodKey].finance) {
+        const finObj = PERIOD_DATA[periodKey].finance[comp] || PERIOD_DATA[periodKey].finance.all;
+        if (finObj) {
+          finBal = Number(finObj.balance_actual || 0).toLocaleString('ru-RU') + ' ₽';
+          finInc = Number(finObj.income_actual || 0).toLocaleString('ru-RU') + ' ₽';
+          finPlan = Number(finObj.income_plan || 0).toLocaleString('ru-RU') + ' ₽';
+        }
+      }
+
+      const corr = cachedGlobalData && cachedGlobalData.correspondence ? cachedGlobalData.correspondence : null;
+      const corrTotal = corr ? (corr.total_active || corr.items?.length || 17) : 17;
+      const corrUnassigned = corr ? (corr.unassigned !== undefined ? corr.unassigned : 9) : 9;
+      const corrInProgress = corr ? (corr.in_progress !== undefined ? corr.in_progress : 6) : 6;
+
+      // Dynamic days remaining until height certification (22.10.2026)
+      const certDate = new Date(2026, 9, 22);
+      const diffTime = certDate - now;
+      const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+
+      return {
+        summary: `<b>📊 Экспресс-сводка генерального директора на ${dateStr}:</b><br><br>
+1. <b>Финансы (${periodName}):</b> Фактический остаток на расчетных счетах составляет <b>${finBal}</b>. Поступления за ${periodName.toLowerCase()} составляют <b>${finInc}</b> при плановом ориентире <b>${finPlan}</b>. Ожидаются подписанные закрывающие документы и реестры КС-2 от заказчиков.<br>
+2. <b>Производство:</b> В работе 4 ключевых объекта. Объект №100 (СПТ№24 НТА-3) идет с опережением (82% закрытия). По объекту №101 зафиксировано отставание 4 дня, ведется согласование ТКП по силовому кабелю.<br>
+3. <b>ФОТ:</b> Начислено 420 000 ₽, выплачено 185 000 ₽ (аванс). Текущая выплата в графике регламента.<br>
+4. <b>Входящие документы и задачи:</b> В оперативном реестре <b>${corrTotal} документов</b> (${corrUnassigned} ожидают назначения, ${corrInProgress} в работе). Ближайшие дедлайны по аукционам: ПАО ММК (15.10) и ПАО ГМК «Норильский никель» (16.10).<br>
+5. <b>Безопасность:</b> Через ${diffDays} дн. (22.10.2026) запланирована повторная аттестация по работе на высоте электросварщика Борькина В.В.`,
+
+        cashflow: `<b>💰 Анализ выплаты заработной платы и Cash Flow:</b><br><br>
+• Текущий совокупный остаток на расчетных счетах группы: <b>${finBal}</b>.<br>
+• Регламентная сумма следующей выплаты ФОТ: <b>235 000 ₽</b> (плановый расчет 25-го числа).<br>
+• <b>Вывод:</b> С учетом ожидаемых закрытий КС-2 по объекту 100 и объекту 102 рисков кассового разрыва не зафиксировано. Денежных средств на счетах группы достаточно.`,
+
+        bottleneck: `<b>⚠️ Анализ узких мест на производстве:</b><br><br>
+• <b>Объект 101 (Кислородный цех М390414):</b> зафиксировано отставание на 4 рабочих дня от графика монтажа шкафа АСКУЭМ.<br>
+• <b>Причина:</b> поставка силового кабеля ВВГнг и согласование листа изменений с куратором цеха.<br>
+• <b>Рекомендация:</b> Главному инженеру Лещинину А.В. ускорить подписание рабочего протокола техрешения со службой заказчика до 15.10.`,
+
+        docs: `<b>📑 Анализ статуса исполнительной документации (АТГ):</b><br><br>
 • По объекту 102 (АСКУЭМ ТЭЦ-ПВС) папка исполнительной документации готова на <b>95%</b>, сформированы все акты на скрытые работы и протоколы наладки.<br>
-• По объекту 100 сдано 12 томов исполнительной, замечания устранены. Готовятся к сдаче финальные исполнительные схемы кабельных трасс.`
-    };
+• По объекту 100 сдано 12 томов исполнительной, замечания устранены. Готовятся финальные схемы трасс кабелей.`
+      };
+    }
 
     function askPresetAi(key) {
       const box = document.getElementById('aiOverviewResponse');
       box.innerHTML = `<div class="flex items-center gap-2 text-cyan-400"><i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Обработка запроса ИИ-агентом...</div>`;
       lucide.createIcons();
       setTimeout(() => {
-        box.innerHTML = aiKnowledge[key] || "Данные сформированы.";
+        const knowledge = getDynamicAiKnowledge();
+        box.innerHTML = knowledge[key] || "Данные сформированы.";
       }, 500);
     }
 
@@ -1859,11 +1904,23 @@
         let answer = "";
         const lower = text.toLowerCase();
         if (lower.includes("зарплат") || lower.includes("фот") || lower.includes("долг")) {
-          answer = `По данным таблицы «2026 расчеты с персоналом»: всего начислено <b>402 818 ₽</b>, фактически выплачено через журнал оплат <b>335 079 ₽</b>. Остаток к выплате — <b>67 739 ₽</b>. Все сотрудники получили аванс, расчет запланирован на 25 число.`;
+          const pSel = document.getElementById('periodSelect');
+          const pKey = pSel ? pSel.value : 'october_2026';
+          const pMeta = PERIOD_DATA[pKey] || PERIOD_DATA['october_2026'];
+          const pay = pMeta.payroll;
+          answer = `По данным расчетов с персоналом (${pMeta.label}): начислено <b>${Number(pay.accrued_plan).toLocaleString('ru-RU')} ₽</b>, фактически выплачено <b>${Number(pay.paid_actual).toLocaleString('ru-RU')} ₽</b>. Остаток к выплате — <b>${Number(pay.balance_due).toLocaleString('ru-RU')} ₽</b>. Выплаты идут по регламентному графику.`;
         } else if (lower.includes("северстал") || lower.includes("объект") || lower.includes("100") || lower.includes("101")) {
           answer = `По объектам ПАО «Северсталь»: совокупный объем контрактов 42.1 млн ₽, закрыто 28.45 млн ₽ (67.5%). По объекту 100 закрыто 82% (15.08 млн ₽). По объекту 101 необходимо ускорить закрытие КС-2 на сумму 1.17 млн ₽ для устранения 4-дневного отставания.`;
         } else if (lower.includes("безопасн") || lower.includes("от") || lower.includes("допуск") || lower.includes("борькин")) {
-          answer = `По данным «ОТ и ТБ персонал»: 11 допусков активны. Внимание требуется электросварщику <b>Борькину В.В.</b> (допуск на высоту заканчивается через 38 дней, 22.10.2026) и <b>Веберу А.Е.</b> (электробезопасность). Сформировать приказ на переаттестацию?`;
+          const diffDays = Math.max(0, Math.ceil((new Date(2026, 9, 22) - new Date()) / (1000 * 60 * 60 * 24)));
+          answer = `По данным «ОТ и ТБ персонал»: 11 допусков активны. Внимание требуется электросварщику <b>Борькину В.В.</b> (допуск на высоту заканчивается через ${diffDays} дн., 22.10.2026) и <b>Веберу А.Е.</b> (электробезопасность). Сформировать приказ на повторную аттестацию?`;
+        } else if (lower.includes("финанс") || lower.includes("баланс") || lower.includes("остаток") || lower.includes("деньг") || lower.includes("счет")) {
+          const pSel = document.getElementById('periodSelect');
+          const pKey = pSel ? pSel.value : 'october_2026';
+          const pMeta = PERIOD_DATA[pKey] || PERIOD_DATA['october_2026'];
+          const comp = document.getElementById('companySelect') ? document.getElementById('companySelect').value : 'all';
+          const fin = pMeta.finance[comp] || pMeta.finance.all;
+          answer = `По оперативным данным БДДС (${pMeta.label}): остаток на расчетных счетах составляет <b>${Number(fin.balance_actual).toLocaleString('ru-RU')} ₽</b>, факт поступлений — <b>${Number(fin.income_actual).toLocaleString('ru-RU')} ₽</b> при плане <b>${Number(fin.income_plan).toLocaleString('ru-RU')} ₽</b>. Кассовых разрывов не обнаружено.`;
         } else {
           answer = `По вашему запросу «${text}»: показатели сверены по актуальным таблицам БДДС, Реестра КС-2/3 и Производства. Все ключевые метрики находятся в границах производственного допуска. Требуется ли сформировать официальный отчет в PDF?`;
         }
@@ -1890,16 +1947,16 @@
 
     // Chart.js Implementations
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Cash Flow Bar Chart
+      // 1. Cash Flow Bar Chart (Dynamic up to October)
       const ctxCash = document.getElementById('cashFlowChart').getContext('2d');
-      new Chart(ctxCash, {
+      window.cashFlowChartInstance = new Chart(ctxCash, {
         type: 'bar',
         data: {
-          labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь (тек.)'],
+          labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь (тек.)'],
           datasets: [
             {
               label: 'Поступления план (₽)',
-              data: [1800000, 2100000, 2400000, 1950000, 2200000, 2500000, 2100000, 2300000, 2082883],
+              data: [1800000, 2100000, 2400000, 1950000, 2200000, 2500000, 2100000, 2300000, 2082883, 850000],
               backgroundColor: 'rgba(14, 165, 233, 0.4)',
               borderColor: '#0EA5E9',
               borderWidth: 1.5,
@@ -1907,7 +1964,7 @@
             },
             {
               label: 'Поступления факт (₽)',
-              data: [1750000, 2050000, 2241980, 1920000, 2180000, 2480000, 2050000, 2280000, 315800],
+              data: [1750000, 2050000, 2241980, 1920000, 2180000, 2480000, 2050000, 2280000, 315800, 180000],
               backgroundColor: 'rgba(16, 185, 129, 0.7)',
               borderColor: '#10B981',
               borderWidth: 1.5,
@@ -2098,8 +2155,8 @@
 • <b>Статус:</b> Готово к отправке в фоновом режиме через локальный шлюз WhatsApp на Mac mini. <b>[Отправить прямо сейчас]</b>`,
 
       report: `<b>📄 Генерация Word-документа:</b><br><br>
-• Создан документ: <code>/Users/user/Desktop/Отчет_СМР_ТЭП_Сентябрь_2026.docx</code>.<br>
-• В отчет включены: сводная таблица выполнения по 4 объектам, расчеты ФОТ и статус подписания КС-2.<br>
+• Создан документ: <code>/Users/user/Desktop/Отчет_СМР_ТЭП_${RU_MONTHS[new Date().getMonth()]}_${new Date().getFullYear()}.docx</code>.<br>
+• В отчет включены: сводная таблица выполнения по объектам за ${RU_MONTHS[new Date().getMonth()].toLowerCase()}, актуальные финансовые остатки и статус входящих документов.<br>
 • Ссылка для скачивания подготовлена. Открыть файл на Mac?`,
 
       spotlight: `<b>🔍 Поиск файлов через системный Spotlight Mac:</b><br><br>
@@ -2115,7 +2172,7 @@
       const promptTitles = {
         mail: "Проверь входящую почту по объектам Северстали",
         whatsapp: "Отправь поручение в WhatsApp главному инженеру",
-        report: "Сформируй официальный Word-отчет за сентябрь",
+        report: `Сформируй официальный Word-отчет за ${RU_MONTHS[new Date().getMonth()].toLowerCase()}`,
         spotlight: "Найди на Mac смету по Кислородному цеху"
       };
 
@@ -2377,44 +2434,283 @@
 
     let cachedGlobalData = null;
 
-    function onCompanyChange() {
-      if (cachedGlobalData) {
-        applyLiveData(cachedGlobalData);
-      }
-    }
-
-    const FALLBACK_FINANCE = {
-      all: {
-        balance_actual: 93588.60,
-        balance_plan: 159454.60,
-        income_actual: 315800,
-        income_plan: 808220,
-        net_flow: 133086.83,
-        start_balance: 93588.60
+    const PERIOD_DATA = {
+      "october_2026": {
+        label: "Октябрь 2026",
+        shortLabel: "Октябрь",
+        isCurrent: true,
+        finance: {
+          all: {
+            start_balance: 93588.60,
+            balance_actual: 142588.60,
+            balance_plan: 185000.00,
+            income_actual: 180000.00,
+            income_plan: 850000.00,
+            net_flow: 49000.00
+          },
+          mpb: {
+            start_balance: 90987.71,
+            balance_actual: 135987.71,
+            balance_plan: 275000.00,
+            income_actual: 130000.00,
+            income_plan: 550000.00,
+            net_flow: 45000.00
+          },
+          tep: {
+            start_balance: 2600.89,
+            balance_actual: 6600.89,
+            balance_plan: -90000.00,
+            income_actual: 50000.00,
+            income_plan: 300000.00,
+            net_flow: 4000.00
+          }
+        },
+        payroll: {
+          accrued_plan: 420000.00,
+          paid_actual: 185000.00,
+          balance_due: 235000.00
+        }
       },
-      mpb: {
-        balance_actual: 90987.71,
-        balance_plan: 265684.61,
-        income_actual: 245000,
-        income_plan: 508220,
-        net_flow: 128450.0,
-        start_balance: 90987.71
+      "september_2026": {
+        label: "Сентябрь 2026",
+        shortLabel: "Сентябрь",
+        isCurrent: false,
+        finance: {
+          all: {
+            start_balance: 93588.60,
+            balance_actual: 93588.60,
+            balance_plan: 159454.60,
+            income_actual: 315800.00,
+            income_plan: 808220.00,
+            net_flow: 133086.83
+          },
+          mpb: {
+            start_balance: 90987.71,
+            balance_actual: 90987.71,
+            balance_plan: 265684.61,
+            income_actual: 245000.00,
+            income_plan: 508220.00,
+            net_flow: 128450.00
+          },
+          tep: {
+            start_balance: 2600.89,
+            balance_actual: 2600.89,
+            balance_plan: -106230.01,
+            income_actual: 70800.00,
+            income_plan: 300000.00,
+            net_flow: 4636.83
+          }
+        },
+        payroll: {
+          accrued_plan: 402818.80,
+          paid_actual: 335079.00,
+          balance_due: 67739.80
+        }
       },
-      tep: {
-        balance_actual: 2600.89,
-        balance_plan: -106230.01,
-        income_actual: 70800,
-        income_plan: 300000,
-        net_flow: 4636.83,
-        start_balance: 2600.89
+      "august_2026": {
+        label: "Август 2026",
+        shortLabel: "Август",
+        isCurrent: false,
+        finance: {
+          all: {
+            start_balance: 145200.00,
+            balance_actual: 218500.00,
+            balance_plan: 230000.00,
+            income_actual: 2280000.00,
+            income_plan: 2300000.00,
+            net_flow: 73300.00
+          },
+          mpb: {
+            start_balance: 120000.00,
+            balance_actual: 185000.00,
+            balance_plan: 190000.00,
+            income_actual: 1650000.00,
+            income_plan: 1680000.00,
+            net_flow: 65000.00
+          },
+          tep: {
+            start_balance: 25200.00,
+            balance_actual: 33500.00,
+            balance_plan: 40000.00,
+            income_actual: 630000.00,
+            income_plan: 620000.00,
+            net_flow: 8300.00
+          }
+        },
+        payroll: {
+          accrued_plan: 395000.00,
+          paid_actual: 395000.00,
+          balance_due: 0.00
+        }
+      },
+      "q4_2026": {
+        label: "IV Квартал 2026",
+        shortLabel: "IV Квартал",
+        isCurrent: true,
+        finance: {
+          all: {
+            start_balance: 93588.60,
+            balance_actual: 142588.60,
+            balance_plan: 450000.00,
+            income_actual: 180000.00,
+            income_plan: 2750000.00,
+            net_flow: 49000.00
+          },
+          mpb: {
+            start_balance: 90987.71,
+            balance_actual: 135987.71,
+            balance_plan: 350000.00,
+            income_actual: 130000.00,
+            income_plan: 1850000.00,
+            net_flow: 45000.00
+          },
+          tep: {
+            start_balance: 2600.89,
+            balance_actual: 6600.89,
+            balance_plan: 100000.00,
+            income_actual: 50000.00,
+            income_plan: 900000.00,
+            net_flow: 4000.00
+          }
+        },
+        payroll: {
+          accrued_plan: 1250000.00,
+          paid_actual: 185000.00,
+          balance_due: 1065000.00
+        }
+      },
+      "q3_2026": {
+        label: "III Квартал 2026",
+        shortLabel: "III Квартал",
+        isCurrent: false,
+        finance: {
+          all: {
+            start_balance: 112000.00,
+            balance_actual: 93588.60,
+            balance_plan: 159454.60,
+            income_actual: 4645800.00,
+            income_plan: 6482883.00,
+            net_flow: 206386.83
+          },
+          mpb: {
+            start_balance: 95000.00,
+            balance_actual: 90987.71,
+            balance_plan: 265684.61,
+            income_actual: 3245000.00,
+            income_plan: 4400000.00,
+            net_flow: 193450.00
+          },
+          tep: {
+            start_balance: 17000.00,
+            balance_actual: 2600.89,
+            balance_plan: -106230.01,
+            income_actual: 1400800.00,
+            income_plan: 2082883.00,
+            net_flow: 12936.83
+          }
+        },
+        payroll: {
+          accrued_plan: 1195000.00,
+          paid_actual: 1127260.00,
+          balance_due: 67740.00
+        }
+      },
+      "y2026": {
+        label: "2026 Год (Всего)",
+        shortLabel: "2026 Год",
+        isCurrent: false,
+        finance: {
+          all: {
+            start_balance: 150000.00,
+            balance_actual: 142588.60,
+            balance_plan: 500000.00,
+            income_actual: 17357780.00,
+            income_plan: 21282883.00,
+            net_flow: 1850000.00
+          },
+          mpb: {
+            start_balance: 110000.00,
+            balance_actual: 135987.71,
+            balance_plan: 400000.00,
+            income_actual: 12150000.00,
+            income_plan: 14500000.00,
+            net_flow: 1350000.00
+          },
+          tep: {
+            start_balance: 40000.00,
+            balance_actual: 6600.89,
+            balance_plan: 100000.00,
+            income_actual: 5207780.00,
+            income_plan: 6782883.00,
+            net_flow: 500000.00
+          }
+        },
+        payroll: {
+          accrued_plan: 3850000.00,
+          paid_actual: 3615000.00,
+          balance_due: 235000.00
+        }
       }
     };
 
+    function onCompanyChange() {
+      if (cachedGlobalData) {
+        applyLiveData(cachedGlobalData);
+      } else {
+        applyLiveData({});
+      }
+    }
+
+    function onPeriodChange() {
+      const pSel = document.getElementById('periodSelect');
+      const periodKey = pSel ? pSel.value : 'october_2026';
+      const meta = PERIOD_DATA[periodKey] || PERIOD_DATA['october_2026'];
+
+      // Update titles across tabs
+      const elKpiTitle = document.getElementById('kpi-income-period-label');
+      if (elKpiTitle) elKpiTitle.innerText = 'Поступления (' + meta.shortLabel + ')';
+
+      const elFinTitle = document.getElementById('fin-period-title');
+      if (elFinTitle) elFinTitle.innerText = 'ДС на начало периода (' + meta.shortLabel.toLowerCase() + ')';
+
+      const elPayTitle = document.getElementById('payroll-period-title');
+      if (elPayTitle) elPayTitle.innerText = 'Расчетный период: ' + meta.label;
+
+      // Re-apply metrics for selected period
+      if (cachedGlobalData) {
+        applyLiveData(cachedGlobalData);
+      } else {
+        applyLiveData({});
+      }
+
+      // Update chart highlighting
+      updateChartPeriodHighlight(periodKey);
+    }
+
+    function updateChartPeriodHighlight(periodKey) {
+      if (!window.cashFlowChartInstance) return;
+      const chart = window.cashFlowChartInstance;
+      const map = {
+        'august_2026': 7,
+        'september_2026': 8,
+        'october_2026': 9,
+        'q4_2026': 9,
+        'q3_2026': 8,
+        'y2026': -1
+      };
+      const activeIdx = map[periodKey] !== undefined ? map[periodKey] : 9;
+      chart.data.datasets[1].backgroundColor = chart.data.labels.map((l, i) => {
+        if (activeIdx === -1) return 'rgba(16, 185, 129, 0.75)';
+        return i === activeIdx ? '#10B981' : 'rgba(16, 185, 129, 0.45)';
+      });
+      chart.update();
+    }
+
     function applyLiveData(data) {
-      if (!data) return;
+      if (!data) data = {};
 
       // Protection against stale/older timestamps:
-      // If we already have a newer timestamp in cachedGlobalData, do not let an older timestamp (e.g. from static file) roll it back
+      // If we already have a newer timestamp in cachedGlobalData, do not let an older timestamp roll it back
       if (cachedGlobalData && cachedGlobalData.updated_at && data.updated_at) {
         const prevTime = parseCustomDate(cachedGlobalData.updated_at);
         const newTime = parseCustomDate(data.updated_at);
@@ -2426,43 +2722,47 @@
         }
       }
 
-      // Zero-protection safeguard:
-      // If incoming finance has all zeroes (due to shifted columns or blank sheet in automated sync),
-      // keep valid non-zero data from cachedGlobalData or FALLBACK_FINANCE
-      const incomingHasValidFinance = data.finance && (
-        (Number(data.finance.balance_actual) > 0) || 
-        (Number(data.finance.balance_plan) > 0) || 
-        (Number(data.finance.start_balance) > 0)
-      );
+      // If incoming data contains periods, merge them
+      if (data.periods) {
+        Object.keys(data.periods).forEach(k => {
+          if (PERIOD_DATA[k]) {
+            PERIOD_DATA[k] = Object.assign({}, PERIOD_DATA[k], data.periods[k]);
+          }
+        });
+      }
 
-      if (!incomingHasValidFinance) {
-        if (cachedGlobalData && cachedGlobalData.finance && (Number(cachedGlobalData.finance.balance_actual) > 0 || Number(cachedGlobalData.finance.balance_plan) > 0)) {
-          data.finance = cachedGlobalData.finance;
-          data.finance_by_company = cachedGlobalData.finance_by_company;
-        } else {
-          data.finance = FALLBACK_FINANCE.all;
-          data.finance_by_company = FALLBACK_FINANCE;
+      // Merge into cachedGlobalData
+      cachedGlobalData = Object.assign({}, cachedGlobalData || {}, data);
+      const fullData = cachedGlobalData;
+
+      // Determine active company and period
+      const comp = document.getElementById('companySelect') ? document.getElementById('companySelect').value : 'all';
+      const pSel = document.getElementById('periodSelect');
+      const periodKey = pSel ? pSel.value : 'october_2026';
+      const periodMeta = PERIOD_DATA[periodKey] || PERIOD_DATA['october_2026'];
+
+      // If live finance arrived for the current period, sync it
+      if (fullData.finance && periodKey === 'october_2026') {
+        const hasLiveFin = (Number(fullData.finance.balance_actual) > 0) || (Number(fullData.finance.income_actual) > 0);
+        if (hasLiveFin) {
+          if (fullData.finance_by_company) {
+            periodMeta.finance = fullData.finance_by_company;
+          } else {
+            periodMeta.finance.all = fullData.finance;
+          }
         }
       }
 
-      // Merge with previously cached data so partial updates (e.g. correspondence from Apps Script) don't erase finance
-      cachedGlobalData = Object.assign({}, cachedGlobalData || {}, data);
-      const fullData = cachedGlobalData;
-      
-      const comp = document.getElementById('companySelect') ? document.getElementById('companySelect').value : 'all';
-      let fin = fullData.finance;
-      if (fullData.finance_by_company && fullData.finance_by_company[comp]) {
-        fin = fullData.finance_by_company[comp];
-      }
+      const finObj = (periodMeta.finance && periodMeta.finance[comp]) ? periodMeta.finance[comp] : periodMeta.finance.all;
 
       // Update Finance on Tab 1 and Tab 2
-      if (fin) {
-        const balVal = Number(fin.balance_actual || 0);
-        const planVal = Number(fin.balance_plan || 0);
-        const startVal = Number(fin.start_balance || balVal);
-        const incFact = Number((fin.income_actual && fin.income_actual > 0) ? fin.income_actual : (comp === 'mpb' ? 245000 : comp === 'tep' ? 70800 : 315800));
-        const incPlan = Number(fin.income_plan || (comp === 'mpb' ? 508220 : comp === 'tep' ? 300000 : 808220));
-        const netVal = Number((fin.net_flow !== undefined && fin.net_flow !== 0) ? fin.net_flow : (balVal - startVal));
+      if (finObj) {
+        const balVal = Number(finObj.balance_actual || 0);
+        const planVal = Number(finObj.balance_plan || 0);
+        const startVal = Number(finObj.start_balance !== undefined ? finObj.start_balance : balVal);
+        const incFact = Number(finObj.income_actual || 0);
+        const incPlan = Number(finObj.income_plan || 1);
+        const netVal = Number(finObj.net_flow !== undefined ? finObj.net_flow : (balVal - startVal));
 
         // TAB 1: KPI 1 - Остаток ДС
         const elBal = document.getElementById('kpi-balance');
@@ -2515,9 +2815,9 @@
         }
 
         // Consolidated holding balances
-        if (fullData.finance_by_company) {
-          const fMpb = fullData.finance_by_company.mpb;
-          const fTep = fullData.finance_by_company.tep;
+        if (periodMeta.finance) {
+          const fMpb = periodMeta.finance.mpb;
+          const fTep = periodMeta.finance.tep;
           const elHoldTep = document.getElementById('fin-holding-tep');
           if (elHoldTep && fTep && fTep.balance_actual !== undefined) {
             elHoldTep.innerText = Number(fTep.balance_actual).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₽';
@@ -2530,10 +2830,11 @@
       }
 
       // Update Payroll
-      if (fullData.payroll) {
+      const payrollData = periodMeta.payroll || fullData.payroll;
+      if (payrollData) {
         const elPaid = document.getElementById('kpi-fio-paid');
-        if (elPaid && fullData.payroll.paid_actual) {
-          elPaid.innerText = Number(fullData.payroll.paid_actual).toLocaleString('ru-RU') + ' ₽';
+        if (elPaid && payrollData.paid_actual) {
+          elPaid.innerText = Number(payrollData.paid_actual).toLocaleString('ru-RU') + ' ₽';
         }
       }
 
@@ -2700,7 +3001,10 @@
         document.getElementById('demoLockModal').classList.remove('hidden');
       }
 
-      // 2. Fetch live data & start 60s background polling
+      // 2. Initialize dynamic period & titles
+      onPeriodChange();
+
+      // 3. Fetch live data & start 60s background polling
       fetchLiveData();
       setInterval(fetchLiveData, 60000);
     });

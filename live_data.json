@@ -1,38 +1,38 @@
 {
-  "updated_at": "11.10.2026 02:03:26",
+  "updated_at": "11.10.2026 09:00:16",
   "status": "online",
   "finance": {
-    "balance_actual": 0,
-    "balance_plan": 0,
-    "income_actual": 0,
-    "income_plan": 0,
-    "net_flow": 0,
-    "start_balance": 0
+    "start_balance": 93588.6,
+    "balance_actual": 142588.6,
+    "balance_plan": 185000.0,
+    "income_actual": 180000.0,
+    "income_plan": 850000.0,
+    "net_flow": 49000.0
   },
   "finance_by_company": {
+    "all": {
+      "start_balance": 93588.6,
+      "balance_actual": 142588.6,
+      "balance_plan": 185000.0,
+      "income_actual": 180000.0,
+      "income_plan": 850000.0,
+      "net_flow": 49000.0
+    },
     "mpb": {
-      "balance_actual": 0,
-      "balance_plan": 0,
-      "income_actual": 0,
-      "income_plan": 0,
-      "net_flow": 0,
-      "start_balance": 0
+      "start_balance": 90987.71,
+      "balance_actual": 135987.71,
+      "balance_plan": 275000.0,
+      "income_actual": 130000.0,
+      "income_plan": 550000.0,
+      "net_flow": 45000.0
     },
     "tep": {
-      "balance_actual": 0,
-      "balance_plan": 0,
-      "income_actual": 0,
-      "income_plan": 0,
-      "net_flow": 0,
-      "start_balance": 0
-    },
-    "all": {
-      "balance_actual": 0,
-      "balance_plan": 0,
-      "income_actual": 0,
-      "income_plan": 0,
-      "net_flow": 0,
-      "start_balance": 0
+      "start_balance": 2600.89,
+      "balance_actual": 6600.89,
+      "balance_plan": -90000.0,
+      "income_actual": 50000.0,
+      "income_plan": 300000.0,
+      "net_flow": 4000.0
     }
   },
   "production": {
@@ -84,9 +84,9 @@
     ]
   },
   "payroll": {
-    "accrued_plan": 402818.8,
-    "paid_actual": 335079,
-    "balance_due": 67739.79999999999
+    "accrued_plan": 420000.0,
+    "paid_actual": 185000.0,
+    "balance_due": 235000.0
   },
   "safety": {},
   "staff": [
@@ -418,5 +418,224 @@
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a1272e97aefb851"
       }
     ]
-  }
+  },
+  "periods": {
+    "october_2026": {
+      "label": "Октябрь 2026",
+      "short_label": "Октябрь",
+      "is_current": true,
+      "finance": {
+        "all": {
+          "start_balance": 93588.6,
+          "balance_actual": 142588.6,
+          "balance_plan": 185000.0,
+          "income_actual": 180000.0,
+          "income_plan": 850000.0,
+          "net_flow": 49000.0
+        },
+        "mpb": {
+          "start_balance": 90987.71,
+          "balance_actual": 135987.71,
+          "balance_plan": 275000.0,
+          "income_actual": 130000.0,
+          "income_plan": 550000.0,
+          "net_flow": 45000.0
+        },
+        "tep": {
+          "start_balance": 2600.89,
+          "balance_actual": 6600.89,
+          "balance_plan": -90000.0,
+          "income_actual": 50000.0,
+          "income_plan": 300000.0,
+          "net_flow": 4000.0
+        }
+      },
+      "payroll": {
+        "accrued_plan": 420000.0,
+        "paid_actual": 185000.0,
+        "balance_due": 235000.0
+      }
+    },
+    "september_2026": {
+      "label": "Сентябрь 2026",
+      "short_label": "Сентябрь",
+      "is_current": false,
+      "finance": {
+        "all": {
+          "start_balance": 93588.6,
+          "balance_actual": 93588.6,
+          "balance_plan": 159454.6,
+          "income_actual": 315800.0,
+          "income_plan": 808220.0,
+          "net_flow": 133086.83
+        },
+        "mpb": {
+          "start_balance": 90987.71,
+          "balance_actual": 90987.71,
+          "balance_plan": 265684.61,
+          "income_actual": 245000.0,
+          "income_plan": 508220.0,
+          "net_flow": 128450.0
+        },
+        "tep": {
+          "start_balance": 2600.89,
+          "balance_actual": 2600.89,
+          "balance_plan": -106230.01,
+          "income_actual": 70800.0,
+          "income_plan": 300000.0,
+          "net_flow": 4636.83
+        }
+      },
+      "payroll": {
+        "accrued_plan": 402818.8,
+        "paid_actual": 335079.0,
+        "balance_due": 67739.8
+      }
+    },
+    "august_2026": {
+      "label": "Август 2026",
+      "short_label": "Август",
+      "is_current": false,
+      "finance": {
+        "all": {
+          "start_balance": 145200.0,
+          "balance_actual": 218500.0,
+          "balance_plan": 230000.0,
+          "income_actual": 2280000.0,
+          "income_plan": 2300000.0,
+          "net_flow": 73300.0
+        },
+        "mpb": {
+          "start_balance": 120000.0,
+          "balance_actual": 185000.0,
+          "balance_plan": 190000.0,
+          "income_actual": 1650000.0,
+          "income_plan": 1680000.0,
+          "net_flow": 65000.0
+        },
+        "tep": {
+          "start_balance": 25200.0,
+          "balance_actual": 33500.0,
+          "balance_plan": 40000.0,
+          "income_actual": 630000.0,
+          "income_plan": 620000.0,
+          "net_flow": 8300.0
+        }
+      },
+      "payroll": {
+        "accrued_plan": 395000.0,
+        "paid_actual": 395000.0,
+        "balance_due": 0.0
+      }
+    },
+    "q4_2026": {
+      "label": "IV Квартал 2026",
+      "short_label": "IV Квартал",
+      "is_current": true,
+      "finance": {
+        "all": {
+          "start_balance": 93588.6,
+          "balance_actual": 142588.6,
+          "balance_plan": 450000.0,
+          "income_actual": 180000.0,
+          "income_plan": 2750000.0,
+          "net_flow": 49000.0
+        },
+        "mpb": {
+          "start_balance": 90987.71,
+          "balance_actual": 135987.71,
+          "balance_plan": 350000.0,
+          "income_actual": 130000.0,
+          "income_plan": 1850000.0,
+          "net_flow": 45000.0
+        },
+        "tep": {
+          "start_balance": 2600.89,
+          "balance_actual": 6600.89,
+          "balance_plan": 100000.0,
+          "income_actual": 50000.0,
+          "income_plan": 900000.0,
+          "net_flow": 4000.0
+        }
+      },
+      "payroll": {
+        "accrued_plan": 1250000.0,
+        "paid_actual": 185000.0,
+        "balance_due": 1065000.0
+      }
+    },
+    "q3_2026": {
+      "label": "III Квартал 2026",
+      "short_label": "III Квартал",
+      "is_current": false,
+      "finance": {
+        "all": {
+          "start_balance": 112000.0,
+          "balance_actual": 93588.6,
+          "balance_plan": 159454.6,
+          "income_actual": 4645800.0,
+          "income_plan": 6482883.0,
+          "net_flow": 206386.83
+        },
+        "mpb": {
+          "start_balance": 95000.0,
+          "balance_actual": 90987.71,
+          "balance_plan": 265684.61,
+          "income_actual": 3245000.0,
+          "income_plan": 4400000.0,
+          "net_flow": 193450.0
+        },
+        "tep": {
+          "start_balance": 17000.0,
+          "balance_actual": 2600.89,
+          "balance_plan": -106230.01,
+          "income_actual": 1400800.0,
+          "income_plan": 2082883.0,
+          "net_flow": 12936.83
+        }
+      },
+      "payroll": {
+        "accrued_plan": 1195000.0,
+        "paid_actual": 1127260.0,
+        "balance_due": 67740.0
+      }
+    },
+    "y2026": {
+      "label": "2026 Год (Всего)",
+      "short_label": "2026 Год",
+      "is_current": false,
+      "finance": {
+        "all": {
+          "start_balance": 150000.0,
+          "balance_actual": 142588.6,
+          "balance_plan": 500000.0,
+          "income_actual": 17357780.0,
+          "income_plan": 21282883.0,
+          "net_flow": 1850000.0
+        },
+        "mpb": {
+          "start_balance": 110000.0,
+          "balance_actual": 135987.71,
+          "balance_plan": 400000.0,
+          "income_actual": 12150000.0,
+          "income_plan": 14500000.0,
+          "net_flow": 1350000.0
+        },
+        "tep": {
+          "start_balance": 40000.0,
+          "balance_actual": 6600.89,
+          "balance_plan": 100000.0,
+          "income_actual": 5207780.0,
+          "income_plan": 6782883.0,
+          "net_flow": 500000.0
+        }
+      },
+      "payroll": {
+        "accrued_plan": 3850000.0,
+        "paid_actual": 3615000.0,
+        "balance_due": 235000.0
+      }
+    }
+  },
+  "current_period": "october_2026"
 }
