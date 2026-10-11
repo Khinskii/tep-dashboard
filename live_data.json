@@ -1,38 +1,38 @@
 {
-  "updated_at": "11.10.2026 09:00:16",
+  "updated_at": "12.10.2026 02:02:45",
   "status": "online",
   "finance": {
-    "start_balance": 93588.6,
-    "balance_actual": 142588.6,
-    "balance_plan": 185000.0,
-    "income_actual": 180000.0,
-    "income_plan": 850000.0,
-    "net_flow": 49000.0
+    "balance_actual": 0,
+    "balance_plan": 0,
+    "income_actual": 0,
+    "income_plan": 0,
+    "net_flow": 0,
+    "start_balance": 0
   },
   "finance_by_company": {
-    "all": {
-      "start_balance": 93588.6,
-      "balance_actual": 142588.6,
-      "balance_plan": 185000.0,
-      "income_actual": 180000.0,
-      "income_plan": 850000.0,
-      "net_flow": 49000.0
-    },
     "mpb": {
-      "start_balance": 90987.71,
-      "balance_actual": 135987.71,
-      "balance_plan": 275000.0,
-      "income_actual": 130000.0,
-      "income_plan": 550000.0,
-      "net_flow": 45000.0
+      "balance_actual": 0,
+      "balance_plan": 0,
+      "income_actual": 0,
+      "income_plan": 0,
+      "net_flow": 0,
+      "start_balance": 0
     },
     "tep": {
-      "start_balance": 2600.89,
-      "balance_actual": 6600.89,
-      "balance_plan": -90000.0,
-      "income_actual": 50000.0,
-      "income_plan": 300000.0,
-      "net_flow": 4000.0
+      "balance_actual": 0,
+      "balance_plan": 0,
+      "income_actual": 0,
+      "income_plan": 0,
+      "net_flow": 0,
+      "start_balance": 0
+    },
+    "all": {
+      "balance_actual": 0,
+      "balance_plan": 0,
+      "income_actual": 0,
+      "income_plan": 0,
+      "net_flow": 0,
+      "start_balance": 0
     }
   },
   "production": {
@@ -84,9 +84,9 @@
     ]
   },
   "payroll": {
-    "accrued_plan": 420000.0,
-    "paid_actual": 185000.0,
-    "balance_due": 235000.0
+    "accrued_plan": 420000,
+    "paid_actual": 185000,
+    "balance_due": 235000
   },
   "safety": {},
   "staff": [
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 9,
-    "in_progress": 6,
+    "unassigned": 0,
+    "in_progress": 2,
     "overdue": 0,
-    "total_active": 15,
+    "total_active": 2,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -203,39 +203,9 @@
         "summary": "СМУ «Промстрой» необходимо проработать поставку комплектующих для модернизации системы пожаротушения по проекту ГИП 116.817 ЦТМ и направить информацию в АСУ Согласование.",
         "deadline": "",
         "assigned": "Черненко Е.Н.",
-        "status": "В работе",
-        "category": "in_progress",
+        "status": "Отвечено",
+        "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0a8e91f783e39e"
-      },
-      {
-        "id": "2026-ВХ-0028",
-        "date": "Sun Sep 27 2026 17:00:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Юрий Тырков",
-        "subject": "Фотографии объектов",
-        "summary": "Письмо содержит ссылки на несколько HEIC-изображений на Google Диске, предположительно, фотографии с объектов.",
-        "deadline": "",
-        "assigned": "Хинский Л.Д.",
-        "status": "В работе",
-        "category": "in_progress",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0e13d167e738f2"
-      },
-      {
-        "id": "2026-ВХ-0036",
-        "date": "Tue Sep 29 2026 23:09:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Леонид Хинский",
-        "subject": "Список объектов",
-        "summary": "Леонид Хинский предоставил перечень объектов, включая АСКУЭМ и другие проекты.",
-        "deadline": "",
-        "assigned": "Хинский Л.Д.",
-        "status": "В работе",
-        "category": "in_progress",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0ecdacc2b699c7"
       },
       {
         "id": "2026-ВХ-0037",
@@ -248,8 +218,8 @@
         "summary": "ПАО ММК информирует об открытии нового аукциона № 5516262 на оборудование Siemens, торги по которому пройдут с 29.09.2026 по 09.10.2026.",
         "deadline": "Fri Oct 09 2026 09:00:00 GMT+0200 (Central European Summer Time)",
         "assigned": "Хинский Л.Д.",
-        "status": "В работе",
-        "category": "in_progress",
+        "status": "Отвечено",
+        "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0ec8ad75b7eaaa"
       },
       {
@@ -263,8 +233,8 @@
         "summary": "Уведомление от ПАО ГМК \"Норильский никель\" об изменениях в закупочной процедуре №20059599/2 на поставку агрегата насосного, срок подачи предложений до 02.10.2026.",
         "deadline": "Fri Oct 02 2026 09:00:00 GMT+0200 (Central European Summer Time)",
         "assigned": "Хинский Л.Д.",
-        "status": "В работе",
-        "category": "in_progress",
+        "status": "Отвечено",
+        "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a0f3c926c9a8a58"
       },
       {
@@ -278,8 +248,8 @@
         "summary": "Получен счет на оплату услуг связи от Билайн с приложением стандартного пакета документов.",
         "deadline": "",
         "assigned": "Кропта О.Н.",
-        "status": "В работе",
-        "category": "in_progress",
+        "status": "Отвечено",
+        "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a107c4835c92ca7"
       },
       {
@@ -292,8 +262,8 @@
         "subject": "Баланс по договору с Автокард",
         "summary": "Баланс по договору ID25542-4049-07/КА от 21.11.2024 с ООО \"Компания \"Автокард\" для ООО \"ТЭП\" составляет 6017.24 руб. на 05.10.2026.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
+        "assigned": "Кропта О.Н.",
+        "status": "В архив",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a10ab59a00a7132"
       },
@@ -307,9 +277,9 @@
         "subject": "Расчет работ по РД Радиосвязь VHF Северсталь",
         "summary": "Запрос на составление перечня работ с расценками и спецификации поставки оборудования (металлоконструкции, кабели, РЩ, АВ, оптика) для договора по РД Радиосвязь VHF на объектах ПАО Северсталь, исключая замену UHF ретрансляторов.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a111a3bd6cd937c"
       },
       {
@@ -322,8 +292,8 @@
         "subject": "Открыт аукцион № 5517537",
         "summary": "Открыт аукцион ПАО ММК № 5517537 на поставку КИП оборудования (модули Beckhoff).",
         "deadline": "Thu Oct 15 2026 09:00:00 GMT+0200 (Central European Summer Time)",
-        "assigned": "",
-        "status": "Поступило",
+        "assigned": "Хинский Л.Д.",
+        "status": "Отвечено",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a116dc83d3f6709"
       },
@@ -337,8 +307,8 @@
         "subject": "Проверка применимости полевых датчиков",
         "summary": "Получены сканы паспортов полевых датчиков, требуется проверить их применимость в условиях среды.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
+        "assigned": "Инженер ПТО",
+        "status": "В архив",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a1163e713e7d872"
       },
@@ -352,8 +322,8 @@
         "subject": "Утверждение документа по аренде манипулятора",
         "summary": "Главный бухгалтер компании \"Автоматика\" запрашивает утверждение документа, отправленного \"Промстрой\" по ЭДО, касающегося аренды манипулятора.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
+        "assigned": "Хинский Л.Д.",
+        "status": "Отвечено",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a115e5a138412c1"
       },
@@ -367,8 +337,8 @@
         "subject": "Изменения в закупочной процедуре: Система вентиляции ЗИФ",
         "summary": "Норникель информирует об изменениях в закупочной процедуре по системе вентиляции ЗИФ и приглашает к подаче предложения до 26.10.2026.",
         "deadline": "Mon Oct 26 2026 08:00:00 GMT+0100 (Central European Standard Time)",
-        "assigned": "",
-        "status": "Поступило",
+        "assigned": "Хинский Л.Д.",
+        "status": "Отвечено",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11cd6cef91d315"
       },
@@ -382,25 +352,10 @@
         "subject": "Модернизация системы пожаротушения. Комплектация шкафов АПТэ",
         "summary": "Заказчик указывает на неверную комплектацию и сборку шкафов АПТэ1 и АПТэ2 по проекту ГИП 116.817 ЦТМ, требует проверки установленных модулей и получения недостающих.",
         "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
+        "assigned": "Хинский Л.Д.",
+        "status": "В работе",
+        "category": "in_progress",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11bb38b00541ef"
-      },
-      {
-        "id": "2026-ВХ-0048",
-        "date": "Fri Oct 09 2026 14:17:00 GMT+0200 (Central European Summer Time)",
-        "direction": "Входящее",
-        "channel": "Email (Google)",
-        "object": "Общие / Корпоративные",
-        "counterparty": "Комитет по управлению имуществом города Череповца",
-        "subject": "Обновления в картотеке арбитражных дел",
-        "summary": "Уведомление об обновлениях по арбитражному делу А13-4757/2026, касающихся добавления доказательств и ходатайства об участии в судебном заседании.",
-        "deadline": "",
-        "assigned": "",
-        "status": "Поступило",
-        "category": "unassigned",
-        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a11f1cbbb0744c4"
       },
       {
         "id": "2026-ВХ-0049",
@@ -412,8 +367,8 @@
         "subject": "Закупочная процедура Норникель: Анкер и Платик",
         "summary": "Уведомление об изменении в закупочной процедуре ПАО ГМК \"Норильский никель\" на поставку анкеров и платиков с дедлайном 16.10.2026.",
         "deadline": "Fri Oct 16 2026 09:00:00 GMT+0200 (Central European Summer Time)",
-        "assigned": "",
-        "status": "Поступило",
+        "assigned": "Хинский Л.Д.",
+        "status": "Отвечено",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a1272e97aefb851"
       }
@@ -428,32 +383,32 @@
         "all": {
           "start_balance": 93588.6,
           "balance_actual": 142588.6,
-          "balance_plan": 185000.0,
-          "income_actual": 180000.0,
-          "income_plan": 850000.0,
-          "net_flow": 49000.0
+          "balance_plan": 185000,
+          "income_actual": 180000,
+          "income_plan": 850000,
+          "net_flow": 49000
         },
         "mpb": {
           "start_balance": 90987.71,
           "balance_actual": 135987.71,
-          "balance_plan": 275000.0,
-          "income_actual": 130000.0,
-          "income_plan": 550000.0,
-          "net_flow": 45000.0
+          "balance_plan": 275000,
+          "income_actual": 130000,
+          "income_plan": 550000,
+          "net_flow": 45000
         },
         "tep": {
           "start_balance": 2600.89,
           "balance_actual": 6600.89,
-          "balance_plan": -90000.0,
-          "income_actual": 50000.0,
-          "income_plan": 300000.0,
-          "net_flow": 4000.0
+          "balance_plan": -90000,
+          "income_actual": 50000,
+          "income_plan": 300000,
+          "net_flow": 4000
         }
       },
       "payroll": {
-        "accrued_plan": 420000.0,
-        "paid_actual": 185000.0,
-        "balance_due": 235000.0
+        "accrued_plan": 420000,
+        "paid_actual": 185000,
+        "balance_due": 235000
       }
     },
     "september_2026": {
@@ -465,30 +420,30 @@
           "start_balance": 93588.6,
           "balance_actual": 93588.6,
           "balance_plan": 159454.6,
-          "income_actual": 315800.0,
-          "income_plan": 808220.0,
+          "income_actual": 315800,
+          "income_plan": 808220,
           "net_flow": 133086.83
         },
         "mpb": {
           "start_balance": 90987.71,
           "balance_actual": 90987.71,
           "balance_plan": 265684.61,
-          "income_actual": 245000.0,
-          "income_plan": 508220.0,
-          "net_flow": 128450.0
+          "income_actual": 245000,
+          "income_plan": 508220,
+          "net_flow": 128450
         },
         "tep": {
           "start_balance": 2600.89,
           "balance_actual": 2600.89,
           "balance_plan": -106230.01,
-          "income_actual": 70800.0,
-          "income_plan": 300000.0,
+          "income_actual": 70800,
+          "income_plan": 300000,
           "net_flow": 4636.83
         }
       },
       "payroll": {
         "accrued_plan": 402818.8,
-        "paid_actual": 335079.0,
+        "paid_actual": 335079,
         "balance_due": 67739.8
       }
     },
@@ -498,34 +453,34 @@
       "is_current": false,
       "finance": {
         "all": {
-          "start_balance": 145200.0,
-          "balance_actual": 218500.0,
-          "balance_plan": 230000.0,
-          "income_actual": 2280000.0,
-          "income_plan": 2300000.0,
-          "net_flow": 73300.0
+          "start_balance": 145200,
+          "balance_actual": 218500,
+          "balance_plan": 230000,
+          "income_actual": 2280000,
+          "income_plan": 2300000,
+          "net_flow": 73300
         },
         "mpb": {
-          "start_balance": 120000.0,
-          "balance_actual": 185000.0,
-          "balance_plan": 190000.0,
-          "income_actual": 1650000.0,
-          "income_plan": 1680000.0,
-          "net_flow": 65000.0
+          "start_balance": 120000,
+          "balance_actual": 185000,
+          "balance_plan": 190000,
+          "income_actual": 1650000,
+          "income_plan": 1680000,
+          "net_flow": 65000
         },
         "tep": {
-          "start_balance": 25200.0,
-          "balance_actual": 33500.0,
-          "balance_plan": 40000.0,
-          "income_actual": 630000.0,
-          "income_plan": 620000.0,
-          "net_flow": 8300.0
+          "start_balance": 25200,
+          "balance_actual": 33500,
+          "balance_plan": 40000,
+          "income_actual": 630000,
+          "income_plan": 620000,
+          "net_flow": 8300
         }
       },
       "payroll": {
-        "accrued_plan": 395000.0,
-        "paid_actual": 395000.0,
-        "balance_due": 0.0
+        "accrued_plan": 395000,
+        "paid_actual": 395000,
+        "balance_due": 0
       }
     },
     "q4_2026": {
@@ -536,32 +491,32 @@
         "all": {
           "start_balance": 93588.6,
           "balance_actual": 142588.6,
-          "balance_plan": 450000.0,
-          "income_actual": 180000.0,
-          "income_plan": 2750000.0,
-          "net_flow": 49000.0
+          "balance_plan": 450000,
+          "income_actual": 180000,
+          "income_plan": 2750000,
+          "net_flow": 49000
         },
         "mpb": {
           "start_balance": 90987.71,
           "balance_actual": 135987.71,
-          "balance_plan": 350000.0,
-          "income_actual": 130000.0,
-          "income_plan": 1850000.0,
-          "net_flow": 45000.0
+          "balance_plan": 350000,
+          "income_actual": 130000,
+          "income_plan": 1850000,
+          "net_flow": 45000
         },
         "tep": {
           "start_balance": 2600.89,
           "balance_actual": 6600.89,
-          "balance_plan": 100000.0,
-          "income_actual": 50000.0,
-          "income_plan": 900000.0,
-          "net_flow": 4000.0
+          "balance_plan": 100000,
+          "income_actual": 50000,
+          "income_plan": 900000,
+          "net_flow": 4000
         }
       },
       "payroll": {
-        "accrued_plan": 1250000.0,
-        "paid_actual": 185000.0,
-        "balance_due": 1065000.0
+        "accrued_plan": 1250000,
+        "paid_actual": 185000,
+        "balance_due": 1065000
       }
     },
     "q3_2026": {
@@ -570,34 +525,34 @@
       "is_current": false,
       "finance": {
         "all": {
-          "start_balance": 112000.0,
+          "start_balance": 112000,
           "balance_actual": 93588.6,
           "balance_plan": 159454.6,
-          "income_actual": 4645800.0,
-          "income_plan": 6482883.0,
+          "income_actual": 4645800,
+          "income_plan": 6482883,
           "net_flow": 206386.83
         },
         "mpb": {
-          "start_balance": 95000.0,
+          "start_balance": 95000,
           "balance_actual": 90987.71,
           "balance_plan": 265684.61,
-          "income_actual": 3245000.0,
-          "income_plan": 4400000.0,
-          "net_flow": 193450.0
+          "income_actual": 3245000,
+          "income_plan": 4400000,
+          "net_flow": 193450
         },
         "tep": {
-          "start_balance": 17000.0,
+          "start_balance": 17000,
           "balance_actual": 2600.89,
           "balance_plan": -106230.01,
-          "income_actual": 1400800.0,
-          "income_plan": 2082883.0,
+          "income_actual": 1400800,
+          "income_plan": 2082883,
           "net_flow": 12936.83
         }
       },
       "payroll": {
-        "accrued_plan": 1195000.0,
-        "paid_actual": 1127260.0,
-        "balance_due": 67740.0
+        "accrued_plan": 1195000,
+        "paid_actual": 1127260,
+        "balance_due": 67740
       }
     },
     "y2026": {
@@ -606,34 +561,34 @@
       "is_current": false,
       "finance": {
         "all": {
-          "start_balance": 150000.0,
+          "start_balance": 150000,
           "balance_actual": 142588.6,
-          "balance_plan": 500000.0,
-          "income_actual": 17357780.0,
-          "income_plan": 21282883.0,
-          "net_flow": 1850000.0
+          "balance_plan": 500000,
+          "income_actual": 17357780,
+          "income_plan": 21282883,
+          "net_flow": 1850000
         },
         "mpb": {
-          "start_balance": 110000.0,
+          "start_balance": 110000,
           "balance_actual": 135987.71,
-          "balance_plan": 400000.0,
-          "income_actual": 12150000.0,
-          "income_plan": 14500000.0,
-          "net_flow": 1350000.0
+          "balance_plan": 400000,
+          "income_actual": 12150000,
+          "income_plan": 14500000,
+          "net_flow": 1350000
         },
         "tep": {
-          "start_balance": 40000.0,
+          "start_balance": 40000,
           "balance_actual": 6600.89,
-          "balance_plan": 100000.0,
-          "income_actual": 5207780.0,
-          "income_plan": 6782883.0,
-          "net_flow": 500000.0
+          "balance_plan": 100000,
+          "income_actual": 5207780,
+          "income_plan": 6782883,
+          "net_flow": 500000
         }
       },
       "payroll": {
-        "accrued_plan": 3850000.0,
-        "paid_actual": 3615000.0,
-        "balance_due": 235000.0
+        "accrued_plan": 3850000,
+        "paid_actual": 3615000,
+        "balance_due": 235000
       }
     }
   },
