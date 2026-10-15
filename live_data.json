@@ -1,5 +1,5 @@
 {
-  "updated_at": "15.10.2026 02:05:49",
+  "updated_at": "16.10.2026 02:03:02",
   "status": "online",
   "finance": {
     "balance_actual": 0,
@@ -157,10 +157,10 @@
     }
   ],
   "correspondence": {
-    "unassigned": 1,
+    "unassigned": 2,
     "in_progress": 2,
     "overdue": 0,
-    "total_active": 3,
+    "total_active": 4,
     "items": [
       {
         "id": "2026-ВХ-0008",
@@ -386,6 +386,21 @@
         "status": "Поступило",
         "category": "unassigned",
         "source_link": "https://mail.google.com/mail/u/0/#inbox/1a136b3598692a1a"
+      },
+      {
+        "id": "2026-ВХ-0051",
+        "date": "Thu Oct 15 2026 18:13:00 GMT+0200 (Central European Summer Time)",
+        "direction": "Входящее",
+        "channel": "Email (Google)",
+        "object": "Общие / Корпоративные",
+        "counterparty": "Инфо Сервислинк",
+        "subject": "Работы по радиостанциям на Северстали",
+        "summary": "Ответ на запрос по работам на Северстали: контакт в командировке, перезвонит сегодня вечером для обсуждения направления РД.",
+        "deadline": "Thu Oct 15 2026 09:00:00 GMT+0200 (Central European Summer Time)",
+        "assigned": "",
+        "status": "Поступило",
+        "category": "unassigned",
+        "source_link": "https://mail.google.com/mail/u/0/#inbox/1a13e321fe3fae81"
       }
     ]
   },
